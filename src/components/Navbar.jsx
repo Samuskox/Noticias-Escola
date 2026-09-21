@@ -1,13 +1,17 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import Home from '../pages/Home';
+
 export default function Navbar() {
   const [aberto, setAberto] = useState(false);
 
   return (
     <nav style={{ padding: '12px 20px', borderBottom: '1px solid #ddd' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2>Jornal Escolar</h2>
+
+        <a href="/"><h2>Jornal Escolar</h2></a>
+       
         {/* Botão com as 3 barrinhas */}
         <button 
           onClick={() => setAberto(!aberto)} 
