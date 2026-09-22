@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+import NoticiaCard from '../components/NoticiaCard';
+
 // Exemplo de lista de notícias (depois pode vir de uma API ou LocalStorage)
 const listaNoticias = [
   { id: '1', titulo: 'Feira de Ciências foi um sucesso', resumo: 'Confira as fotos dos projetos...' },
@@ -29,17 +31,11 @@ export default function Home() {
       </section>
 
       {/* Lista de notícias */}
-      <section>
+       <section>
         <h2>Últimas Notícias</h2>
         {listaNoticias.map((item) => (
-          <div key={item.id} style={{ border: '1px solid #ddd', margin: '10px 0', padding: '12px', borderRadius: '6px' }}>
-            <h3>{item.titulo}</h3>
-            <p>{item.resumo}</p>
-            {/* Link para a rota dinâmica */}
-            <Link to={`/noticia/${item.id}`} style={{ color: 'blue', fontWeight: 'bold' }}>
-              Ler matéria completa →
-            </Link>
-          </div>
+          // 2. Aqui você chama o componente passando o objeto 'item' como prop
+          <NoticiaCard key={item.id} noticia={item} />
         ))}
       </section>
     </div>
