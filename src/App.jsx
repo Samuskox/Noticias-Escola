@@ -8,6 +8,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import News from './pages/Noticia';
 import Admin from './pages/Admin';
+import Login from './pages/Login'
 
 import './App.css'
 
@@ -27,6 +28,8 @@ function App() {
       <Route path="/escola" element={<Escola />} />
       <Route path="/colaboradores" element={<Colaboradores />} />
       <Route path="/admin" element={<Admin />} />
+      <Route path="/login" element={<Login/>} />
+
      </Routes>
     
     </BrowserRouter>

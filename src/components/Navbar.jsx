@@ -29,7 +29,7 @@ export default function Navbar() {
           <Link to="/escola" onClick={() => setAberto(false)}>Nossa escola</Link>
           <Link to="/colaboradores" onClick={() => setAberto(false)}>Todos os colaboradores</Link>
           <hr />
-          <Link to="/admin" onClick={() => setAberto(false)}>Área de Postagem (Admin)</Link>
+          <Link to="/login" onClick={() => setAberto(false)}>Área de Postagem (Admin)</Link>
         </div>
       )}
     </nav>
