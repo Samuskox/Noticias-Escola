@@ -12,6 +12,11 @@ export default function Admin() {
   const handleSubmeter = (e) => {
     e.preventDefault(); // Evita que a página recarregue
 
+    const admin = JSON.parse(localStorage.getItem('adminLogado'));
+    const idAdmin = admin?.ID_ADMIN || 1;
+
+    const listaNomesImagens = Array.from(imagens).map(arquivo => `uploads/${arquivo.name}`);
+
     // Gera a data e hora automaticamente no formato local (BR)
     const dataPostagem = new Date().toLocaleString('pt-BR');
 
@@ -22,7 +27,7 @@ export default function Admin() {
       resumo,
       conteudo,
       videoUrl,
-      imagens: Array.from(imagens), // Converte a lista de arquivos para Array
+      imagens_multiplas: listaNomesImagens, // Converte a lista de arquivos para Array
       data: dataPostagem
     };
 

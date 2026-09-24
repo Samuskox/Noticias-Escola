@@ -63,15 +63,37 @@ app.post('/api/login', (req, res) => {
 
 // 2. Rota de Criar Notícia
 app.post('/api/noticia', (req, res) => {
-  const { titulo, resumo, conteudo, url_imagem, url_video, categoria, id_admin } = req.body;
+  const { titulo, resumo, conteudo, url_video, id_admin, caminho_imagens } = req.body;
 
-  try {
+  const criarNoticiaCompleta = db.transaction(() => {
     const stmt = db.prepare(`
-      INSERT INTO NOTICIAS (titulo, resumo, conteudo, url_imagem, url_video, categoria, id_admin)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO NOTICIAS (TITULO, RESUMO, CONTEUDO, URL_VIDEO, FK_ADMINISTRADOR_ID_ADMIN)
+      VALUES (?, ?, ?, ?, ?)
     `);
-    const resultado = stmt.run(titulo, resumo, conteudo, url_imagem, url_video, categoria || 'noticia', id_admin);
-    res.json({ sucesso: true, id_noticia: resultado.lastInsertRowid });
+
+    const infoNoticia = stmt.run(titulo, resumo, conteudo, url_video, id_admin, caminho_imagens);
+    const idNoticia = infoNoticia.lastInsertRowid;
+
+    if(caminho_imagens && Array.isArray(caminho_imagens)){
+      const stmtImg = db.prepare(`INSERT INTO IMAGENS (CAMINHO_IMG) VALUES (?)`);
+      const stmtVinculo = db.prepare(`
+        INSERT INTO NOTICIA_IMG_TEM (FK_NOTICIAS_ID_NOTICIAS, FK_IMAGENS_ID_IMG)
+        VALUES (?, ?)
+      `);
+
+      for(const caminho of caminho_imagens){
+        const infoImg = stmtImg.run(caminho_imagens);
+        const idImagem = infoImg.lastInsertRowid;
+        stmtVinculo.run(idNoticia, idImagem);
+      }
+      
+    }
+
+    return idNoticia;
+  });
+  try {
+    const novoId = criarNoticiaCompleta();
+    res.json({ sucesso: true, id_noticia: novoId, mensagem: "Notícia e imagem salvas com sucesso!" });
   } catch (error) {
     res.status(500).json({ sucesso: false, erro: error.message });
   }

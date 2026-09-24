@@ -22,6 +22,8 @@ export default function Login() {
 
       if (resposta.ok && dados.sucesso) {
         // Guarda a sessão básica no navegador
+        console.log("Deu certo");
+        console.log(JSON.stringify(dados.admin));
         localStorage.setItem('adminLogado', JSON.stringify(dados.admin));
         navigate('/admin');
       } else {
