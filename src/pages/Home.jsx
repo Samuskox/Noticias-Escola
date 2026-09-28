@@ -1,14 +1,40 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
 import NoticiaCard from '../components/NoticiaCard';
 
 // Exemplo de lista de notícias (depois pode vir de uma API ou LocalStorage)
-const listaNoticias = [
-  { id: '1', titulo: 'Feira de Ciências foi um sucesso', resumo: 'Confira as fotos dos projetos...' },
-  { id: '2', titulo: 'Vídeo da final do campeonato de futsal', resumo: 'Veja os melhores momentos...' }
-];
+// const listaNoticias = [
+//   { id: '1', titulo: 'Feira de Ciências foi um sucesso', resumo: 'Confira as fotos dos projetos...' },
+//   { id: '2', titulo: 'Vídeo da final do campeonato de futsal', resumo: 'Veja os melhores momentos...' }
+// ];
 
 export default function Home() {
+
+    const [listaNoticias, setListaNoticias] = useState([]);
+    const [carregando, setCarregando] = useState(true);
+
+  // Busca os dados da API ao carregar o componente
+  useEffect(() => {
+    const buscarNoticiasDoBanco = async () => {
+      try {
+        const resposta = await fetch('http://localhost:3001/api/noticias');
+        if (resposta.ok) {
+          const dados = await resposta.json();
+          setListaNoticias(dados); // Salva as notícias vindas do banco no estado
+        } else {
+          console.error('Erro ao buscar notícias da API');
+        }
+      } catch (erro) {
+        console.error('Não foi possível conectar ao servidor backend:', erro);
+      } finally {
+        setCarregando(false);
+      }
+    };
+
+    buscarNoticiasDoBanco();
+  }, []);
+
+
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
       {/* Cabeçalho pedido pelo professor */}
@@ -33,9 +59,9 @@ export default function Home() {
       {/* Lista de notícias */}
        <section>
         <h2>Últimas Notícias</h2>
-        {listaNoticias.map((item) => (
+        {!carregando && listaNoticias.map((item) => (
           // 2. Aqui você chama o componente passando o objeto 'item' como prop
-          <NoticiaCard key={item.id} noticia={item} />
+          <NoticiaCard key={item} noticia={item} />
         ))}
       </section>
     </div>

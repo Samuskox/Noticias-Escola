@@ -1,48 +1,60 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Admin() {
-  // Estados para armazenar os dados do formulário
+
   const [titulo, setTitulo] = useState('');
   const [resumo, setResumo] = useState('');
   const [conteudo, setConteudo] = useState('');
   const [videoUrl, setVideoUrl] = useState('');
   const [imagens, setImagens] = useState([]);
+  const navigate = useNavigate();
 
-  // Função disparada ao clicar em "Postar Notícia"
-  const handleSubmeter = (e) => {
-    e.preventDefault(); // Evita que a página recarregue
+    const handleSubmeter = async (e) => {
+    e.preventDefault(); 
 
     const admin = JSON.parse(localStorage.getItem('adminLogado'));
     const idAdmin = admin?.ID_ADMIN || 1;
 
     const listaNomesImagens = Array.from(imagens).map(arquivo => `uploads/${arquivo.name}`);
 
-    // Gera a data e hora automaticamente no formato local (BR)
-    const dataPostagem = new Date().toLocaleString('pt-BR');
-
-    // Objeto final pronto para enviar para uma API ou salvar no LocalStorage
+    // Objeto ajustado com as chaves exatas que a rota do Node.js espera
     const novaNoticia = {
-      id: Date.now().toString(), // Gera um ID único simples baseado no tempo
       titulo,
       resumo,
       conteudo,
-      videoUrl,
-      imagens_multiplas: listaNomesImagens, // Converte a lista de arquivos para Array
-      data: dataPostagem
+      url_video: videoUrl,
+      id_admin: idAdmin, // IMPORTANTE: enviando o ID do admin para o banco
+      imagens_multiplas: listaNomesImagens
     };
 
-    console.log('Notícia criada com sucesso:', novaNoticia);
-    alert('Notícia postada com sucesso! Verifique o console.');
+    try {
+      // Faz o envio real para o seu backend Node.js
+      const resposta = await fetch('http://localhost:3001/api/noticia', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(novaNoticia),
+      });
 
-    // Limpa o formulário após o envio
-    setTitulo('');
-    setResumo('');
-    setConteudo('');
-    setVideoUrl('');
-    setImagens([]);
-    e.target.reset(); // Reseta o campo de upload de arquivos visualmente
+      const dados = await resposta.json();
+
+      if (resposta.ok && dados.sucesso) {
+        alert('🚀 Notícia postada com sucesso no banco de dados!');
+        
+        // Limpa o formulário após o envio com sucesso
+        setTitulo('');
+        setResumo('');
+        setConteudo('');
+        setVideoUrl('');
+        setImagens([]);
+        e.target.reset(); 
+      } else {
+        alert('Erro ao salvar no banco: ' + (dados.erro || 'Erro desconhecido'));
+      }
+    } catch (error) {
+      alert('Não foi possível conectar ao servidor backend. Verifique se o Node está rodando na porta 3001.');
+    }
   };
-
   return (
     <div style={{ maxWidth: '600px', margin: '40px auto', padding: '20px', fontFamily: 'sans-serif' }}>
       <h1 style={{ borderBottom: '2px solid #333', paddingBottom: '10px', marginBottom: '20px' }}>
@@ -51,13 +63,13 @@ export default function Admin() {
       <p style={{ color: '#666', marginBottom: '20px' }}>Preencha os campos abaixo para publicar uma nova notícia.</p>
 
       <form onSubmit={handleSubmeter} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        
+
         {/* Campo: Título */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
           <label style={{ fontWeight: 'bold' }}>Título da Notícia:</label>
-          <input 
-            type="text" 
-            required 
+          <input
+            type="text"
+            required
             value={titulo}
             onChange={(e) => setTitulo(e.target.value)}
             placeholder="Ex: Grande vitória no campeonato de xadrez"
@@ -68,9 +80,9 @@ export default function Admin() {
         {/* Campo: Resumo */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
           <label style={{ fontWeight: 'bold' }}>Resumo (Aparece no Card):</label>
-          <input 
-            type="text" 
-            required 
+          <input
+            type="text"
+            required
             value={resumo}
             onChange={(e) => setResumo(e.target.value)}
             placeholder="Ex: Alunos do 9º ano conquistam o primeiro lugar..."
@@ -81,8 +93,8 @@ export default function Admin() {
         {/* Campo: Conteúdo Completo */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
           <label style={{ fontWeight: 'bold' }}>Conteúdo da Matéria:</label>
-          <textarea 
-            required 
+          <textarea
+            required
             rows="6"
             value={conteudo}
             onChange={(e) => setConteudo(e.target.value)}
@@ -94,9 +106,9 @@ export default function Admin() {
         {/* Campo: Imagens (Múltiplas) */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
           <label style={{ fontWeight: 'bold' }}>Imagens da Notícia (Selecione 1 ou mais):</label>
-          <input 
-            type="file" 
-            multiple 
+          <input
+            type="file"
+            multiple
             accept="image/*"
             onChange={(e) => setImagens(e.target.files)}
             style={{ padding: '6px 0' }}
@@ -106,8 +118,8 @@ export default function Admin() {
         {/* Campo: URL do Vídeo (Apenas 1) */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
           <label style={{ fontWeight: 'bold' }}>URL do Vídeo (YouTube, Drive, etc.):</label>
-          <input 
-            type="url" 
+          <input
+            type="url"
             value={videoUrl}
             onChange={(e) => setVideoUrl(e.target.value)}
             placeholder="Ex: https://youtube.com..."
@@ -116,16 +128,16 @@ export default function Admin() {
         </div>
 
         {/* Botão de Envio */}
-        <button 
-          type="submit" 
-          style={{ 
-            background: '#007bff', 
-            color: 'white', 
-            padding: '12px', 
-            border: 'none', 
-            borderRadius: '6px', 
-            fontSize: '16px', 
-            fontWeight: 'bold', 
+        <button
+          type="submit"
+          style={{
+            background: '#007bff',
+            color: 'white',
+            padding: '12px',
+            border: 'none',
+            borderRadius: '6px',
+            fontSize: '16px',
+            fontWeight: 'bold',
             cursor: 'pointer',
             marginTop: '10px'
           }}
