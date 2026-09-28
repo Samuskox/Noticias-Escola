@@ -3,10 +3,12 @@ import cors from 'cors';
 import Database from 'better-sqlite3';
 
 const app = express();
+
 const db = new Database('fisico.db');
 
 app.use(cors());
 app.use(express.json());
+app.use('/uploads', express.static('uploads')); 
 
 db.exec(`
 CREATE TABLE IF NOT EXISTS "ADMINISTRADOR" (

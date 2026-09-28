@@ -2,7 +2,9 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 export default function Noticia() {
- const { item: id } = useParams(); 
+  const parametros = useParams();
+  console.log("Parâmetros da URL:", parametros);
+ const { id } = useParams(); 
 
   const [noticia, setNoticia] = useState(null);
   const [carregando, setCarregando] = useState(true);
