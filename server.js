@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import Database from 'better-sqlite3';
+import multer from 'multer';
+import path from 'path';
 
 const app = express();
 
@@ -9,6 +11,18 @@ const db = new Database('fisico.db');
 app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static('uploads')); 
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // Garanta que a pasta 'uploads' existe na raiz do backend
+  },
+  filename: (req, file, cb) => {
+    const nomeUnico = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, nomeUnico + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage });
 
 db.exec(`
 CREATE TABLE IF NOT EXISTS "ADMINISTRADOR" (
@@ -61,8 +75,10 @@ app.post('/api/login', (req, res) => {
 });
 
 // 2. Rota de Criar Notícia
-app.post('/api/noticia', (req, res) => {
-  const { titulo, resumo, conteudo, url_video, id_admin, imagens_multiplas } = req.body;
+app.post('/api/noticia', upload.array('imagens_multiplas'), (req, res) => {
+  const {titulo, resumo, conteudo, url_video, id_admin} = req.body;
+
+   const arquivos = req.files;
 
   const criarNoticiaCompleta = db.transaction(() => {
     const stmt = db.prepare(`
@@ -73,15 +89,16 @@ app.post('/api/noticia', (req, res) => {
     const infoNoticia = stmt.run(titulo, resumo, conteudo, url_video || null, id_admin);
     const idNoticia = infoNoticia.lastInsertRowid;
 
-    if (imagens_multiplas && Array.isArray(imagens_multiplas)) {
+    if (arquivos && arquivos.length > 0) {
       const stmtImg = db.prepare(`INSERT INTO IMAGENS (CAMINHO_IMG) VALUES (?)`);
       const stmtVinculo = db.prepare(`
         INSERT INTO NOTICIA_IMG_TEM (FK_NOTICIAS_ID_NOTICIAS, FK_IMAGENS_ID_IMG)
         VALUES (?, ?)
       `);
 
-      for (const caminho of imagens_multiplas) {
-        const infoImg = stmtImg.run(caminho);
+      for (const file of arquivos) {
+        const caminhoRelativo = `uploads/${file.filename}`;
+        const infoImg = stmtImg.run(caminhoRelativo);
         const idImagem = infoImg.lastInsertRowid;
         stmtVinculo.run(idNoticia, idImagem);
       }

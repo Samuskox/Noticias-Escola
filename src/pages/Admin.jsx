@@ -16,24 +16,23 @@ export default function Admin() {
     const admin = JSON.parse(localStorage.getItem('adminLogado'));
     const idAdmin = admin?.ID_ADMIN || 1;
 
-    const listaNomesImagens = Array.from(imagens).map(arquivo => `uploads/${arquivo.name}`);
+    const formData = new FormData();
 
-    // Objeto ajustado com as chaves exatas que a rota do Node.js espera
-    const novaNoticia = {
-      titulo,
-      resumo,
-      conteudo,
-      url_video: videoUrl,
-      id_admin: idAdmin, // IMPORTANTE: enviando o ID do admin para o banco
-      imagens_multiplas: listaNomesImagens
-    };
+    formData.append('titulo', titulo);
+    formData.append('resumo', resumo);
+    formData.append('conteudo', conteudo);
+    formData.append('url_video', videoUrl);
+    formData.append('id_admin', idAdmin);
+
+    for(let i = 0; i< imagens.length; i++){
+      formData.append('imagens_multiplas', imagens[i]);
+    }
 
     try {
       // Faz o envio real para o seu backend Node.js
       const resposta = await fetch('http://localhost:3001/api/noticia', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(novaNoticia),
+        body: formData,
       });
 
       const dados = await resposta.json();
