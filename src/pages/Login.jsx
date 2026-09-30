@@ -1,36 +1,50 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { db } from '../firebaseconfig';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+
 export default function Login() {
   const [usuario, setUsuario] = useState('');
   const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');
+  const [carregando, setCarregando] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setErro('');
+    setCarregando(true)
 
     try {
-      const resposta = await fetch('http://localhost:3001/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ usuario, senha }),
-      });
+      const queryFirebase = query(
+        collection(db, 'administradores'),
+        where('usuario', '==', usuario.trim()),
+        where('senha','==', senha.trim())
+    );
 
-      const dados = await resposta.json();
+    const querySnapshot = await getDocs(queryFirebase);
 
-      if (resposta.ok && dados.sucesso) {
-        // Guarda a sessão básica no navegador
-        console.log("Deu certo");
-        console.log(JSON.stringify(dados.admin));
-        localStorage.setItem('adminLogado', JSON.stringify(dados.admin));
-        navigate('/admin');
-      } else {
-        setErro(dados.mensagem || 'Erro ao autenticar');
-      }
+    if(!querySnapshot.empty){
+      const docAdmin = querySnapshot.docs[0];
+      const dadosAdmin = docAdmin.data();
+
+      const usuarioSessao = {
+        ID_ADMIN: docAdmin.id,
+        NOME_ADMINISTRADOR: dadosAdmin.usuario
+      };
+
+      localStorage.setItem('adminLogado', JSON.stringify(usuarioSessao));
+      navigate('/admin')
+    }
+    else{
+      setErro('Usúario ou senha inválidos');
+    }
     } catch (err) {
+      console.error("Erro ao autenticar com firebase: ", err);
       setErro('Não foi possível conectar ao servidor.');
+    } finally{
+      setCarregando(false);
     }
   };
 
@@ -60,7 +74,7 @@ export default function Login() {
           />
         </div>
         <button type="submit" style={{ padding: '10px', cursor: 'pointer', background: '#007bff', color: '#fff', border: 'none', borderRadius: '4px' }}>
-          Entrar
+          {carregando ? 'Autenticando...' : 'Entrar'}
         </button>
       </form>
     </div>

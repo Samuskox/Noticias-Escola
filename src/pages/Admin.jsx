@@ -1,5 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+
+import { db, storage } from '../firebaseconfig'; 
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 export default function Admin() {
 
@@ -8,13 +13,73 @@ export default function Admin() {
   const [conteudo, setConteudo] = useState('');
   const [videoUrl, setVideoUrl] = useState('');
   const [imagens, setImagens] = useState([]);
+  const [carregando, setCarregando] = useState(false);
   const navigate = useNavigate();
 
-    const handleSubmeter = async (e) => {
-    e.preventDefault(); 
 
-    const admin = JSON.parse(localStorage.getItem('adminLogado'));
-    const idAdmin = admin?.ID_ADMIN || 1;
+  useEffect(() => {
+    const adminLogado = localStorage.getItem('adminLogado');
+
+    if(!adminLogado){
+      navigate('/login');
+    }
+  }, [navigate]);
+
+    const handleSubmeter = async (e) => {
+    e.preventDefault();
+    setCarregando(true);
+    
+    try {
+      const admin = JSON.parse(localStorage.getItem('adminLogado'));
+      const idAdmin = admin?.ID_ADMIN || 1;
+
+      const listaUrlsImagens = [];
+
+
+      if(imagens && imagens.length > 0){
+        for(let i = 0; i < imagens.length; i++){
+          const arquivo = imagens[i];
+
+          const nomeArquivoRef = `noticias/${Date.now()}-${arquivo.name}`;
+          const storageRef = ref(storage, nomeArquivoRef);
+
+          const uploadResult = await uploadBytes(storageRef, arquivo);
+
+          const urlPublica = await getDownloadURL(uploadResult.ref);
+          listaUrlsImagens.push(urlPublica);
+        }
+      }
+
+
+      const novaNoticia = {
+        titulo,
+        resumo,
+        conteudo,
+        videoUrl: videoUrl || null,
+        id_admin: idAdmin,
+        imagens: listaUrlsImagens,
+        data: serverTimestamp()
+      };
+
+      await addDoc(collection(db,"noticias"), novaNoticia);
+
+      alert('Notícia e fotos publicadas com sucesso na nuvem do Firebase!');
+      setTitulo('');
+      setResumo('');
+      setConteudo('');
+      setVideoUrl('');
+      setImagens([]);
+      e.target.reset();
+      
+    } catch (error) {
+      console.error("Erro ao publicar a notícia: ", error);
+      alert('Erro ao salvar no banco de dados');
+      
+    } finally{
+
+    }
+
+
 
     const formData = new FormData();
 
