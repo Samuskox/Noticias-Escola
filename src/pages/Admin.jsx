@@ -31,38 +31,41 @@ export default function Admin() {
       const idAdmin = admin?.ID_ADMIN || 1;
 
       const listaUrlsImagens = [];
-
+       console.log("Ta entrando aqui:::");
 
       if(imagens && imagens.length > 0){
         for(let i = 0; i < imagens.length; i++){
           const arquivo = imagens[i];
 
-          const nomeArquivoRef = `noticias/${Date.now()}-${arquivo.name}`;
-          const storageRef = ref(storage, nomeArquivoRef);
+          const nomeArquivo = `${Date.now()}-${arquivo.name}`;
+          
+          const  {data: uploadData, error: uploadError } = await supabase.storage.from('noticias-imagens').upload(nomeArquivo, arquivo);
 
-          const metadata = {
-            contentType: arquivo.type
-          };
+          if(uploadError) throw uploadError;
 
-          const uploadResult = await uploadBytes(storageRef, arquivo, metadata);
-
-          const urlPublica = await getDownloadURL(uploadResult.ref);
-          listaUrlsImagens.push(urlPublica);
+          const { data: urlData } = supabase.storage
+            .from('noticias-imagens')
+            .getPublicUrl(nomeArquivo);
+         
+          listaUrlsImagens.push(urlData.publicUrl);
         }
       }
 
 
-      const novaNoticia = {
-        titulo,
-        resumo,
-        conteudo,
-        videoUrl: videoUrl || null,
-        id_admin: idAdmin,
-        imagens: listaUrlsImagens,
-        data: serverTimestamp()
-      };
+      const { error: insertError } = await supabase
+        .from('NOTICIAS')
+        .insert([
+          {
+            TITULO: titulo,
+            RESUMO: resumo,
+            CONTEUDO: conteudo,
+            URL_VIDEO: videoUrl || null,
+            FK_ADMINISTRADOR_ID_ADMIN: idAdmin,
+            IMAGENS: listaUrlsImagens
+          }
+        ]);
 
-      await addDoc(collection(db,"noticias"), novaNoticia);
+      if (insertError) throw insertError;
 
       alert('Notícia e fotos publicadas com sucesso na nuvem do Firebase!');
       setTitulo('');
