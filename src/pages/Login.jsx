@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '../supabaseclient';
 
 
 export default function Login() {
@@ -15,24 +16,19 @@ export default function Login() {
     setCarregando(true)
 
     try {
-      const queryFirebase = query(
-        collection(db, 'administradores'),
-        where('usuario', '==', usuario.trim()),
-        where('senha','==', senha.trim())
-    );
+    const {data, error} = await supabase
+    .from('ADMINISTRADOR')
+    .select('ID_ADMIN, NOME_ADMINISTRADOR')
+    .eq('NOME_ADMINISTRADOR', usuario.trim())
+    .eq('SENHA_ADMINISTRADOR', senha.trim());
 
-    const querySnapshot = await getDocs(queryFirebase);
+    if (error) throw error;
 
-    if(!querySnapshot.empty){
-      const docAdmin = querySnapshot.docs[0];
-      const dadosAdmin = docAdmin.data();
 
-      const usuarioSessao = {
-        ID_ADMIN: docAdmin.id,
-        NOME_ADMINISTRADOR: dadosAdmin.usuario
-      };
+    if(data && data.length > 0){
+      const adminLogado = data[0];
 
-      localStorage.setItem('adminLogado', JSON.stringify(usuarioSessao));
+      localStorage.setItem('adminLogado', JSON.stringify(adminLogado));
       navigate('/admin')
     }
     else{
