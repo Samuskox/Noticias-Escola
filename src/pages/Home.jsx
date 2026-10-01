@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NoticiaCard from '../components/NoticiaCard';
+import { supabase } from '../supabaseClient';
 
 // Exemplo de lista de notícias (depois pode vir de uma API ou LocalStorage)
 // const listaNoticias = [
@@ -10,20 +11,31 @@ import NoticiaCard from '../components/NoticiaCard';
 
 export default function Home() {
 
-    const [listaNoticias, setListaNoticias] = useState([]);
-    const [carregando, setCarregando] = useState(true);
+  const [listaNoticias, setListaNoticias] = useState([]);
+  const [carregando, setCarregando] = useState(true);
 
   // Busca os dados da API ao carregar o componente
   useEffect(() => {
     const buscarNoticiasDoBanco = async () => {
       try {
-        const resposta = await fetch('http://localhost:3001/api/noticias');
-        if (resposta.ok) {
-          const dados = await resposta.json();
-          setListaNoticias(dados); // Salva as notícias vindas do banco no estado
-        } else {
-          console.error('Erro ao buscar notícias da API');
-        }
+        const { data, error } = await supabase.from('NOTICIAS').select('*').order('DATA', { ascending: false });
+
+        if (error) throw error;
+
+        const noticiasFormatadas = data.map((item) => ({
+          id: item.ID_NOTICIAS.toString(), // Converte o ID numérico SERIAL para String
+          titulo: item.TITULO,
+          resumo: item.RESUMO,
+          conteudo: item.CONTEUDO,
+          videoUrl: item.URL_VIDEO,
+          imagens: item.IMAGENS || [], // Se for null, vira um array vazio []
+          data: item.DATA
+        }));
+
+        console.log(noticiasFormatadas)
+
+        setListaNoticias(noticiasFormatadas);
+
       } catch (erro) {
         console.error('Não foi possível conectar ao servidor backend:', erro);
       } finally {
@@ -57,12 +69,18 @@ export default function Home() {
       </section>
 
       {/* Lista de notícias */}
-       <section>
-        <h2>Últimas Notícias</h2>
-        {!carregando && listaNoticias.map((item) => (
-          // 2. Aqui você chama o componente passando o objeto 'item' como prop
-          <NoticiaCard key={item} noticia={item} />
+      <section>
+        {carregando && <p style={{ color: '#666' }}>Carregando matérias recentes da nuvem...</p>}
+
+        {!carregando && listaNoticias.length === 0 && (
+          <p style={{ color: '#777' }}>Nenhuma notícia publicada ainda no mural.</p>
+        )}
+
+        {/* Ajustado: Usando item.id na key em vez do índice 'i' */}
+        {!carregando && listaNoticias.slice(0, 2).map((item) => (
+          <NoticiaCard key={item.id} noticia={item} />
         ))}
+
       </section>
     </div>
   );
