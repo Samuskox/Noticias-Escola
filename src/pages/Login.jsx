@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { db } from '../firebaseconfig';
-import { collection, query, where, getDocs } from 'firebase/firestore';
 
 export default function Login() {
   const [usuario, setUsuario] = useState('');

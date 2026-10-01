@@ -2,10 +2,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-import { db, storage } from '../firebaseconfig'; 
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-
 export default function Admin() {
 
   const [titulo, setTitulo] = useState('');
@@ -43,7 +39,11 @@ export default function Admin() {
           const nomeArquivoRef = `noticias/${Date.now()}-${arquivo.name}`;
           const storageRef = ref(storage, nomeArquivoRef);
 
-          const uploadResult = await uploadBytes(storageRef, arquivo);
+          const metadata = {
+            contentType: arquivo.type
+          };
+
+          const uploadResult = await uploadBytes(storageRef, arquivo, metadata);
 
           const urlPublica = await getDownloadURL(uploadResult.ref);
           listaUrlsImagens.push(urlPublica);
@@ -76,47 +76,7 @@ export default function Admin() {
       alert('Erro ao salvar no banco de dados');
       
     } finally{
-
-    }
-
-
-
-    const formData = new FormData();
-
-    formData.append('titulo', titulo);
-    formData.append('resumo', resumo);
-    formData.append('conteudo', conteudo);
-    formData.append('url_video', videoUrl);
-    formData.append('id_admin', idAdmin);
-
-    for(let i = 0; i< imagens.length; i++){
-      formData.append('imagens_multiplas', imagens[i]);
-    }
-
-    try {
-      // Faz o envio real para o seu backend Node.js
-      const resposta = await fetch('http://localhost:3001/api/noticia', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const dados = await resposta.json();
-
-      if (resposta.ok && dados.sucesso) {
-        alert('🚀 Notícia postada com sucesso no banco de dados!');
-        
-        // Limpa o formulário após o envio com sucesso
-        setTitulo('');
-        setResumo('');
-        setConteudo('');
-        setVideoUrl('');
-        setImagens([]);
-        e.target.reset(); 
-      } else {
-        alert('Erro ao salvar no banco: ' + (dados.erro || 'Erro desconhecido'));
-      }
-    } catch (error) {
-      alert('Não foi possível conectar ao servidor backend. Verifique se o Node está rodando na porta 3001.');
+      setCarregando(false);
     }
   };
   return (
@@ -206,7 +166,7 @@ export default function Admin() {
             marginTop: '10px'
           }}
         >
-          🚀 Postar Notícia
+          {carregando ? 'Postando Noticia....' : 'Postar Noticia'}
         </button>
 
       </form>
