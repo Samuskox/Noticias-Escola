@@ -27,6 +27,7 @@ export default function Home() {
           titulo: item.TITULO,
           resumo: item.RESUMO,
           conteudo: item.CONTEUDO,
+          autores: item.AUTORES,
           videoUrl: item.URL_VIDEO,
           imagens: item.IMAGENS || [], // Se for null, vira um array vazio []
           data: item.DATA
@@ -77,7 +78,7 @@ export default function Home() {
         )}
 
         {/* Ajustado: Usando item.id na key em vez do índice 'i' */}
-        {!carregando && listaNoticias.slice(0, 2).map((item) => (
+        {!carregando && listaNoticias.slice(0, 3).map((item) => (
           <NoticiaCard key={item.id} noticia={item} />
         ))}
 

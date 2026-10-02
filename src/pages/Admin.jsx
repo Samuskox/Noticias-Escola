@@ -8,6 +8,7 @@ export default function Admin() {
   const [titulo, setTitulo] = useState('');
   const [resumo, setResumo] = useState('');
   const [conteudo, setConteudo] = useState('');
+  const [autores, setAutores] = useState('');
   const [videoUrl, setVideoUrl] = useState('');
   const [imagens, setImagens] = useState([]);
   const [carregando, setCarregando] = useState(false);
@@ -31,7 +32,6 @@ export default function Admin() {
       const idAdmin = admin?.ID_ADMIN || 1;
 
       const listaUrlsImagens = [];
-       console.log("Ta entrando aqui:::");
 
       if(imagens && imagens.length > 0){
         for(let i = 0; i < imagens.length; i++){
@@ -59,6 +59,7 @@ export default function Admin() {
             TITULO: titulo,
             RESUMO: resumo,
             CONTEUDO: conteudo,
+            AUTORES: autores || 'Redação',
             URL_VIDEO: videoUrl || null,
             FK_ADMINISTRADOR_ID_ADMIN: idAdmin,
             IMAGENS: listaUrlsImagens
@@ -67,7 +68,7 @@ export default function Admin() {
 
       if (insertError) throw insertError;
 
-      alert('Notícia e fotos publicadas com sucesso na nuvem do Firebase!');
+      alert('Notícia e fotos publicadas com sucesso!');
       setTitulo('');
       setResumo('');
       setConteudo('');
@@ -129,6 +130,13 @@ export default function Admin() {
             placeholder="Escreva a notícia completa aqui..."
             style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ccc', resize: 'vertical' }}
           />
+        </div>
+
+        <div>
+          <label style={{ fontWeight: 'bold' }}>Autor / Alunos Redatores:</label>
+          <input type="text"
+           placeholder="Ex: Aluno 1 e Aluno 2"
+            value={autores} onChange={(e) => setAutores(e.target.value)} style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc', boxSizing: 'border-box' }} />
         </div>
 
         {/* Campo: Imagens (Múltiplas) */}

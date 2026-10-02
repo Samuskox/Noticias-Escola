@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { supabase } from '../supabaseClient';
 
 export default function Noticia() {
   const parametros = useParams();
@@ -11,14 +12,26 @@ export default function Noticia() {
 
   useEffect(() => {
     const buscarNoticiaUnica = async () => {
+      if(!id) return;
       try {
-        const resposta = await fetch(`http://localhost:3001/api/noticias/${id}`);
-        if (resposta.ok) {
-          const dados = await resposta.json();
-          setNoticia(dados);
-        } else {
-          console.error('Erro ao buscar a matéria');
-        }
+       const {data, error} = await supabase
+       .from('NOTICIAS')
+       .select('*')
+       .eq('ID_NOTICIAS', id)
+       .single();
+
+       if(error) throw error;
+
+       setNoticia({
+        id: data.ID_NOTICIAS.toString(),
+        titulo: data.TITULO,
+        resumo: data.RESUMO,
+        conteudo: data.CONTEUDO,
+        autores: data.AUTORES,
+        videoUrl: data.URL_VIDEO,
+        imagens: data.IMAGENS || [],
+        data: data.DATA
+       });
       } catch (erro) {
         console.error('Erro na conexão com o servidor:', erro);
       } finally {
@@ -36,27 +49,26 @@ export default function Noticia() {
       <header style={{ marginBottom: '20px' }}>
         <h1 style={{ fontSize: '2.2rem', marginBottom: '8px' }}>{noticia.titulo}</h1>
         <p style={{ color: '#666', fontSize: '0.9rem' }}>
-          Por <strong>{noticia.autor}</strong> em {new Date(noticia.data).toLocaleDateString('pt-BR')}
+          Por <strong>{noticia.autores}</strong> em {new Date(noticia.data).toLocaleDateString('pt-BR')}
         </p>
         <p style={{ fontSize: '1.1rem', color: '#444', fontStyle: 'italic', marginTop: '12px' }}>{noticia.resumo}</p>
       </header>
 
-      {/* Renderiza todas as imagens vinculadas se existirem */}
       {noticia.imagens && noticia.imagens.length > 0 && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', margin: '20px 0' }}>
-          {noticia.imagens.map((caminho, index) => (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', margin: '24px 0' }}>
+          {noticia.imagens.map((url, index) => (
             <img 
               key={index}
-              src={caminho.startsWith('http') ? caminho : `http://localhost:3001/${caminho}`} 
-              alt={`Foto ${index + 1} da matéria`} 
-              style={{ width: '100%', borderRadius: '8px', objectFit: 'cover' }} 
+              src={url} 
+              alt={`Mídia ${index + 1} da matéria`} 
+              style={{ width: '100%', borderRadius: '8px', objectFit: 'cover', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }} 
             />
           ))}
         </div>
       )}
 
       {/* Conteúdo em texto da matéria */}
-      <div style={{ lineHeight: '1.6', fontSize: '1.1rem', color: '#222', whiteSpace: 'pre-line' }}>
+      <div style={{ lineHeight: '1.6', fontSize: '1.1rem', color: '#222', whiteSpace: 'pre-line', marginBottom: '40px', textAlign:'left' }}>
         {noticia.conteudo}
       </div>
 
