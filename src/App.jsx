@@ -8,7 +8,8 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import News from './pages/Noticia';
 import Admin from './pages/Admin';
-import Login from './pages/Login'
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
 
 import './App.css'
 
@@ -29,6 +30,7 @@ function App() {
       <Route path="/colaboradores" element={<Colaboradores />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="/login" element={<Login/>} />
+      <Route path="/dashboard" element={<Dashboard/>} />
 
      </Routes>
     

@@ -29,7 +29,7 @@ export default function Login() {
       const adminLogado = data[0];
 
       localStorage.setItem('adminLogado', JSON.stringify(adminLogado));
-      navigate('/admin')
+      navigate('/Dashboard')
     }
     else{
       setErro('Usúario ou senha inválidos');
