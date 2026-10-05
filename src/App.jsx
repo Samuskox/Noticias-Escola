@@ -10,6 +10,7 @@ import News from './pages/Noticia';
 import Admin from './pages/Admin';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Mural from './pages/GerenciarMural';
 
 import './App.css'
 
@@ -31,6 +32,7 @@ function App() {
       <Route path="/admin" element={<Admin />} />
       <Route path="/login" element={<Login/>} />
       <Route path="/dashboard" element={<Dashboard/>} />
+      <Route path="/mural" element={<Mural/>}/>
 
      </Routes>
     

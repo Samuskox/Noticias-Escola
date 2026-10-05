@@ -36,6 +36,11 @@ export default function Dashboard() {
         <Link to="/" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', background: '#6c757d', color: 'white', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.1rem', textAlign: 'center', boxShadow: '0 2px 6px rgba(0,0,0,0.1)' }}>
           Ver o Site (Home)
         </Link>
+
+        <Link to="/mural" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', background: '#6c757d', color: 'white', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.1rem', textAlign: 'center', boxShadow: '0 2px 6px rgba(0,0,0,0.1)' }}>
+          Gerenciar Mural
+        </Link>
+
       </div>
     </div>
   );

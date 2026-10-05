@@ -12,6 +12,7 @@ import { supabase } from '../supabaseClient';
 export default function Home() {
 
   const [listaNoticias, setListaNoticias] = useState([]);
+  const [muralBlocos, setMuralBlocos] = useState([]);
   const [carregando, setCarregando] = useState(true);
 
   // Busca os dados da API ao carregar o componente
@@ -32,6 +33,16 @@ export default function Home() {
           imagens: item.IMAGENS || [], // Se for null, vira um array vazio []
           data: item.DATA
         }));
+
+        const { data: muralData } = await supabase
+          .from('MURAL_HOME')
+          .select('*')
+          .order('ORDEM', { ascending: true })
+          .order('DATA_CRIACAO', { ascending: true });
+
+        if (muralData) {
+          setMuralBlocos(muralData);
+        }
 
         console.log(noticiasFormatadas)
 
@@ -58,15 +69,29 @@ export default function Home() {
       </header>
 
       {/* Destaques rápidos */}
-      <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '24px' }}>
-        <div style={{ background: '#f5f5f5', padding: '12px', borderRadius: '8px' }}>
-          <h3>🍱 Almoço do Dia</h3>
-          <p>Arroz, feijão, frango grelhado e salada tropical.</p>
-        </div>
-        <div style={{ background: '#f5f5f5', padding: '12px', borderRadius: '8px' }}>
-          <h3>💡 Curiosidade da Semana</h3>
-          <p>Você sabia que a biblioteca da nossa escola tem mais de 3.000 livros?</p>
-        </div>
+      <section style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', // Se adapta de forma bonita se tiver 1, 2, 3 ou mais blocos
+        gap: '16px',
+        marginBottom: '32px'
+      }}>
+        {muralBlocos.map((bloco) => (
+          <div
+            key={bloco.ID}
+            style={{
+              background: '#f8f9fa',
+              padding: '16px',
+              borderRadius: '10px',
+              border: '1px solid #e9ecef',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
+            }}
+          >
+            <h3 style={{ margin: '0 0 8px 0', fontSize: '1.15rem', color: '#222' }}>{bloco.TITULO}</h3>
+            <p style={{ margin: 0, fontSize: '0.95rem', color: '#444', lineHeight: '1.4', whiteSpace: 'pre-line' }}>
+              {bloco.CONTEUDO}
+            </p>
+          </div>
+        ))}
       </section>
 
       {/* Lista de notícias */}
