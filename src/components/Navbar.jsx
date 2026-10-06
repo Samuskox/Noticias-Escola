@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import Home from '../pages/Home';
+import iconeHamburguer from '../assets/hamburgueMenu.png';
 
 export default function Navbar() {
   const [aberto, setAberto] = useState(false);
@@ -17,7 +18,7 @@ export default function Navbar() {
           onClick={() => setAberto(!aberto)} 
           style={{ fontSize: '20px', cursor: 'pointer', background: 'none', border: 'none' }}
         >
-            <img src="src\assets\hamburgueMenu.png" alt="" width="50" />
+            <img src={iconeHamburguer} alt="" width="50" />
         </button>
       </div>
 
@@ -28,6 +29,7 @@ export default function Navbar() {
           <Link to="/sobre" onClick={() => setAberto(false)}>Sobre nós</Link>
           <Link to="/escola" onClick={() => setAberto(false)}>Nossa escola</Link>
           <Link to="/colaboradores" onClick={() => setAberto(false)}>Todos os colaboradores</Link>
+          <Link to="/todasNoticias" onClick={() => setAberto(false) }>Todas as Notícias</Link>
           <hr />
           <Link to="/login" onClick={() => setAberto(false)}>Área de Postagem (Admin)</Link>
         </div>

@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import NoticiaCard from '../components/NoticiaCard';
 import { supabase } from '../supabaseClient';
 
+import './Home.css';
+
 // Exemplo de lista de notícias (depois pode vir de uma API ou LocalStorage)
 // const listaNoticias = [
 //   { id: '1', titulo: 'Feira de Ciências foi um sucesso', resumo: 'Confira as fotos dos projetos...' },
@@ -60,54 +62,48 @@ export default function Home() {
 
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
-      {/* Cabeçalho pedido pelo professor */}
-      <header style={{ marginBottom: '24px', borderBottom: '2px solid #eee', paddingBottom: '12px' }}>
+
+    <div className="home-container">
+      
+      <header className="home-header">
         <h1>O Clarim da Escola</h1>
         <p><strong>Professor Orientador:</strong> Lucas Alaric Angelo</p>
         <p><strong>Redação: </strong>Aluno 1, Aluno 2, Aluno 3, Aluno 4 e Aluno 5</p>
       </header>
 
-      {/* Destaques rápidos */}
-      <section style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', // Se adapta de forma bonita se tiver 1, 2, 3 ou mais blocos
-        gap: '16px',
-        marginBottom: '32px'
-      }}>
+      {/* Seção dos blocos do mural */}
+      <section className="mural-grid">
         {muralBlocos.map((bloco) => (
-          <div
-            key={bloco.ID}
-            style={{
-              background: '#f8f9fa',
-              padding: '16px',
-              borderRadius: '10px',
-              border: '1px solid #e9ecef',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
-            }}
-          >
-            <h3 style={{ margin: '0 0 8px 0', fontSize: '1.15rem', color: '#222' }}>{bloco.TITULO}</h3>
-            <p style={{ margin: 0, fontSize: '0.95rem', color: '#444', lineHeight: '1.4', whiteSpace: 'pre-line' }}>
-              {bloco.CONTEUDO}
-            </p>
+          <div key={bloco.ID} className="mural-bloco">
+            <h3>{bloco.TITULO}</h3>
+            <p>{bloco.CONTEUDO}</p>
           </div>
         ))}
       </section>
 
-      {/* Lista de notícias */}
+      {/* Seção das notícias */}
       <section>
-        {carregando && <p style={{ color: '#666' }}>Carregando matérias recentes da nuvem...</p>}
-
+        <h2>Últimas Notícias</h2>
+        
+        {carregando && <p style={{ color: '#666' }}>Carregando matérias recentes...</p>}
+        
         {!carregando && listaNoticias.length === 0 && (
           <p style={{ color: '#777' }}>Nenhuma notícia publicada ainda no mural.</p>
         )}
 
-        {/* Ajustado: Usando item.id na key em vez do índice 'i' */}
-        {!carregando && listaNoticias.slice(0, 3).map((item) => (
+        {!carregando && listaNoticias.slice(0, 2).map((item) => (
           <NoticiaCard key={item.id} noticia={item} />
         ))}
-
       </section>
+
+      {/* Botão dinâmico para ver o acervo de todas as notícias */}
+      {!carregando && listaNoticias.length > 2 && (
+        <div className="botao-acervo-container">
+          <Link to="/todasNoticias" className="botao-acervo">
+            📚 Ver Todas as Notícias Antigas ({listaNoticias.length})
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

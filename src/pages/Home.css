@@ -1,0 +1,65 @@
+/* Home.css */
+
+.home-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: sans-serif;
+}
+
+.home-header {
+  margin-bottom: 24px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 12px;
+}
+
+.mural-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.mural-bloco {
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.mural-bloco h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.15rem;
+  color: #222;
+}
+
+.mural-bloco p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.4;
+  white-space: pre-line;
+}
+
+.botao-acervo-container {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.botao-acervo {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #f0f4f8;
+  color: #007bff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  border: 1px solid #d0e0f0;
+  transition: background 0.2s;
+}
+
+.botao-acervo:hover {
+  background: #e1ecf7;
+}
