@@ -67,7 +67,7 @@ export default function GerenciarMural() {
 
   return (
     <div style={{ maxWidth: '650px', margin: '40px auto', padding: '20px', fontFamily: 'sans-serif' }}>
-      <Link to="/painel" style={{ textDecoration: 'none', color: '#007bff', fontWeight: 'bold' }}>← Voltar ao Painel</Link>
+      <Link to="/Dashboard" style={{ textDecoration: 'none', color: '#007bff', fontWeight: 'bold' }}>← Voltar ao Painel</Link>
       
       <h2 style={{ borderBottom: '2px solid #333', paddingBottom: '10px', marginBottom: '20px', marginTop: '20px' }}>⚙️ Gerenciar Blocos do Mural</h2>
       
