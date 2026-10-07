@@ -16,6 +16,7 @@ export default function Home() {
   const [listaNoticias, setListaNoticias] = useState([]);
   const [muralBlocos, setMuralBlocos] = useState([]);
   const [carregando, setCarregando] = useState(true);
+  const [autoresMural, setAutoresMural] = useState('Carregando autores...');
 
   // Busca os dados da API ao carregar o componente
   useEffect(() => {
@@ -50,7 +51,7 @@ export default function Home() {
             data: item.DATA
           };
         });
-        
+
         const { data: muralData } = await supabase
           .from('MURAL_HOME')
           .select('*')
@@ -61,7 +62,17 @@ export default function Home() {
           setMuralBlocos(muralData);
         }
 
-        console.log(noticiasFormatadas)
+        const { data: autoresData } = await supabase
+          .from('AUTORES')
+          .select('NOME')
+          .order('NOME', { ascending: true });
+
+        if(autoresData && autoresData.length > 0){
+          const nomesFormatados = autoresData.map(auth => auth.NOME).join(', ');
+          setAutoresMural(nomesFormatados);
+        } else {
+          setAutoresMural('Redação Escolar');
+        }
 
         setListaNoticias(noticiasFormatadas);
 
@@ -83,7 +94,7 @@ export default function Home() {
       <header className="home-header">
         <h1>O Clarim da Escola</h1>
         <p><strong>Professor Orientador:</strong> Lucas Alaric Angelo</p>
-        <p><strong>Redação: </strong>Aluno 1, Aluno 2, Aluno 3, Aluno 4 e Aluno 5</p>
+        <p><strong>Redação: </strong>{autoresMural}</p>
       </header>
 
       {/* Seção dos blocos do mural */}

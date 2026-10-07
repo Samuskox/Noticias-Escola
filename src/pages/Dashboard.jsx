@@ -9,7 +9,11 @@ export default function Dashboard() {
 
   useEffect(() => {
     const adminLogado = localStorage.getItem('adminLogado');
-    if (!adminLogado) navigate('/login');
+    if(!adminLogado){
+      navigate('/login')
+    }else{
+      buscarNoticias(); 
+    } 
   }, [navigate]);
 
   const handleSair = () => {

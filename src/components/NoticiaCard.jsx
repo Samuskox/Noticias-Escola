@@ -58,7 +58,7 @@ export default function NoticiaCard({ noticia }) {
         
         {/* Metadados: Autor e Data */}
         <div style={{ display: 'flex', gap: '12px', fontSize: '0.85rem', color: '#757575', fontWeight: '500' }}>
-          <span>Escrito por: {noticia.autores}</span>
+          <span>Escrito por: {noticia.autor}</span>
           <span>-{dataFormatada}</span>
         </div>
 

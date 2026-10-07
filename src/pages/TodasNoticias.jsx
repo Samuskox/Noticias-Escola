@@ -13,21 +13,43 @@ export default function TodasNoticias() {
         // Busca TODAS as notícias do banco, da mais nova para a mais antiga
         const { data, error } = await supabase
           .from('NOTICIAS')
-          .select('*')
+          .select(`
+            ID_NOTICIAS,
+            TITULO,
+            RESUMO,
+            CONTEUDO,
+            URL_VIDEO,
+            IMAGENS,
+            DATA,
+            NOTICIA_AUTOR_TEM (
+              AUTORES ( NOME )
+            )
+            `)
           .order('DATA', { ascending: false });
 
         if (error) throw error;
 
-        const formatadas = data.map((item) => ({
-          id: item.ID_NOTICIAS.toString(),
-          titulo: item.TITULO,
-          resumo: item.RESUMO,
-          conteudo: item.CONTEUDO,
-          autor: item.AUTOR || 'Redação',
-          videoUrl: item.URL_VIDEO,
-          imagens: item.IMAGENS || [],
-          data: item.DATA
-        }));
+
+        const formatadas = data.map((item) => {
+
+          const listaNomes = item.NOTICIA_AUTOR_TEM
+            ?.map(pivo => pivo.AUTORES?.NOME)
+            .filter(Boolean) || [];
+
+          return {
+            id: item.ID_NOTICIAS.toString(),
+            titulo: item.TITULO,
+            resumo: item.RESUMO,
+            conteudo: item.CONTEUDO,
+            autor: listaNomes.length > 0 ? listaNomes.join(', ') : 'Redação',
+            videoUrl: item.URL_VIDEO,
+            imagens: item.IMAGENS || [],
+            data: item.DATA
+          }
+
+        });
+
+
 
         setListaCompleta(formatadas);
       } catch (erro) {
@@ -52,7 +74,7 @@ export default function TodasNoticias() {
 
       <section style={{ marginTop: '30px' }}>
         {carregando && <p style={{ color: '#666' }}>Carregando histórico do jornal...</p>}
-        
+
         {!carregando && listaCompleta.length === 0 && (
           <p style={{ color: '#777', fontStyle: 'italic' }}>Nenhuma notícia encontrada no arquivo histórico.</p>
         )}
