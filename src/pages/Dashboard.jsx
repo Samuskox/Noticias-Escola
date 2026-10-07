@@ -95,13 +95,17 @@ export default function Dashboard() {
         <Link to="/admin" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', background: '#007bff', color: 'white', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.1rem', textAlign: 'center', boxShadow: '0 2px 6px rgba(0,0,0,0.1)' }}>
           Escrever
         </Link>
-        <Link to="/" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', background: '#6c757d', color: 'white', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.1rem', textAlign: 'center', boxShadow: '0 2px 6px rgba(0,0,0,0.1)' }}>
+        <Link to="/" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', background: '#6c7d76', color: 'white', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.1rem', textAlign: 'center', boxShadow: '0 2px 6px rgba(0,0,0,0.1)' }}>
           Ver o Site (Home)
         </Link>
 
-        <Link to="/mural" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', background: '#6c757d', color: 'white', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.1rem', textAlign: 'center', boxShadow: '0 2px 6px rgba(0,0,0,0.1)' }}>
+        <Link to="/mural" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', background: '#ceab61', color: 'white', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.1rem', textAlign: 'center', boxShadow: '0 2px 6px rgba(0,0,0,0.1)' }}>
           Gerenciar Mural
         </Link>
+
+        <Link to="/autores" style={{ padding: '20px', background: '#17a2b8', color: 'white', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.1rem', textAlign: 'center', boxShadow: '0 2px 6px rgba(0,0,0,0.1)' }}>
+          Gerenciar Autores
+      </Link>
 
       </div>
 
@@ -116,7 +120,7 @@ export default function Dashboard() {
               <div style={{ paddingRight: '12px' }}>
                 <strong style={{ display: 'block', fontSize: '1.1rem', color: '#222' }}>{item.TITULO}</strong>
                 <span style={{ fontSize: '0.82rem', color: '#777' }}>
-                  📅 {new Date(item.DATA).toLocaleDateString('pt-BR')}
+                  {new Date(item.DATA).toLocaleDateString('pt-BR')}
                 </span>
               </div>
               <button 

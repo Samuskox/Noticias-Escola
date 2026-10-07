@@ -12,6 +12,8 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Mural from './pages/GerenciarMural';
 import TodasNoticias from './pages/TodasNoticias';
+import Autores from './pages/GerenciarAutores';
+import Jogos from './pages/Jogos';
 
 import './App.css'
 
@@ -35,6 +37,8 @@ function App() {
       <Route path="/dashboard" element={<Dashboard/>} />
       <Route path="/mural" element={<Mural/>}/>
       <Route path="/todasNoticias" element={<TodasNoticias/>}/>
+      <Route path="/autores" element={<Autores/>}/>
+      <Route path="/jogos" element={<Jogos/>}/>
 
      </Routes>
     
