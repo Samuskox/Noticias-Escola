@@ -21,21 +21,36 @@ export default function Home() {
   useEffect(() => {
     const buscarNoticiasDoBanco = async () => {
       try {
-        const { data, error } = await supabase.from('NOTICIAS').select('*').order('DATA', { ascending: false });
+        const { data, error } = await supabase.from('NOTICIAS').select(
+          `ID_NOTICIAS,
+        TITULO,
+        RESUMO,
+        CONTEUDO,
+        URL_VIDEO,
+        IMAGENS,
+        DATA, 
+        NOTICIA_AUTOR_TEM (
+          AUTORES ( NOME )
+        )`).order('DATA', { ascending: false });
 
         if (error) throw error;
 
-        const noticiasFormatadas = data.map((item) => ({
-          id: item.ID_NOTICIAS.toString(), // Converte o ID numérico SERIAL para String
-          titulo: item.TITULO,
-          resumo: item.RESUMO,
-          conteudo: item.CONTEUDO,
-          autores: item.AUTORES,
-          videoUrl: item.URL_VIDEO,
-          imagens: item.IMAGENS || [], // Se for null, vira um array vazio []
-          data: item.DATA
-        }));
-
+        const noticiasFormatadas = data.map((item) => {
+          const listaNomes = item.NOTICIA_AUTOR_TEM
+            ?.map(pivo => pivo.AUTORES?.NOME)
+            .filter(Boolean) || [];
+          return {
+            id: item.ID_NOTICIAS.toString(),
+            titulo: item.TITULO,
+            resumo: item.RESUMO,
+            conteudo: item.CONTEUDO,
+            autor: listaNomes.length > 0 ? listaNomes.join(', ') : 'Redação', // ✨ Exibe todos os autores juntos!
+            videoUrl: item.URL_VIDEO,
+            imagens: item.IMAGENS || [],
+            data: item.DATA
+          };
+        });
+        
         const { data: muralData } = await supabase
           .from('MURAL_HOME')
           .select('*')
@@ -64,7 +79,7 @@ export default function Home() {
   return (
 
     <div className="home-container">
-      
+
       <header className="home-header">
         <h1>O Clarim da Escola</h1>
         <p><strong>Professor Orientador:</strong> Lucas Alaric Angelo</p>
@@ -84,9 +99,9 @@ export default function Home() {
       {/* Seção das notícias */}
       <section>
         <h2>Últimas Notícias</h2>
-        
+
         {carregando && <p style={{ color: '#666' }}>Carregando matérias recentes...</p>}
-        
+
         {!carregando && listaNoticias.length === 0 && (
           <p style={{ color: '#777' }}>Nenhuma notícia publicada ainda no mural.</p>
         )}

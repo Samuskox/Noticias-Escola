@@ -16,22 +16,41 @@ export default function Noticia() {
       try {
        const {data, error} = await supabase
        .from('NOTICIAS')
-       .select('*')
+       .select(`
+        ID_NOTICIAS,
+            TITULO,
+            RESUMO,
+            CONTEUDO,
+            URL_VIDEO,
+            IMAGENS,
+            DATA,
+            NOTICIA_AUTOR_TEM (
+              AUTORES ( NOME )
+            )
+        `)
        .eq('ID_NOTICIAS', id)
        .single();
 
        if(error) throw error;
 
-       setNoticia({
+       if(data){
+        const listaNomes = data.NOTICIA_AUTOR_TEM
+            ?.map(pivo => pivo.AUTORES?.NOME)
+            .filter(Boolean) || [];
+
+        setNoticia({
         id: data.ID_NOTICIAS.toString(),
         titulo: data.TITULO,
         resumo: data.RESUMO,
         conteudo: data.CONTEUDO,
-        autores: data.AUTORES,
+        autor: listaNomes.length > 0 ? listaNomes.join(', ') : 'Redação',
         videoUrl: data.URL_VIDEO,
         imagens: data.IMAGENS || [],
         data: data.DATA
        });
+       }
+
+       
       } catch (erro) {
         console.error('Erro na conexão com o servidor:', erro);
       } finally {
@@ -49,7 +68,7 @@ export default function Noticia() {
       <header style={{ marginBottom: '20px' }}>
         <h1 style={{ fontSize: '2.2rem', marginBottom: '8px' }}>{noticia.titulo}</h1>
         <p style={{ color: '#666', fontSize: '0.9rem' }}>
-          Por <strong>{noticia.autores}</strong> em {new Date(noticia.data).toLocaleDateString('pt-BR')}
+          Por <strong>{noticia.autor}</strong> em {new Date(noticia.data).toLocaleDateString('pt-BR')}
         </p>
         <p style={{ fontSize: '1.1rem', color: '#444', fontStyle: 'italic', marginTop: '12px' }}>{noticia.resumo}</p>
       </header>

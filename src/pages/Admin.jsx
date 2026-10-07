@@ -12,6 +12,11 @@ export default function Admin() {
   const [videoUrl, setVideoUrl] = useState('');
   const [imagens, setImagens] = useState([]);
   const [carregando, setCarregando] = useState(false);
+
+
+  const [listaAutores, setListaAutores] = useState([]);
+  const [autoresSelecionados, setAutoresSelecionados] = useState([]); // Array de IDs selecionados
+  const [novosAutoresTexto, setNovosAutoresTexto] = useState('');
   const navigate = useNavigate();
 
 
@@ -20,8 +25,15 @@ export default function Admin() {
 
     if(!adminLogado){
       navigate('/login');
+    } else {
+      buscarAutores();
     }
   }, [navigate]);
+
+    const buscarAutores = async () => {
+    const { data } = await supabase.from('AUTORES').select('*').order('NOME', { ascending: true });
+    if (data) setListaAutores(data);
+    };
 
     const handleSubmeter = async (e) => {
     e.preventDefault();
@@ -30,43 +42,73 @@ export default function Admin() {
     try {
       const admin = JSON.parse(localStorage.getItem('adminLogado'));
       const idAdmin = admin?.ID_ADMIN || 1;
+      let idsAutoresFinais = [...autoresSelecionados].map(Number);
+      // 1. SE DIGITOU NOVOS AUTORES (SEPARADOS POR VÍRGULA), CADASTRA ELES PRIMEIRO
+      if (novosAutoresTexto.trim() !== '') {
+        const nomesNovos = novosAutoresTexto.split(',').map(n => n.trim()).filter(Boolean);
+        
+        for (const nome of nomesNovos) {
+          // Insere ou ignora se já existir (devido ao UNIQUE no banco)
+          const { data: criado } = await supabase
+            .from('AUTORES')
+            .insert([{ NOME: nome }])
+            .select('ID_AUTOR');
 
+          if (criado && criado.length > 0) {
+            idsAutoresFinais.push(criado[0].ID_AUTOR);
+          } else {
+            // Se já existia, busca o ID dele
+            const { data: existente } = await supabase.from('AUTORES').select('ID_AUTOR').eq('NOME', nome).single();
+            if (existente) idsAutoresFinais.push(existente.ID_AUTOR);
+          }
+        }
+      }
+
+      // Se nenhum autor foi selecionado ou criado, assume o ID 1 padrão
+      if (idsAutoresFinais.length === 0 && listaAutores.length > 0) {
+        idsAutoresFinais.push(listaAutores[0].ID_AUTOR);
+      }
+
+      // 2. UPLOAD DAS IMAGENS (Igual ao seu fluxo atual)
       const listaUrlsImagens = [];
-
-      if(imagens && imagens.length > 0){
-        for(let i = 0; i < imagens.length; i++){
+      if (imagens && imagens.length > 0) {
+        for (let i = 0; i < imagens.length; i++) {
           const arquivo = imagens[i];
-
-          const nomeArquivo = `${Date.now()}-${arquivo.name}`;
-          
-          const  {data: uploadData, error: uploadError } = await supabase.storage.from('noticias-imagens').upload(nomeArquivo, arquivo);
-
-          if(uploadError) throw uploadError;
-
-          const { data: urlData } = supabase.storage
-            .from('noticias-imagens')
-            .getPublicUrl(nomeArquivo);
-         
+          const nomeUnico = `${Date.now()}-${arquivo.name}`;
+          const { error: uploadError } = await supabase.storage.from('noticias-imagens').upload(nomeUnico, arquivo);
+          if (uploadError) throw uploadError;
+          const { data: urlData } = supabase.storage.from('noticias-imagens').getPublicUrl(nomeUnico);
           listaUrlsImagens.push(urlData.publicUrl);
         }
       }
 
-
-      const { error: insertError } = await supabase
+      // 3. SALVAR A NOTÍCIA
+      const { data: novaNoticiaData, error: insertError } = await supabase
         .from('NOTICIAS')
         .insert([
           {
             TITULO: titulo,
             RESUMO: resumo,
             CONTEUDO: conteudo,
-            AUTORES: autores || 'Redação',
             URL_VIDEO: videoUrl || null,
             FK_ADMINISTRADOR_ID_ADMIN: idAdmin,
             IMAGENS: listaUrlsImagens
           }
-        ]);
+        ])
+        .select('ID_NOTICIAS')
+        .single();
 
       if (insertError) throw insertError;
+      const idDaNoticiaCriada = novaNoticiaData.ID_NOTICIAS;
+
+      // 4. VINCULAR MÚLTIPLOS AUTORES NA TABELA PIVÔ (NOTICIA_AUTOR_TEM)
+      const vinculos = idsAutoresFinais.map(idAutor => ({
+        FK_NOTICIAS_ID: idDaNoticiaCriada,
+        FK_AUTORES_ID: idAutor
+      }));
+
+      const { error: erroVinculo } = await supabase.from('NOTICIA_AUTOR_TEM').insert(vinculos);
+      if (erroVinculo) throw erroVinculo;
 
       alert('Notícia e fotos publicadas com sucesso!');
       setTitulo('');
@@ -84,6 +126,13 @@ export default function Admin() {
       setCarregando(false);
     }
   };
+
+    const handleSelectChange = (e) => {
+    const valores = Array.from(e.target.selectedOptions, option => option.value);
+    setAutoresSelecionados(valores);
+  };
+
+
   return (
     <div style={{ maxWidth: '600px', margin: '40px auto', padding: '20px', fontFamily: 'sans-serif' }}>
       <h1 style={{ borderBottom: '2px solid #333', paddingBottom: '10px', marginBottom: '20px' }}>
@@ -133,10 +182,17 @@ export default function Admin() {
         </div>
 
         <div>
-          <label style={{ fontWeight: 'bold' }}>Autor / Alunos Redatores:</label>
-          <input type="text"
-           placeholder="Ex: Aluno 1 e Aluno 2"
-            value={autores} onChange={(e) => setAutores(e.target.value)} style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc', boxSizing: 'border-box' }} />
+          <label style={{ fontWeight: 'bold' }}>Selecionar Autores (Segure Ctrl para escolher mais de 1):</label>
+          <select multiple value={autoresSelecionados} onChange={handleSelectChange} style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc', height: '100px' }}>
+            {listaAutores.map((aut) => (
+              <option key={aut.ID_AUTOR} value={aut.ID_AUTOR}>{aut.NOME}</option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label style={{ fontWeight: 'bold', color: '#007bff' }}>Ou cadastrar novos autores na hora (separe por vírgula):</label>
+          <input type="text" placeholder="Ex: Aluno Lucas, Aluna Mariana, Aluno Pedro" value={novosAutoresTexto} onChange={(e) => setNovosAutoresTexto(e.target.value)} style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #007bff', boxSizing: 'border-box' }} />
         </div>
 
         {/* Campo: Imagens (Múltiplas) */}

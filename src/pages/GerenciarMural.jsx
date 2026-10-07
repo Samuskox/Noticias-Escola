@@ -41,7 +41,7 @@ export default function GerenciarMural() {
 
       if (error) throw error;
 
-      alert('✅ Novo bloco adicionado ao mural!');
+      alert('Novo bloco adicionado ao mural!');
       setNovoTitulo('');
       setNovoConteudo('');
       buscarBlocos(); // Atualiza a lista na tela
