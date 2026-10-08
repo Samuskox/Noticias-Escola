@@ -1,0 +1,92 @@
+/* Estilos para a página Nossa Escola */
+.escola-container {
+  max-width: 750px;
+  margin: 40px auto;
+  padding: 32px 24px;
+  background-color: #ffffff !important; /* Força fundo branco contra Dark Mode */
+  color: #1e293b !important; /* Texto principal em grafite escuro */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  box-sizing: border-box;
+}
+
+.escola-container h1 {
+  font-size: 2.2rem;
+  color: #0f172a;
+  margin-top: 0;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #f1f5f9;
+  padding-bottom: 12px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.escola-paragrafo {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #334155;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+/* Bloco de destaque para memórias históricas da escola */
+.escola-memoria-box {
+  background-color: #f8fafc;
+  border-left: 4px solid #ceab61; /* Cor dourada sutil para remeter a história/conquista */
+  padding: 20px;
+  border-radius: 0 8px 8px 0;
+  margin: 28px 0;
+}
+
+.escola-memoria-box h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.escola-memoria-box p {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: #475569;
+}
+
+/* Frase poética de encerramento em destaque */
+.escola-destaque-final {
+  background-color: #f0f4f8;
+  color: #007bff !important;
+  font-size: 1.15rem;
+  font-weight: 600;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  margin: 28px 0 10px 0;
+  line-height: 1.4;
+}
+
+/* Responsividade para Celulares */
+@media (max-width: 480px) {
+  .escola-container {
+    margin: 20px 12px;
+    padding: 24px 16px;
+  }
+
+  .escola-container h1 {
+    font-size: 1.8rem;
+  }
+
+  .escola-paragrafo {
+    font-size: 1rem;
+  }
+
+  .escola-memoria-box p {
+    font-size: 0.95rem;
+  }
+
+  .escola-destaque-final {
+    font-size: 1.05rem;
+  }
+}

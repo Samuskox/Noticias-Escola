@@ -14,11 +14,11 @@ import Mural from './pages/GerenciarMural';
 import TodasNoticias from './pages/TodasNoticias';
 import Autores from './pages/GerenciarAutores';
 import Jogos from './pages/Jogos';
+import Sobre from './pages/Sobre';
+import Escola from './pages/NossaEscola';
 
 import './App.css'
 
-const Sobre = () => <h2>Sobre Nós</h2>;
-const Escola = () => <h2>Nossa Escola</h2>;
 const Colaboradores = () => <h2>Todos os Colaboradores</h2>;
 
 function App() {
@@ -39,7 +39,6 @@ function App() {
       <Route path="/todasNoticias" element={<TodasNoticias/>}/>
       <Route path="/autores" element={<Autores/>}/>
       <Route path="/jogos" element={<Jogos/>}/>
-
      </Routes>
     
     </BrowserRouter>

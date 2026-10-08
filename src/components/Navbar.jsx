@@ -30,7 +30,6 @@ export default function Navbar() {
         <Link to="/" className="navbar-link-item" onClick={() => setAberto(false)}>Início</Link>
         <Link to="/sobre" className="navbar-link-item" onClick={() => setAberto(false)}>Sobre nós</Link>
         <Link to="/escola" className="navbar-link-item" onClick={() => setAberto(false)}>Nossa escola</Link>
-        <Link to="/colaboradores" className="navbar-link-item" onClick={() => setAberto(false)}>Todos os colaboradores</Link>
         <Link to="/todasNoticias" className="navbar-link-item" onClick={() => setAberto(false)}>Todas as Notícias</Link>
         <Link to="/jogos" className="navbar-link-item" onClick={() => setAberto(false)}>Jogos</Link>
 
