@@ -1,0 +1,120 @@
+/* NoticiaCardItem.css */
+
+.card-noticia-link {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  background-color: #ffffff !important; /* Força fundo branco contra Dark Mode */
+  color: #111111 !important; /* Força texto principal escuro */
+  border: 1px solid #e2e8f0; /* Borda cinza mais suave e moderna */
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-decoration: none;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 0.25s ease;
+}
+
+/* Efeito sutil e flutuante ao passar o mouse */
+@media (hover: hover) {
+  .card-noticia-link:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+    border-color: #cbd5e1;
+  }
+}
+
+/* Lado Esquerdo: Container da Imagem */
+.card-noticia-imagem-wrapper {
+  width: 200px;
+  height: 140px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #f1f5f9;
+}
+
+.card-noticia-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+@media (hover: hover) {
+  .card-noticia-link:hover .card-noticia-img {
+    transform: scale(1.03); /* Leve aproximação da imagem ao passar o mouse */
+  }
+}
+
+/* Lado Direito: Conteúdo de Texto */
+.card-noticia-conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
+}
+
+.card-noticia-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #64748b; /* Cinza azulado mais agradável aos olhos */
+  font-weight: 500;
+}
+
+.card-noticia-titulo {
+  margin: 0;
+  font-size: 1.35rem;
+  color: #1e293b;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.card-noticia-resumo {
+  margin: 0;
+  font-size: 0.98rem;
+  color: #475569;
+  line-height: 1.5;
+}
+
+/* Link/Botão Indicativo com visual refinado */
+.card-noticia-action {
+  font-size: 0.9rem;
+  color: #007bff;
+  font-weight: 600;
+  align-self: flex-start;
+  margin-top: 4px;
+  transition: color 0.2s ease;
+}
+
+@media (hover: hover) {
+  .card-noticia-link:hover .card-noticia-action {
+    color: #0056b3;
+    text-decoration: underline; /* Dá um feedback visual clássico de link */
+  }
+}
+
+/* 📱 Layout Responsivo para Celulares */
+@media (max-width: 640px) {
+  .card-noticia-link {
+    flex-direction: column; /* Empilha a imagem em cima do texto no mobile */
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .card-noticia-imagem-wrapper {
+    width: 100%; /* Imagem ocupa a largura inteira disponível */
+    height: 180px; /* Um pouco mais alta para valorizar a foto no celular */
+  }
+  
+  .card-noticia-titulo {
+    font-size: 1.25rem;
+  }
+}

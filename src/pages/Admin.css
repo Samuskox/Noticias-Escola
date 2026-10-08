@@ -1,0 +1,120 @@
+/* EscreverNoticia.css */
+
+.escrever-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: sans-serif;
+  box-sizing: border-box;
+  background-color: #ffffff !important; /* Garante fundo branco contra Dark Mode */
+  color: #222222 !important; /* Garante texto principal escuro */
+}
+
+.escrever-container h1 {
+  border-bottom: 2px solid #333;
+  padding-bottom: 10px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+.escrever-subtitulo {
+  color: #666;
+  margin-bottom: 20px;
+  font-size: 1rem;
+}
+
+.form-noticia {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-campo label {
+  font-weight: bold;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+/* Inputs de texto padrão, URLs e Textareas */
+.form-campo input[type="text"],
+.form-campo input[type="url"],
+.form-campo textarea,
+.form-campo select {
+  width: 100%;
+  padding: 12px; /* Maior respiro interno para facilitar digitação no mobile */
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 16px; /* Impede zoom forçado automático no iOS */
+  transition: border-color 0.2s;
+}
+
+.form-campo textarea {
+  resize: vertical;
+}
+
+/* Destaque especial azul para a seção de novos autores rápidos */
+.form-campo.autores-novos label {
+  color: #007bff;
+}
+
+.form-campo.autores-novos input {
+  border: 1px solid #007bff;
+}
+
+/* Foco nos campos do formulário */
+.form-campo input:focus,
+.form-campo textarea:focus,
+.form-campo select:focus {
+  border-color: #0056b3;
+  outline: none;
+}
+
+.form-campo input[type="file"] {
+  padding: 6px 0;
+  font-size: 15px;
+}
+
+/* Botão de Envio */
+.btn-postar {
+  background: #007bff;
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.2s;
+}
+
+@media (hover: hover) {
+  .btn-postar:hover {
+    background: #0056b3;
+  }
+}
+
+.btn-postar:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Ajustes finos de espaçamento em telas mobile */
+@media (max-width: 480px) {
+  .escrever-container {
+    margin: 15px auto;
+    padding: 16px;
+  }
+  
+  .escrever-container h1 {
+    font-size: 1.5rem;
+  }
+}

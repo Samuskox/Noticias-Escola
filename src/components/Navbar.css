@@ -1,0 +1,115 @@
+/* Navbar.css */
+
+.navbar-header {
+  padding: 14px 20px;
+  border-bottom: 1px solid #e2e8f0;
+  background-color: #ffffff !important; /* Força fundo branco */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-sizing: border-box;
+}
+
+.navbar-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-logo-link {
+  text-decoration: none;
+  color: #0f172a !important;
+}
+
+.navbar-logo-link h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.btn-hamburguer {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.btn-hamburguer:active {
+  transform: scale(0.92);
+}
+
+.btn-hamburguer img {
+  display: block;
+  width: 32px;
+  height: auto;
+}
+
+/* CONTAINER DO MENU COM ANIMAÇÃO */
+.navbar-menu-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 14px;
+  padding: 8px 0;
+  border-top: 1px solid #f1f5f9;
+  
+  /* Esconde o menu por padrão para a animação começar do zero */
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(-10px);
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s ease,
+              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* CLASSE QUE ATIVA A ANIMAÇÃO DE ABRIR SUAVE */
+.navbar-menu-container.aberto {
+  max-height: 500px; /* Um valor alto o suficiente para caber todos os links */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Links de Navegação */
+.navbar-link-item {
+  text-decoration: none;
+  color: #334155 !important;
+  font-size: 1.05rem;
+  font-weight: 500;
+  padding: 12px 14px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.navbar-link-item:hover,
+.navbar-link-item:active {
+  background-color: #f1f5f9;
+  color: #007bff !important;
+}
+
+.navbar-divisor {
+  border: 0;
+  height: 1px;
+  background-color: #e2e8f0;
+  margin: 12px 0;
+}
+
+.navbar-link-admin {
+  text-decoration: none;
+  color: #64748b !important;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background-color: #f8fafc;
+  text-align: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.navbar-link-admin:hover {
+  background-color: #007bff;
+  color: #ffffff !important;
+}

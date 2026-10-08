@@ -1,0 +1,107 @@
+/* NoticiaCard.css */
+
+.noticia-artigo {
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 0 16px;
+  font-family: sans-serif;
+  box-sizing: border-box;
+  background-color: #ffffff !important; /* Força o fundo branco */
+  color: #222222 !important; /* Força o texto escuro */
+}
+
+.noticia-header {
+  margin-bottom: 20px;
+}
+
+.noticia-titulo {
+  font-size: 2.2rem;
+  margin-top: 0;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.noticia-metadados {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.noticia-resumo {
+  font-size: 1.1rem;
+  color: #444;
+  font-style: italic;
+  margin-top: 12px;
+  line-height: 1.4;
+}
+
+/* Container de imagens da notícia */
+.noticia-galeria {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 24px 0;
+}
+
+.noticia-imagem {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Corpo de texto da matéria */
+.noticia-conteudo {
+  line-height: 1.6;
+  font-size: 1.1rem;
+  color: #222;
+  white-space: pre-line;
+  margin-bottom: 40px;
+  text-align: left;
+}
+
+/* Seção de vídeo */
+.noticia-video-secao {
+  margin-top: 30px;
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+}
+
+.noticia-video-secao h4 {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+/* Container mágico para manter o vídeo na proporção 16:9 no celular */
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* Proporção 16:9 */
+  height: 0;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.video-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Otimizações para telas pequenas (Celulares) */
+@media (max-width: 480px) {
+  .noticia-titulo {
+    font-size: 1.75rem; /* Diminui o título para não quebrar muitas linhas */
+  }
+
+  .noticia-resumo {
+    font-size: 1rem;
+  }
+
+  .noticia-conteudo {
+    font-size: 1rem; /* Tamanho de letra mais confortável em telas menores */
+    line-height: 1.5;
+  }
+}

@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 
+import './GerenciarMural.css';
+
 export default function GerenciarMural() {
   const [listaBlocos, setListaBlocos] = useState([]);
   const [novoTitulo, setNovoTitulo] = useState('');
@@ -66,36 +68,50 @@ export default function GerenciarMural() {
   };
 
   return (
-    <div style={{ maxWidth: '650px', margin: '40px auto', padding: '20px', fontFamily: 'sans-serif' }}>
-      <Link to="/Dashboard" style={{ textDecoration: 'none', color: '#007bff', fontWeight: 'bold' }}>← Voltar ao Painel</Link>
+    <div className="mural-manager-container">
+      <Link to="/Dashboard" className="btn-voltar-painel">← Voltar ao Painel</Link>
       
-      <h2 style={{ borderBottom: '2px solid #333', paddingBottom: '10px', marginBottom: '20px', marginTop: '20px' }}>⚙️ Gerenciar Blocos do Mural</h2>
+      <h2>⚙️ Gerenciar Blocos do Mural</h2>
       
       {/* FORMULÁRIO PARA ADICIONAR NOVO BLOCO */}
-      <form onSubmit={handleAdicionarBloco} style={{ background: '#f9f9f9', padding: '16px', borderRadius: '8px', border: '1px solid #ddd', display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '30px' }}>
-        <h4 style={{ margin: 0, color: '#333' }}>➕ Adicionar Novo Bloco Informativo</h4>
-        <input type="text" placeholder="Título do Bloco (Ex: ⚽ Grêmio Estudantil)" required value={novoTitulo} onChange={(e) => setNovoTitulo(e.target.value)} style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc', boxSizing: 'border-box' }} />
-        <textarea placeholder="Conteúdo informativo..." required rows="3" value={novoConteudo} onChange={(e) => setNovoConteudo(e.target.value)} style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc', boxSizing: 'border-box', resize: 'vertical' }} />
-        <button type="submit" disabled={carregando} style={{ background: '#007bff', color: 'white', padding: '10px', border: 'none', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer' }}>
+      <form onSubmit={handleAdicionarBloco} className="form-cadastro-bloco">
+        <h4>➕ Adicionar Novo Bloco Informativo</h4>
+        <input 
+          type="text" 
+          placeholder="Título do Bloco (Ex: ⚽ Grêmio Estudantil)" 
+          required 
+          value={novoTitulo} 
+          onChange={(e) => setNovoTitulo(e.target.value)} 
+        />
+        <textarea 
+          placeholder="Conteúdo informativo..." 
+          required 
+          rows="3" 
+          value={novoConteudo} 
+          onChange={(e) => setNovoConteudo(e.target.value)} 
+        />
+        <button type="submit" className="btn-inserir" disabled={carregando}>
           {carregando ? 'Adicionando...' : 'Inserir no Mural'}
         </button>
       </form>
 
       {/* LISTAGEM DOS BLOCOS EXISTENTES PARA GERENCIAMENTO */}
       <h3>Blocos Ativos no Site ({listaBlocos.length})</h3>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <div className="lista-blocos-ativos">
         {listaBlocos.map((bloco) => (
-          <div key={bloco.ID} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px', border: '1px solid #eee', borderRadius: '6px', background: '#fff' }}>
-            <div>
-              <strong style={{ display: 'block', fontSize: '1.05rem' }}>{bloco.TITULO}</strong>
-              <span style={{ fontSize: '0.9rem', color: '#555' }}>{bloco.CONTEUDO}</span>
+          <div key={bloco.ID} className="bloco-item-gerenciável">
+            <div className="bloco-item-info">
+              <strong>{bloco.TITULO}</strong>
+              <span>{bloco.CONTEUDO}</span>
             </div>
-            <button onClick={() => handleExcluirBloco(bloco.ID)} style={{ background: '#dc3545', color: 'white', border: 'none', padding: '6px 10px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold', fontSize: '0.85rem' }}>
+            <button onClick={() => handleExcluirBloco(bloco.ID)} className="btn-excluir">
               Excluir
             </button>
           </div>
         ))}
-        {listaBlocos.length === 0 && <p style={{ color: '#777', fontStyle: 'italic' }}>Nenhum bloco ativo no momento.</p>}
+        {listaBlocos.length === 0 && (
+          <p className="mural-vazio-notificacao">Nenhum bloco ativo no momento.</p>
+        )}
       </div>
     </div>
   );

@@ -2,6 +2,8 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 
+import './Noticia.css';
+
 export default function Noticia() {
   const parametros = useParams();
   console.log("Parâmetros da URL:", parametros);
@@ -64,43 +66,43 @@ export default function Noticia() {
   if (carregando) return <p style={{ textAlign: 'center', marginTop: '40px' }}>Carregando matéria...</p>;
   if (!noticia) return <p style={{ textAlign: 'center', marginTop: '40px', color: 'red' }}>Notícia não encontrada!</p>;
   return (
-    <article style={{ maxWidth: '700px', margin: '20px auto', padding: '0 16px', fontFamily: 'sans-serif' }}>
-      <header style={{ marginBottom: '20px' }}>
-        <h1 style={{ fontSize: '2.2rem', marginBottom: '8px' }}>{noticia.titulo}</h1>
-        <p style={{ color: '#666', fontSize: '0.9rem' }}>
+    <article className="noticia-artigo">
+      <header className="noticia-header">
+        <h1 className="noticia-titulo">{noticia.titulo}</h1>
+        <p className="noticia-metadados">
           Por <strong>{noticia.autor}</strong> em {new Date(noticia.data).toLocaleDateString('pt-BR')}
         </p>
-        <p style={{ fontSize: '1.1rem', color: '#444', fontStyle: 'italic', marginTop: '12px' }}>{noticia.resumo}</p>
+        <p className="noticia-resumo">{noticia.resumo}</p>
       </header>
 
       {noticia.imagens && noticia.imagens.length > 0 && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', margin: '24px 0' }}>
+        <div className="noticia-galeria">
           {noticia.imagens.map((url, index) => (
             <img 
               key={index}
               src={url} 
               alt={`Mídia ${index + 1} da matéria`} 
-              style={{ width: '100%', borderRadius: '8px', objectFit: 'cover', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }} 
+              className="noticia-imagem"
             />
           ))}
         </div>
       )}
 
       {/* Conteúdo em texto da matéria */}
-      <div style={{ lineHeight: '1.6', fontSize: '1.1rem', color: '#222', whiteSpace: 'pre-line', marginBottom: '40px', textAlign:'left' }}>
+      <div className="noticia-conteudo">
         {noticia.conteudo}
       </div>
 
       {/* Se houver vídeo cadastrado do YouTube, renderiza o Player */}
       {noticia.url_video && (
-        <div style={{ marginTop: '30px', borderTop: '1px solid #eee', paddingTop: '20px' }}>
-          <h4 style={{ marginBottom: '12px' }}>Vídeo Anexo:</h4>
-          <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: '8px' }}>
+        <div className="noticia-video-secao">
+          <h4>Vídeo Anexo:</h4>
+          <div className="video-wrapper">
             <iframe 
               src={noticia.url_video.replace('watch?v=', 'embed/')} // Converte link normal do youtube em link embed
               title="Player do Vídeo" 
               allowFullScreen
-              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
+              className="video-iframe"
             />
           </div>
         </div>

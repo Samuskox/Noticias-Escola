@@ -1,0 +1,200 @@
+/* GerenciarAutores.css */
+
+.autores-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: sans-serif;
+  box-sizing: border-box;
+  background-color: #ffffff !important; /* Força fundo branco contra Dark Mode */
+  color: #222222 !important; /* Força texto escuro */
+}
+
+.btn-voltar-dashboard {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+  display: inline-block;
+  padding: 6px 0;
+}
+
+.btn-voltar-dashboard:hover {
+  color: #0056b3;
+}
+
+.autores-container h2 {
+  border-bottom: 2px solid #333;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+/* Formulário de Cadastro de Autor */
+.form-cadastro-autor {
+  background: #f9f9f9;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  display: flex;
+  flex-wrap: wrap; /* Permite quebrar linha se faltar espaço no celular */
+  gap: 12px;
+  margin-bottom: 30px;
+  align-items: flex-end;
+  box-sizing: border-box;
+}
+
+.campo-cadastro-grupo {
+  flex: 1;
+  min-width: 200px; /* Garante tamanho mínimo para o input antes de quebrar linha */
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.campo-cadastro-grupo label {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.campo-cadastro-grupo input[type="text"] {
+  width: 100%;
+  padding: 12px; /* Inputs altos ideais para dispositivos móveis */
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 16px; /* Evita zoom forçado automático no iOS */
+}
+
+.campo-cadastro-grupo input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.btn-adicionar-autor {
+  background: #007bff;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+@media (hover: hover) {
+  .btn-adicionar-autor:hover {
+    background: #0056b3;
+  }
+}
+
+.btn-adicionar-autor:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Listagem de Autores */
+.autores-lista-titulo {
+  font-size: 1.2rem;
+  margin-bottom: 14px;
+  color: #555;
+}
+
+.autores-status-msg {
+  color: #666;
+}
+
+.autores-grid-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.autor-item-linha {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+  gap: 12px;
+}
+
+.autor-nome-texto {
+  font-size: 1.05rem;
+  color: #333;
+  font-weight: 500;
+  flex: 1;
+}
+
+.input-edicao-autor {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #007bff;
+  font-size: 16px;
+  flex: 1;
+  max-width: 60%;
+  box-sizing: border-box;
+}
+
+/* Grupo de botões de controle (Editar/Excluir/Salvar/Cancelar) */
+.autor-botoes-acoes {
+  display: flex;
+  gap: 8px;
+}
+
+.autor-botoes-acoes button {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: opacity 0.2s;
+}
+
+.autor-botoes-acoes button:hover {
+  opacity: 0.9;
+}
+
+.btn-salvar { background: #28a745; color: white; }
+.btn-cancelar { background: #6c757d; color: white; }
+.btn-editar { background: #ffc107; color: #212529; }
+.btn-excluir-autor { background: #dc3545; color: white; }
+
+.autores-vazio-msg {
+  color: #777;
+  font-style: italic;
+}
+
+/* Regras Responsivas para Celular */
+@media (max-width: 520px) {
+  .autores-container {
+    margin: 10px auto;
+    padding: 16px;
+  }
+
+  .btn-adicionar-autor {
+    width: 100%; /* Botão ocupa a linha inteira no mobile quando quebrar */
+    text-align: center;
+  }
+
+  .autor-item-linha {
+    flex-direction: column; /* Empilha o texto e as ações em telas pequenas */
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .input-edicao-autor {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .autor-botoes-acoes {
+    width: 100%;
+    justify-content: flex-end; /* Alinha os botões à direita no mobile */
+  }
+}

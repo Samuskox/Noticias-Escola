@@ -1,0 +1,119 @@
+/* EspaçoJogos.css */
+
+.jogos-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 16px;
+  font-family: sans-serif;
+  box-sizing: border-box;
+  background-color: #ffffff !important; /* Força o fundo branco contra Dark Mode */
+  color: #111111 !important; /* Força o texto escuro */
+}
+
+.btn-voltar-home {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+  fontSize: 0.95rem;
+  display: inline-block;
+  padding: 6px 0;
+}
+
+.btn-voltar-home:hover {
+  color: #0056b3;
+}
+
+.jogos-header {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 16px;
+}
+
+.jogos-header h1 {
+  font-size: 2.2rem;
+  color: #111;
+  margin: 0 0 8px 0;
+}
+
+.jogos-header p {
+  color: #666;
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+/* Grid adaptável para os cards de jogos */
+.jogos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Card individual do jogo */
+.jogo-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+/* Efeito hover para computadores */
+@media (hover: hover) {
+  .jogo-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    border-color: #007bff;
+  }
+}
+
+.jogo-card h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.3rem;
+  color: #111;
+}
+
+.jogo-card p {
+  margin: 0 0 20px 0;
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+/* Botão de ação interno do card */
+.btn-jogar {
+  display: inline-block;
+  text-align: center;
+  padding: 12px; /* Aumentado sutilmente para facilitar o toque no mobile */
+  background: #007bff;
+  color: white;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+}
+
+@media (hover: hover) {
+  .jogo-card:hover .btn-jogar {
+    background: #0056b3;
+  }
+}
+
+/* Ajustes finos para celulares menores */
+@media (max-width: 480px) {
+  .jogos-container {
+    margin: 20px auto;
+  }
+
+  .jogos-header h1 {
+    font-size: 1.8rem;
+  }
+}

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import './GerenciarAutores.css';
 
 export default function GerenciarAutores() {
   const [autores, setAutores] = useState([]);
@@ -117,17 +118,15 @@ export default function GerenciarAutores() {
   };
 
   return (
-    <div style={{ maxWidth: '600px', margin: '40px auto', padding: '20px', fontFamily: 'sans-serif' }}>
-      <Link to="/Dashboard" style={{ textDecoration: 'none', color: '#007bff', fontWeight: 'bold' }}>← Voltar ao Painel</Link>
+    <div className="autores-container">
+      <Link to="/Dashboard" className="btn-voltar-dashboard">← Voltar ao Painel</Link>
       
-      <h2 style={{ borderBottom: '2px solid #333', paddingBottom: '10px', marginBottom: '20px', marginTop: '20px' }}>
-        Gerenciar Autores / Alunos
-      </h2>
+      <h2>Gerenciar Autores / Alunos</h2>
 
-      {/* ➕ FORMULÁRIO PARA CADASTRAR NOVO AUTOR */}
-      <form onSubmit={handleAdicionarAutor} style={{ background: '#f9f9f9', padding: '16px', borderRadius: '8px', border: '1px solid #ddd', display: 'flex', gap: '12px', marginBottom: '30px', alignItems: 'flex-end' }}>
-        <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          <label style={{ fontWeight: 'bold', fontSize: '0.9rem', color: '#333' }}>Cadastrar Novo Autor:</label>
+      {/* FORMULÁRIO PARA CADASTRAR NOVO AUTOR */}
+      <form onSubmit={handleAdicionarAutor} className="form-cadastro-autor">
+        <div className="campo-cadastro-grupo">
+          <label>Cadastrar Novo Autor:</label>
           <input 
             type="text" 
             placeholder="Ex: Nome do Aluno Redator" 
@@ -135,77 +134,66 @@ export default function GerenciarAutores() {
             disabled={carregandoCriacao}
             value={novoAutor} 
             onChange={(e) => setNovoAutor(e.target.value)} 
-            style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc', boxSizing: 'border-box' }}
           />
         </div>
         <button 
           type="submit" 
           disabled={carregandoCriacao}
-          style={{ background: '#007bff', color: 'white', padding: '11px 20px', border: 'none', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer' }}
+          className="btn-adicionar-autor"
         >
           {carregandoCriacao ? '...' : 'Adicionar'}
         </button>
       </form>
 
       {/* LISTAGEM DOS AUTORES CADASTRADOS */}
-      <h3 style={{ fontSize: '1.2rem', marginBottom: '14px', color: '#555' }}>Autores Cadastrados ({autores.length})</h3>
+      <h3 className="autores-lista-titulo">Autores Cadastrados ({autores.length})</h3>
 
-      {carregando && <p style={{ color: '#666' }}>Carregando lista de redatores...</p>}
+      {carregando && <p className="autores-status-msg">Carregando lista de redatores...</p>}
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <div className="autores-grid-lista">
         {autores.map((autor) => (
-          <div 
-            key={autor.ID_AUTOR} 
-            style={{ 
-              display: 'flex', 
-              justifyContent: 'space-between', 
-              alignItems: 'center', 
-              padding: '12px', 
-              border: '1px solid #eee', 
-              borderRadius: '8px', 
-              background: '#fff',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.02)' 
-            }}
-          >
+          <div key={autor.ID_AUTOR} className="autor-item-linha">
+            
             {idEditando === autor.ID_AUTOR ? (
               <input 
                 type="text" 
                 value={nomeEditando} 
                 onChange={(e) => setNomeEditando(e.target.value)} 
-                style={{ padding: '6px 10px', borderRadius: '4px', border: '1px solid #007bff', fontSize: '1rem', width: '60%' }}
+                className="input-edicao-autor"
               />
             ) : (
-              <span style={{ fontSize: '1.05rem', color: '#333', fontWeight: '500' }}>
+              <span className="autor-nome-texto">
                 ✍️ {autor.NOME}
               </span>
             )}
 
-            <div style={{ display: 'flex', gap: '8px' }}>
+            <div className="autor-botoes-acoes">
               {idEditando === autor.ID_AUTOR ? (
                 <>
-                  <button onClick={() => handleSalvarEdicao(autor.ID_AUTOR)} style={{ background: '#28a745', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
+                  <button onClick={() => handleSalvarEdicao(autor.ID_AUTOR)} className="btn-salvar">
                     Salvar
                   </button>
-                  <button onClick={() => setIdEditando(null)} style={{ background: '#6c757d', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer' }}>
+                  <button onClick={() => setIdEditando(null)} className="btn-cancelar">
                     Cancelar
                   </button>
                 </>
               ) : (
                 <>
-                  <button onClick={() => iniciarEdicao(autor.ID_AUTOR, autor.NOME)} style={{ background: '#ffc107', color: '#212529', border: 'none', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
+                  <button onClick={() => iniciarEdicao(autor.ID_AUTOR, autor.NOME)} className="btn-editar">
                     Editar
                   </button>
-                  <button onClick={() => handleExcluirAutor(autor.ID_AUTOR, autor.NOME)} style={{ background: '#dc3545', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
+                  <button onClick={() => handleExcluirAutor(autor.ID_AUTOR, autor.NOME)} className="btn-excluir-autor">
                     Excluir
                   </button>
                 </>
               )}
             </div>
+
           </div>
         ))}
 
         {!carregando && autores.length === 0 && (
-          <p style={{ color: '#777', fontStyle: 'italic' }}>Nenhum autor cadastrado no sistema.</p>
+          <p className="autores-vazio-msg">Nenhum autor cadastrado no sistema.</p>
         )}
       </div>
     </div>

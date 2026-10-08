@@ -3,34 +3,51 @@
 .home-container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 24px 16px; /* 16px nas laterais para o conteúdo não colar na borda do celular */
   font-family: sans-serif;
+  box-sizing: border-box;
 }
 
 .home-header {
   margin-bottom: 24px;
   border-bottom: 2px solid #eee;
-  padding-bottom: 12px;
+  padding-bottom: 16px;
 }
 
+.home-header h1 {
+  font-size: 2rem;
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #111;
+}
+
+.home-header p {
+  margin: 6px 0;
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+/* Grid responsivo para os blocos */
 .mural-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 16px;
   margin-bottom: 32px;
 }
 
 .mural-bloco {
   background: #f8f9fa;
-  padding: 16px;
+  padding: 20px; /* Um pouco mais de respiro interno */
   border-radius: 10px;
   border: 1px solid #e9ecef;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
 }
 
 .mural-bloco h3 {
-  margin: 0 0 8px 0;
-  font-size: 1.15rem;
+  margin: 0 0 10px 0;
+  font-size: 1.2rem;
   color: #222;
 }
 
@@ -38,28 +55,69 @@
   margin: 0;
   font-size: 0.95rem;
   color: #444;
-  line-height: 1.4;
+  line-height: 1.5;
   white-space: pre-line;
 }
 
+/* Seção de notícias */
+.noticias-secao h2 {
+  font-size: 1.6rem;
+  margin-bottom: 16px;
+  color: #222;
+}
+
+.mensagem-status {
+  color: #555;
+  font-size: 1rem;
+  font-style: italic;
+  margin: 16px 0;
+}
+
+/* Botão de acervo */
 .botao-acervo-container {
   text-align: center;
-  margin-top: 24px;
+  margin-top: 32px;
 }
 
 .botao-acervo {
   display: inline-block;
-  padding: 10px 20px;
+  width: auto;
+  max-width: 100%; /* Garante que o botão não estoure em telas muito finas */
+  padding: 12px 24px; /* Maior para facilitar o clique no celular */
   background: #f0f4f8;
   color: #007bff;
   text-decoration: none;
-  border-radius: 6px;
+  border-radius: 8px;
   font-weight: bold;
-  font-size: 0.95rem;
+  font-size: 1rem;
   border: 1px solid #d0e0f0;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.1s;
+  box-sizing: border-box;
 }
 
-.botao-acervo:hover {
-  background: #e1ecf7;
+/* Efeito de clique e hover */
+@media (hover: hover) {
+  .botao-acervo:hover {
+    background: #e1ecf7;
+  }
+}
+
+.botao-acervo:active {
+  transform: scale(0.98); /* Efeito de clique físico no celular */
+}
+
+/* Ajustes finos para celulares menores (ex: iPhone SE, telas menores que 480px) */
+@media (max-width: 480px) {
+  .home-header h1 {
+    font-size: 1.75rem; /* Diminui um pouco o título principal */
+  }
+  
+  .noticias-secao h2 {
+    font-size: 1.4rem;
+  }
+  
+  .botao-acervo {
+    display: block; /* O botão vira bloco e ocupa a largura total disponível no mobile */
+    text-align: center;
+  }
 }

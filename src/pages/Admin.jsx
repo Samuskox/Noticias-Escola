@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseclient';
 
+import './Admin.css';
+
 
 export default function Admin() {
 
@@ -134,107 +136,94 @@ export default function Admin() {
 
 
   return (
-    <div style={{ maxWidth: '600px', margin: '40px auto', padding: '20px', fontFamily: 'sans-serif' }}>
-      <h1 style={{ borderBottom: '2px solid #333', paddingBottom: '10px', marginBottom: '20px' }}>
-        Escrever Notícia
-      </h1>
-      <p style={{ color: '#666', marginBottom: '20px' }}>Preencha os campos abaixo para publicar uma nova notícia.</p>
+<div className="escrever-container">
+      <h1>Escrever Notícia</h1>
+      <p className="escrever-subtitulo">Preencha os campos abaixo para publicar uma nova notícia.</p>
 
-      <form onSubmit={handleSubmeter} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <form onSubmit={handleSubmeter} className="form-noticia">
 
         {/* Campo: Título */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          <label style={{ fontWeight: 'bold' }}>Título da Notícia:</label>
+        <div className="form-campo">
+          <label>Título da Notícia:</label>
           <input
             type="text"
             required
             value={titulo}
             onChange={(e) => setTitulo(e.target.value)}
             placeholder="Ex: Grande vitória no campeonato de xadrez"
-            style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
           />
         </div>
 
         {/* Campo: Resumo */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          <label style={{ fontWeight: 'bold' }}>Resumo (Aparece no Card):</label>
+        <div className="form-campo">
+          <label>Resumo (Aparece no Card):</label>
           <input
             type="text"
             required
             value={resumo}
             onChange={(e) => setResumo(e.target.value)}
             placeholder="Ex: Alunos do 9º ano conquistam o primeiro lugar..."
-            style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
           />
         </div>
 
         {/* Campo: Conteúdo Completo */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          <label style={{ fontWeight: 'bold' }}>Conteúdo da Matéria:</label>
+        <div className="form-campo">
+          <label>Conteúdo da Matéria:</label>
           <textarea
             required
             rows="6"
             value={conteudo}
             onChange={(e) => setConteudo(e.target.value)}
             placeholder="Escreva a notícia completa aqui..."
-            style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ccc', resize: 'vertical' }}
           />
         </div>
 
-        <div>
-          <label style={{ fontWeight: 'bold' }}>Selecionar Autores (Segure Ctrl para escolher mais de 1):</label>
-          <select multiple value={autoresSelecionados} onChange={handleSelectChange} style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc', height: '100px' }}>
+        {/* Campo: Seleção de Autores Existentes */}
+        <div className="form-campo">
+          <label>Selecionar Autores (Segure Ctrl para escolher mais de 1):</label>
+          <select multiple value={autoresSelecionados} onChange={handleSelectChange} style={{ height: '100px' }}>
             {listaAutores.map((aut) => (
               <option key={aut.ID_AUTOR} value={aut.ID_AUTOR}>{aut.NOME}</option>
             ))}
           </select>
         </div>
 
-        <div>
-          <label style={{ fontWeight: 'bold', color: '#007bff' }}>Ou cadastrar novos autores na hora (separe por vírgula):</label>
-          <input type="text" placeholder="Ex: Aluno Lucas, Aluna Mariana, Aluno Pedro" value={novosAutoresTexto} onChange={(e) => setNovosAutoresTexto(e.target.value)} style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #007bff', boxSizing: 'border-box' }} />
+        {/* Campo: Cadastro de novos Autores na hora */}
+        <div className="form-campo autores-novos">
+          <label>Ou cadastrar novos autores na hora (separe por vírgula):</label>
+          <input 
+            type="text" 
+            placeholder="Ex: Aluno Lucas, Aluna Mariana, Aluno Pedro" 
+            value={novosAutoresTexto} 
+            onChange={(e) => setNovosAutoresTexto(e.target.value)} 
+          />
         </div>
 
-        {/* Campo: Imagens (Múltiplas) */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          <label style={{ fontWeight: 'bold' }}>Imagens da Notícia (Selecione 1 ou mais):</label>
+        {/* Campo: Imagens */}
+        <div className="form-campo">
+          <label>Imagens da Notícia (Selecione 1 ou mais):</label>
           <input
             type="file"
             multiple
             accept="image/*"
             onChange={(e) => setImagens(e.target.files)}
-            style={{ padding: '6px 0' }}
           />
         </div>
 
-        {/* Campo: URL do Vídeo (Apenas 1) */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          <label style={{ fontWeight: 'bold' }}>URL do Vídeo (YouTube, Drive, etc.):</label>
+        {/* Campo: URL do Vídeo */}
+        <div className="form-campo">
+          <label>URL do Vídeo (YouTube, Drive, etc.):</label>
           <input
             type="url"
             value={videoUrl}
             onChange={(e) => setVideoUrl(e.target.value)}
             placeholder="Ex: https://youtube.com..."
-            style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
           />
         </div>
 
         {/* Botão de Envio */}
-        <button
-          type="submit"
-          style={{
-            background: '#007bff',
-            color: 'white',
-            padding: '12px',
-            border: 'none',
-            borderRadius: '6px',
-            fontSize: '16px',
-            fontWeight: 'bold',
-            cursor: 'pointer',
-            marginTop: '10px'
-          }}
-        >
-          {carregando ? 'Postando Noticia....' : 'Postar Noticia'}
+        <button type="submit" className="btn-postar" disabled={carregando}>
+          {carregando ? 'Postando Notícia...' : 'Postar Notícia'}
         </button>
 
       </form>

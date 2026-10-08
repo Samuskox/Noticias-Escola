@@ -1,0 +1,113 @@
+/* Container que envelopa a página inteira para centralizar o card */
+.login-page-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Ocupa a altura inteira da tela */
+  background-color: #f4f6f9; /* Um fundo sutil para dar contraste ao card */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* O card de login em si */
+.login-container {
+  width: 100%;
+  max-width: 380px; /* Um pouco mais largo para telas grandes */
+  padding: 30px 24px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px; /* Bordas mais arredondadas e modernas */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Sombra suave profissional */
+  box-sizing: border-box;
+}
+
+.login-container h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333333;
+  font-family: sans-serif;
+}
+
+.login-error {
+  color: #dc3545;
+  background-color: #f8d7da;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Mais espaçamento para facilitar o toque no celular */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #555555;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px; /* Inputs maiores para facilitar a digitação no celular */
+  font-size: 16px; /* Evita que o iOS dê zoom automático ao focar no input */
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+/* Efeito azul amigável ao clicar no campo */
+.form-group input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.btn-submit {
+  padding: 14px; /* Botão mais alto, perfeito para o tamanho do polegar */
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  transition: background 0.2s;
+  margin-top: 8px;
+}
+
+/* Efeito de hover para computador */
+@media (hover: hover) {
+  .btn-submit:hover {
+    background: #0056b3;
+  }
+}
+
+.btn-submit:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Ajustes específicos para telas muito pequenas de celular */
+@media (max-width: 480px) {
+  .login-page-wrapper {
+    background-color: #ffffff; /* No celular, remove o fundo cinza se preferir */
+    padding: 16px;
+  }
+  
+  .login-container {
+    border: none; /* Remove a borda para parecer um app nativo */
+    box-shadow: none; /* Remove a sombra no mobile */
+    padding: 20px 8px;
+  }
+}

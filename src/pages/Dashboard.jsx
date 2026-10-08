@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import { useNavigate, Link } from 'react-router-dom';
+import './Dashboard.css';
 
 export default function Dashboard() {
   const [noticias, setNoticias] = useState([]);
@@ -80,54 +81,51 @@ export default function Dashboard() {
   const nomeAdmin = admin.NOME_ADMINISTRADOR || 'Administrador';
 
   return (
-    <div style={{ maxWidth: '600px', margin: '50px auto', padding: '20px', fontFamily: 'sans-serif' }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid #333', paddingBottom: '12px', marginBottom: '30px' }}>
+<div className="dashboard-container">
+      <header className="dashboard-header">
         <div>
-          <h1 style={{ margin: 0, fontSize: '1.8rem' }}>Painel do Administrador</h1>
-          <p style={{ margin: '4px 0 0 0', color: '#666' }}>Bem-vindo(a), <strong>{nomeAdmin}</strong></p>
+          <h1>Painel do Administrador</h1>
+          <p>Bem-vindo(a), <strong>{nomeAdmin}</strong></p>
         </div>
-        <button onClick={handleSair} style={{ background: '#dc3545', color: 'white', border: 'none', padding: '8px 14px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
+        <button onClick={handleSair} className="btn-sair">
           Sair
         </button>
       </header>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-        <Link to="/admin" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', background: '#007bff', color: 'white', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.1rem', textAlign: 'center', boxShadow: '0 2px 6px rgba(0,0,0,0.1)' }}>
+      {/* Grid de botões principais */}
+      <div className="dashboard-menu-grid">
+        <Link to="/admin" className="menu-card escrever">
           Escrever
         </Link>
-        <Link to="/" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', background: '#6c7d76', color: 'white', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.1rem', textAlign: 'center', boxShadow: '0 2px 6px rgba(0,0,0,0.1)' }}>
+        <Link to="/" className="menu-card ver-site">
           Ver o Site (Home)
         </Link>
-
-        <Link to="/mural" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', background: '#ceab61', color: 'white', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.1rem', textAlign: 'center', boxShadow: '0 2px 6px rgba(0,0,0,0.1)' }}>
+        <Link to="/mural" className="menu-card mural">
           Gerenciar Mural
         </Link>
-
-        <Link to="/autores" style={{ padding: '20px', background: '#17a2b8', color: 'white', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.1rem', textAlign: 'center', boxShadow: '0 2px 6px rgba(0,0,0,0.1)' }}>
+        <Link to="/autores" className="menu-card autores">
           Gerenciar Autores
-      </Link>
-
+        </Link>
       </div>
 
-      <section>
-        <h3 style={{ borderBottom: '1px solid #ddd', paddingBottom: '8px', marginBottom: '16px' }}>Publicações Ativas ({noticias.length})</h3>
+      {/* Seção das postagens abaixo */}
+      <section className="publicacoes-section">
+        <h3>Publicações Ativas ({noticias.length})</h3>
         
-        {carregando && <p style={{ color: '#666' }}>Carregando acervo de controle...</p>}
+        {carregando && <p className="publicacoes-status-msg">Carregando acervo de controle...</p>}
         
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        <div className="publicacoes-lista">
           {noticias.map((item) => (
-            <div key={item.ID_NOTICIAS} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px', border: '1px solid #eee', borderRadius: '8px', background: '#fff', boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
-              <div style={{ paddingRight: '12px' }}>
-                <strong style={{ display: 'block', fontSize: '1.1rem', color: '#222' }}>{item.TITULO}</strong>
-                <span style={{ fontSize: '0.82rem', color: '#777' }}>
+            <div key={item.ID_NOTICIAS} className="publicacao-item">
+              <div className="publicacao-info">
+                <strong>{item.TITULO}</strong>
+                <span>
                   {new Date(item.DATA).toLocaleDateString('pt-BR')}
                 </span>
               </div>
               <button 
                 onClick={() => handleExcluirNoticia(item.ID_NOTICIAS, item.IMAGENS)}
-                style={{ background: '#e63946', color: 'white', border: 'none', padding: '8px 12px', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', fontSize: '0.88rem', flexShrink: 0, transition: 'background 0.2s' }}
-                onMouseEnter={(e) => e.currentTarget.style.background = '#bd2130'}
-                onMouseLeave={(e) => e.currentTarget.style.background = '#e63946'}
+                className="btn-excluir-noticia"
               >
                 🗑️ Excluir
               </button>
@@ -135,7 +133,7 @@ export default function Dashboard() {
           ))}
 
           {!carregando && noticias.length === 0 && (
-            <p style={{ color: '#777', fontStyle: 'italic', textAlign: 'center', marginTop: '10px' }}>Nenhuma notícia encontrada para gerenciar.</p>
+            <p className="publicacoes-vazio">Nenhuma notícia encontrada para gerenciar.</p>
           )}
         </div>
       </section>

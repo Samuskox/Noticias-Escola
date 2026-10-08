@@ -1,0 +1,203 @@
+/* Dashboard.css */
+
+.dashboard-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: sans-serif;
+  box-sizing: border-box;
+  background-color: #ffffff !important; /* Força fundo branco contra Dark Mode */
+  color: #222222 !important; /* Força texto escuro */
+}
+
+/* Cabeçalho do Painel */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #333;
+  padding-bottom: 12px;
+  margin-bottom: 30px;
+  gap: 16px;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #111;
+}
+
+.dashboard-header p {
+  margin: 4px 0 0 0;
+  color: #666;
+}
+
+.btn-sair {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 16px; /* Um pouco maior para facilitar o toque no celular */
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+@media (hover: hover) {
+  .btn-sair:hover {
+    background: #bd2130;
+  }
+}
+
+/* Grid de Navegação de Gerenciamento */
+.dashboard-menu-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.menu-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s, filter 0.2s;
+  box-sizing: border-box;
+}
+
+/* Cores específicas de cada botão do menu */
+.menu-card.escrever { background: #007bff; }
+.menu-card.ver-site { background: #6c7d76; }
+.menu-card.mural { background: #ceab61; }
+.menu-card.autores { background: #17a2b8; }
+
+@media (hover: hover) {
+  .menu-card:hover {
+    transform: translateY(-2px);
+    filter: brightness(0.9);
+  }
+}
+
+/* Seção de Listagem das Publicações */
+.publicacoes-section h3 {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.publicacoes-status-msg {
+  color: #666;
+}
+
+.publicacoes-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.publicacao-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+  gap: 16px;
+}
+
+.publicacao-info {
+  flex: 1;
+}
+
+.publicacao-info strong {
+  display: block;
+  font-size: 1.1rem;
+  color: #222;
+  margin-bottom: 4px;
+}
+
+.publicacao-info span {
+  font-size: 0.82rem;
+  color: #777;
+}
+
+.btn-excluir-noticia {
+  background: #e63946;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.88rem;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+@media (hover: hover) {
+  .btn-excluir-noticia:hover {
+    background: #bd2130;
+  }
+}
+
+.publicacoes-vazio {
+  color: #777;
+  font-style: italic;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Regras Responsivas para Celular */
+@media (max-width: 520px) {
+  .dashboard-container {
+    margin: 10px auto;
+    padding: 16px;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .btn-sair {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Faz as duas colunas de botões virarem uma única coluna no mobile */
+  .dashboard-menu-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .menu-card {
+    padding: 18px;
+  }
+
+  /* Ajusta a linha de exclusão para não quebrar feio em telas muito pequenas */
+  .publicacao-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .btn-excluir-noticia {
+    width: 100%;
+    text-align: center;
+  }
+}

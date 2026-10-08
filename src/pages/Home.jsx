@@ -88,48 +88,48 @@ export default function Home() {
 
 
   return (
+<div className="home-container">
 
-    <div className="home-container">
+  <header className="home-header">
+    <h1>O Clarim da Escola</h1>
+    <p><strong>Professor Orientador:</strong> Lucas Alaric Angelo</p>
+    <p><strong>Redação: </strong>{autoresMural}</p>
+  </header>
 
-      <header className="home-header">
-        <h1>O Clarim da Escola</h1>
-        <p><strong>Professor Orientador:</strong> Lucas Alaric Angelo</p>
-        <p><strong>Redação: </strong>{autoresMural}</p>
-      </header>
+  {/* Seção dos blocos do mural */}
+  <section className="mural-grid">
+    {muralBlocos.map((bloco) => (
+      <div key={bloco.ID} className="mural-bloco">
+        <h3>{bloco.TITULO}</h3>
+        <p>{bloco.CONTEUDO}</p>
+      </div>
+    ))}
+  </section>
 
-      {/* Seção dos blocos do mural */}
-      <section className="mural-grid">
-        {muralBlocos.map((bloco) => (
-          <div key={bloco.ID} className="mural-bloco">
-            <h3>{bloco.TITULO}</h3>
-            <p>{bloco.CONTEUDO}</p>
-          </div>
-        ))}
-      </section>
+  {/* Seção das notícias */}
+  <section className="noticias-secao">
+    <h2>Últimas Notícias</h2>
 
-      {/* Seção das notícias */}
-      <section>
-        <h2>Últimas Notícias</h2>
+    {carregando && <p className="mensagem-status">Carregando matérias recentes...</p>}
 
-        {carregando && <p style={{ color: '#666' }}>Carregando matérias recentes...</p>}
+    {!carregando && listaNoticias.length === 0 && (
+      <p className="mensagem-status">Nenhuma notícia publicada ainda no mural.</p>
+    )}
 
-        {!carregando && listaNoticias.length === 0 && (
-          <p style={{ color: '#777' }}>Nenhuma notícia publicada ainda no mural.</p>
-        )}
+    {!carregando && listaNoticias.slice(0, 2).map((item) => (
+      <NoticiaCard key={item.id} noticia={item} />
+    ))}
+  </section>
 
-        {!carregando && listaNoticias.slice(0, 2).map((item) => (
-          <NoticiaCard key={item.id} noticia={item} />
-        ))}
-      </section>
-
-      {/* Botão dinâmico para ver o acervo de todas as notícias */}
-      {!carregando && listaNoticias.length > 2 && (
-        <div className="botao-acervo-container">
-          <Link to="/todasNoticias" className="botao-acervo">
-            📚 Ver Todas as Notícias Antigas ({listaNoticias.length})
-          </Link>
-        </div>
-      )}
+  {/* Botão dinâmico para ver o acervo de todas as notícias */}
+  {!carregando && listaNoticias.length > 2 && (
+    <div className="botao-acervo-container">
+      <Link to="/todasNoticias" className="botao-acervo">
+        📚 Ver Todas as Notícias Antigas ({listaNoticias.length})
+      </Link>
     </div>
+  )}
+</div>
+
   );
 }

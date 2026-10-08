@@ -2,40 +2,44 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import Home from '../pages/Home';
+import './Navbar.css';
 import iconeHamburguer from '../assets/hamburgueMenu.png';
 
 export default function Navbar() {
   const [aberto, setAberto] = useState(false);
 
   return (
-    <nav style={{ padding: '12px 20px', borderBottom: '1px solid #ddd' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+   <nav className="navbar-header">
+      <div className="navbar-topo">
 
-        <a href="/"><h2>Jornal Escolar</h2></a>
+        <a href="/" className="navbar-logo-link">
+          <h2>Jornal Escolar</h2>
+        </a>
        
         {/* Botão com as 3 barrinhas */}
         <button 
           onClick={() => setAberto(!aberto)} 
-          style={{ fontSize: '20px', cursor: 'pointer', background: 'none', border: 'none' }}
+          className="btn-hamburguer"
         >
-            <img src={iconeHamburguer} alt="" width="50" />
+          <img src={iconeHamburguer} alt="Menu" />
         </button>
       </div>
 
+      {/* A div fica sempre na árvore, mas ganha a classe ".aberto" dinamicamente */}
+      <div className={`navbar-menu-container ${aberto ? 'aberto' : ''}`}>
+        <Link to="/" className="navbar-link-item" onClick={() => setAberto(false)}>Início</Link>
+        <Link to="/sobre" className="navbar-link-item" onClick={() => setAberto(false)}>Sobre nós</Link>
+        <Link to="/escola" className="navbar-link-item" onClick={() => setAberto(false)}>Nossa escola</Link>
+        <Link to="/colaboradores" className="navbar-link-item" onClick={() => setAberto(false)}>Todos os colaboradores</Link>
+        <Link to="/todasNoticias" className="navbar-link-item" onClick={() => setAberto(false)}>Todas as Notícias</Link>
+        <Link to="/jogos" className="navbar-link-item" onClick={() => setAberto(false)}>Jogos</Link>
 
-      {aberto && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '10px' }}>
-          <Link to="/" onClick={() => setAberto(false)}>Início</Link>
-          <Link to="/sobre" onClick={() => setAberto(false)}>Sobre nós</Link>
-          <Link to="/escola" onClick={() => setAberto(false)}>Nossa escola</Link>
-          <Link to="/colaboradores" onClick={() => setAberto(false)}>Todos os colaboradores</Link>
-          <Link to="/todasNoticias" onClick={() => setAberto(false) }>Todas as Notícias</Link>
-          <Link to="/jogos" onClick={() => setAberto(false) }>jogos</Link>
-
-          <hr />
-          <Link to="/login" onClick={() => setAberto(false)}>Área de Postagem (Admin)</Link>
-        </div>
-      )}
+        <hr className="navbar-divisor" />
+        
+        <Link to="/login" className="navbar-link-admin" onClick={() => setAberto(false)}>
+          🔒 Área de Postagem (Admin)
+        </Link>
+      </div>
     </nav>
   );
 }
