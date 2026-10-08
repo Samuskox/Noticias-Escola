@@ -91,7 +91,7 @@ export default function Home() {
 <div className="home-container">
 
   <header className="home-header">
-    <h1>O Clarim da Escola</h1>
+    <h1>Jornal do Sarah</h1>
     <p><strong>Professor Orientador:</strong> Lucas Alaric Angelo</p>
     <p><strong>Redação: </strong>{autoresMural}</p>
   </header>

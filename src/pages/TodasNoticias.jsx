@@ -71,7 +71,7 @@ export default function TodasNoticias() {
           ← Voltar para a Página Inicial
         </Link>
         <h1>Acervo de Matérias</h1>
-        <p className="acervo-subtitulo">Consulte todas as notícias já publicadas no Clarim da Escola.</p>
+        <p className="acervo-subtitulo">Consulte todas as notícias já publicadas no Jornal do Sarah.</p>
       </header>
 
       <section className="acervo-lista">
