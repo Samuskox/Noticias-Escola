@@ -41,10 +41,15 @@ export default function Login() {
 
   return (
 
+    
+
     <div className="login-page-wrapper">
 
       <div className="login-container">
         <h2>Área do Administrador</h2>
+        <span className="login-aviso-texto">
+      ⚠️ Atenção: A área de postagem e gerenciamento é permitida apenas para os administradores!
+      </span>
         {erro && <p className="login-error">{erro}</p>}
 
         <form onSubmit={handleLogin} className="login-form">

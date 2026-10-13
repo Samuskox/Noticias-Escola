@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Home from '../pages/Home';
 import './Navbar.css';
 import iconeHamburguer from '../assets/hamburgueMenu.png';
+import logoEscola from '../assets/LogoSarah.jpg';
 
 export default function Navbar() {
   const [aberto, setAberto] = useState(false);
@@ -13,6 +14,16 @@ export default function Navbar() {
       <div className="navbar-topo">
 
         <a href="/" className="navbar-logo-link">
+        <img 
+            src={logoEscola} 
+            alt="Logo Oficial da Escola" 
+            style={{ 
+              width: '45px',      /* Tamanho ideal para crachá de topo */
+              height: '45px', 
+              objectFit: 'contain',
+              borderRadius: '8px' /* Deixa os cantos da logo fofinhos se for quadrada */
+            }} 
+          />
           <h2>Jornal Escolar</h2>
         </a>
        

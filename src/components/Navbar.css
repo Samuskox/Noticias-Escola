@@ -186,3 +186,11 @@
   0%, 100% { transform: scale(1); }
   50% { transform: scale(0.98); box-shadow: 0 3px 0 #4A3E3D; }
 }
+
+
+@media (hover: hover) {
+  /* Quando passa o mouse no link, faz a caixa inteira (logo + texto) dar um pulinho */
+  .navbar-logo-link:hover {
+    transform: scale(1.05) translateY(-2px);
+  }
+}

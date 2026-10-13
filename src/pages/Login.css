@@ -1,48 +1,75 @@
-/* Container que envelopa a página inteira para centralizar o card */
+/* Login.css - Versão O Clarim Divertido 🔐🎈 */
+
+/* 1. CONTAINER QUE ENVELOPA A PÁGINA INTEIRA (Fundo Azul Céu) */
 .login-page-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Ocupa a altura inteira da tela */
-  background-color: #f4f6f9; /* Um fundo sutil para dar contraste ao card */
+  min-height: 100vh; 
+  background-color: #e5f1f7; /* Azul sutil da paleta para dar harmonia com o restante do site */
   padding: 20px;
   box-sizing: border-box;
+  font-family: 'Quicksand', 'Nunito', 'Comic Sans MS', sans-serif;
 }
 
-/* O card de login em si */
+/* 2. O CARD DE LOGIN (Estilo Lousa Mágica Amarela) */
 .login-container {
   width: 100%;
-  max-width: 380px; /* Um pouco mais largo para telas grandes */
-  padding: 30px 24px;
-  background-color: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px; /* Bordas mais arredondadas e modernas */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Sombra suave profissional */
+  max-width: 380px; 
+  padding: 32px 24px;
+  background-color: #FFF9EF !important; /* Tom creme da paleta */
+  border: 4px solid #4A3E3D; /* Contorno forte estilo desenho animado */
+  border-radius: 20px; /* Cantos bem arredondados */
+  box-shadow: 8px 8px 0px #FFD85E; /* Sombra sólida no amarelo sol */
   box-sizing: border-box;
+  transition: transform 0.2s ease;
 }
 
+/* 3. TÍTULO PRINCIPAL */
 .login-container h2 {
   margin-top: 0;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   text-align: center;
-  color: #333333;
-  font-family: sans-serif;
+  color: #65C7F7; /* Azul vibrante da paleta */
+  font-size: 1.8rem;
+  font-weight: 900;
+  text-shadow: 1.5px 1px 0px #4A3E3D;
 }
 
-.login-error {
-  color: #dc3545;
-  background-color: #f8d7da;
+/* 🌟 NOVO AVISO: Mensagem "Apenas Administradores" (Estilo Post-it Rosa) */
+.login-aviso-texto {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: #4A3E3D;
+  background-color: #FFABC4; /* Rosa chiclete da paleta */
+  border: 2px dashed #4A3E3D;
+  border-radius: 12px;
   padding: 10px;
-  border-radius: 6px;
-  font-size: 14px;
   text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  line-height: 1.4;
+  box-shadow: 2px 2px 0px rgba(74, 62, 61, 0.1);
+}
+
+/* 4. MENSAGEM DE ERRO (Estilo Alerta Vermelho de Game Over) */
+.login-error {
+  color: #ffffff;
+  background-color: #e63946; /* Vermelho vibrante */
+  border: 2px solid #4A3E3D;
+  padding: 10px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 16px;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.1);
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 16px; /* Mais espaçamento para facilitar o toque no celular */
+  gap: 16px; 
 }
 
 .form-group {
@@ -52,62 +79,81 @@
 
 .form-group label {
   margin-bottom: 6px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #555555;
+  font-size: 1rem;
+  font-weight: 800; /* Letras mais grossas e infantis */
+  color: #4A3E3D;
 }
 
+/* 5. CAMPOS DE INPUT (Estilo Caixinha Macia) */
 .form-group input {
   width: 100%;
-  padding: 12px; /* Inputs maiores para facilitar a digitação no celular */
-  font-size: 16px; /* Evita que o iOS dê zoom automático ao focar no input */
-  border: 1px solid #cccccc;
-  border-radius: 6px;
+  padding: 12px; 
+  font-size: 16px; 
+  color: #4A3E3D;
+  border: 3px solid #4A3E3D; /* Contorno de cartoon */
+  border-radius: 12px;
+  background-color: #ffffff;
   box-sizing: border-box;
-  transition: border-color 0.2s;
+  font-weight: 600;
+  transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.25), border-color 0.2s;
 }
 
-/* Efeito azul amigável ao clicar no campo */
+/* Efeito divertido e expansivo ao clicar para digitar */
 .form-group input:focus {
-  border-color: #007bff;
+  border-color: #65C7F7; /* Muda a borda para o azul da paleta */
+  transform: scale(1.02); /* O campo dá um leve pulinho para a frente */
   outline: none;
+  background-color: #ffffff;
 }
 
+/* 6. BOTÃO SUBMIT (Estilo Botão de Videogame Verde) */
 .btn-submit {
-  padding: 14px; /* Botão mais alto, perfeito para o tamanho do polegar */
-  font-size: 16px;
-  font-weight: bold;
+  padding: 14px; 
+  font-size: 1.1rem;
+  font-weight: 900;
   cursor: pointer;
-  background: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  transition: background 0.2s;
-  margin-top: 8px;
+  background: #8EDDB0; /* Verde da paleta */
+  color: #4A3E3D;
+  border: 3px solid #4A3E3D;
+  border-radius: 50px; /* Formato pílula macio */
+  box-shadow: 0 5px 0 #4A3E3D; /* Sombra sólida de botão que afunda */
+  transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.4), box-shadow 0.1s ease;
+  margin-top: 12px;
 }
 
-/* Efeito de hover para computador */
 @media (hover: hover) {
   .btn-submit:hover {
-    background: #0056b3;
+    background: #a2ebd0; /* Verde um pouquinho mais claro no foco */
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 #4A3E3D;
   }
+}
+
+.btn-submit:active {
+  transform: translateY(4px); /* Botão afunda fisicamente ao clicar */
+  box-shadow: 0 1px 0 #4A3E3D;
 }
 
 .btn-submit:disabled {
   background: #cccccc;
+  border-color: #777777;
+  box-shadow: 0 3px 0 #777777;
+  color: #666666;
   cursor: not-allowed;
+  transform: none !important;
 }
 
-/* Ajustes específicos para telas muito pequenas de celular */
+/* 📱 AJUSTES PARA MOBILE */
 @media (max-width: 480px) {
   .login-page-wrapper {
-    background-color: #ffffff; /* No celular, remove o fundo cinza se preferir */
+    background-color: #e5f1f7; /* Mantém o fundo azul fofinho no mobile */
     padding: 16px;
   }
   
   .login-container {
-    border: none; /* Remove a borda para parecer um app nativo */
-    box-shadow: none; /* Remove a sombra no mobile */
-    padding: 20px 8px;
+    padding: 24px 16px;
+    border-radius: 16px;
+    border-width: 3px;
+    box-shadow: 5px 5px 0px #FFD85E;
   }
 }

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NoticiaCard from '../components/NoticiaCard';
 import { supabase } from '../supabaseClient';
-
+import logoEscola from '../assets/LogoSarah.jpg'; 
 import './Home.css';
 
 // Exemplo de lista de notícias (depois pode vir de uma API ou LocalStorage)
@@ -89,6 +89,27 @@ export default function Home() {
 
   return (
 <div className="home-container">
+
+  <img 
+        src={logoEscola} 
+        alt="Logo de fundo da escola" 
+        style={{
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)', /* Centraliza perfeitamente na tela */
+          height: '65vh', /* Tamanho gigante de fundo */
+          width: 'auto',
+          objectFit: 'contain',
+          zIndex: 0, /* Fica atrás de todos os textos do jornal */
+          
+          /* 🌟 OPACIDADE MÍNIMA PEDIDA: 0.04 significa apenas 4% de visibilidade.
+             Fica super sutil, parecendo papel timbrado de verdade e não atrapalha a leitura! */
+          opacity: 0.05, 
+          
+          pointerEvents: 'none' /* Garante que o usuário consiga clicar nos cards sem a imagem travar o mouse */
+        }} 
+      />
 
   <header className="home-header">
     <h1>Jornal do Sarah</h1>
