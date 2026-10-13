@@ -1,124 +1,179 @@
-/* NoticiaPagina.css - Versão O Clarim Divertido 📝🎨 */
+/* NoticiaPagina.css - Versão Super Animada & Descansativa 📰🎈 */
 
 .noticia-artigo {
-  max-width: 700px;
+  max-width: 750px; 
   margin: 32px auto;
-  padding: 24px;
-  font-family: 'Comic Sans MS', 'Fredoka One', 'Nunito', sans-serif; /* Tipografia arredondada infantil */
+  padding: 32px 28px;
+  font-family: 'Quicksand', 'Nunito', sans-serif; 
   box-sizing: border-box;
   background-color: #ffffff !important; 
-  color: #3e2723 !important; /* Marrom suave, muito melhor para crianças que o preto rígido */
-  border: 4px solid #ff9800; /* Moldura laranja super alegre */
-  border-radius: 24px; /* Cantos super redondinhos */
-  box-shadow: 0 8px 0 #ffe082; /* Sombra sólida estilo desenho animado */
+  color: #4A3E3D !important; 
+  border: 3px solid #4A3E3D;
+  border-radius: 20px;
+  box-shadow: 6px 6px 0px #4A3E3D; /* Sombra sólida para combinar com a Home */
+  transition: transform 0.3s ease;
 }
 
 .noticia-header {
-  margin-bottom: 24px;
-  text-align: center; /* Centralizado deixa o visual mais equilibrado e amigável */
+  margin-bottom: 30px;
+  text-align: center;
 }
 
+/* 🌟 ANIMAÇÃO NO TÍTULO DA NOTÍCIA: Flutua e cresce de forma elástica */
 .noticia-titulo {
-  font-size: 2.5rem;
+  font-size: 2.4rem;
   margin-top: 0;
-  margin-bottom: 12px;
-  line-height: 1.2;
-  color: #e65100; /* Laranja chamativo */
-  font-weight: 900; /* Letras bem gordinhas */
-  text-shadow: 2px 2px 0px #ffcc80; /* Efeito 3D lúdico */
+  margin-bottom: 14px;
+  line-height: 1.25;
+  color: #65C7F7; 
+  font-weight: 900;
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+@media (hover: hover) {
+  .noticia-titulo:hover {
+    transform: scale(1.05) translateY(-3px);
+    color: #FFABC4; /* Muda para o rosa da paleta para dar um brilho animado */
+  }
+}
+
+/* 🌟 ANIMAÇÃO NOS METADADOS: Dá um pulinho de mola */
 .noticia-metadados {
-  color: #1b5e20; /* Verde escuro legível */
+  color: #4A3E3D; 
   font-size: 0.95rem;
   font-weight: bold;
   margin: 0;
-  background-color: #e8f5e9; /* Badge em formato de crachá infantil */
+  background-color: #FFD85E; 
   display: inline-block;
   padding: 8px 18px;
   border-radius: 50px;
-  border: 2px solid #a5d6a7;
-  box-shadow: 0 3px 0 #a5d6a7;
+  border: 2px solid #4A3E3D;
+  box-shadow: 0 4px 0 #4A3E3D;
+  cursor: default;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.5), box-shadow 0.2s ease;
 }
 
+@media (hover: hover) {
+  .noticia-metadados:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 6px 0 #4A3E3D;
+    background-color: #8EDDB0; /* Muda de amarelo para verde na hora! */
+  }
+}
+
+/* 🌟 ANIMAÇÃO NO RESUMO (POST-IT): Balança e expande de leve */
 .noticia-resumo {
   font-size: 1.2rem;
-  color: #4e342e;
-  font-style: normal; /* Remove o itálico para deixar a leitura mais fácil para crianças */
+  color: #4A3E3D;
+  font-style: normal; 
   font-weight: bold;
-  margin-top: 20px;
-  line-height: 1.5;
-  background: #fffde7; /* Caixinha amarela estilo post-it */
-  padding: 16px;
+  margin-top: 24px;
+  line-height: 1.6;
+  background: #FFF9EF; 
+  padding: 20px;
   border-radius: 16px;
-  border: 2px dashed #fff176;
+  border: 3px dashed #FFABC4; 
+  box-shadow: 0 0px 0 rgba(0,0,0,0);
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.3), 
+              box-shadow 0.25s ease, 
+              border-color 0.25s ease;
 }
 
-/* Container de imagens - Estilo Álbum de Fotos */
+@media (hover: hover) {
+  .noticia-resumo:hover {
+    transform: scale(1.02) rotate(0.5deg);
+    border-color: #65C7F7; /* O tracejado muda para azul */
+    box-shadow: 4px 4px 0px #4A3E3D; /* Ganha sombra em bloco */
+  }
+}
+
+/* 🌟 GALERIA DE FOTOS SUPER ANIMADA: Efeito Polaroid Inteligente */
 .noticia-galeria {
   display: flex;
   flex-direction: column;
   gap: 28px;
-  margin: 32px 0;
+  margin: 35px 0;
 }
 
 .noticia-imagem {
   width: 100%;
-  border-radius: 20px;
+  border-radius: 16px;
   object-fit: cover;
-  border: 6px solid #ffffff; /* Borda branca grossa simulando foto Polaroid revelada */
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-  transition: transform 0.2s ease-in-out;
+  border: 3px solid #4A3E3D; 
+  box-shadow: 4px 4px 0px rgba(74, 62, 61, 0.15);
+  /* Configura transição de mola suave para as fotos */
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+              box-shadow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Efeito divertido: as fotos dão uma leve giradinha quando passa o mouse */
-.noticia-imagem:nth-child(odd):hover {
-  transform: scale(1.02) rotate(1.5deg);
+@media (hover: hover) {
+  /* Fotos na posição ímpar inclinam para a direita e saltam */
+  .noticia-galeria .noticia-imagem:nth-child(odd):hover {
+    transform: scale(1.04) translateY(-5px) rotate(1.5deg);
+    box-shadow: 8px 8px 0px #FFABC4; /* Sombra rosa divertida */
+  }
+
+  /* Fotos na posição par inclinam para a esquerda e saltam */
+  .noticia-galeria .noticia-imagem:nth-child(even):hover {
+    transform: scale(1.04) translateY(-5px) rotate(-1.5deg);
+    box-shadow: 8px 8px 0px #65C7F7; /* Sombra azul divertida */
+  }
 }
 
-.noticia-imagem:nth-child(even):hover {
-  transform: scale(1.02) rotate(-1.5deg);
-}
-
-/* Corpo de texto da matéria */
+/* Corpo de texto principal da matéria (Mantido limpo e confortável) */
 .noticia-conteudo {
   line-height: 1.8;
-  font-size: 1.15rem;
-  color: #3e2723;
+  font-size: 1.2rem;
+  color: #4A3E3D;
   white-space: pre-line;
-  margin-bottom: 40px;
+  margin-bottom: 45px;
   text-align: left;
-  padding: 0 10px;
-  background-image: radial-gradient(#e0e0e0 1px, transparent 1px); /* Fundo sutil de pontinhos, estilo caderno de desenho */
-  background-size: 20px 20px;
-  border-radius: 12px;
+  padding: 0 4px;
+  letter-spacing: 0.01em; 
 }
 
-/* Seção de vídeo - Estilo Cineminha */
+/* Seção de vídeo - Estilo Televisãozinha */
 .noticia-video-secao {
   margin-top: 40px;
-  border-top: 4px dashed #ffe082; /* Linha de recorte pontilhada */
+  border-top: 3px dashed #4A3E3D; 
   padding-top: 24px;
 }
 
 .noticia-video-secao h4 {
   margin-top: 0;
   margin-bottom: 16px;
-  font-size: 1.4rem;
-  color: #0288d1; /* Azul chamativo */
-  font-weight: 800;
+  font-size: 1.3rem;
+  color: #4A3E3D;
+  font-weight: 900;
   text-align: center;
+  transition: transform 0.2s ease;
 }
 
-/* Moldura divertida para o vídeo */
+@media (hover: hover) {
+  .noticia-video-secao h4:hover {
+    transform: scale(1.05);
+  }
+}
+
+/* 🌟 ANIMAÇÃO DO VÍDEO: A TV balança e expande a sombra no foco */
 .video-wrapper {
   position: relative;
   padding-bottom: 56.25%; 
   height: 0;
   overflow: hidden;
-  border-radius: 20px;
-  border: 4px solid #0288d1; /* Moldura de televisão azul */
-  box-shadow: 0 6px 0 #b3e5fc;
+  border-radius: 18px;
+  border: 3px solid #4A3E3D; 
+  box-shadow: 0 5px 0 #65C7F7; 
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+              box-shadow 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@media (hover: hover) {
+  .video-wrapper:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 9px 0 #FFD85E; /* Aumenta a base da TV e muda pra amarelo */
+  }
 }
 
 .video-iframe {
@@ -130,25 +185,35 @@
   border: 0;
 }
 
-/* Otimizações para telas pequenas (Celulares) */
+/* Otimizações Mobile */
 @media (max-width: 480px) {
   .noticia-artigo {
-    margin: 16px auto;
+    margin: 12px auto;
     padding: 16px;
-    border-radius: 16px;
+    border-radius: 12px;
   }
 
   .noticia-titulo {
-    font-size: 1.9rem; 
+    font-size: 1.8rem; 
   }
 
   .noticia-resumo {
-    font-size: 1.05rem;
-    padding: 12px;
+    font-size: 1.1rem;
+    padding: 14px;
   }
 
   .noticia-conteudo {
-    font-size: 1.05rem; 
-    line-height: 1.6;
+    font-size: 1.1rem; 
+    line-height: 1.7;
+  }
+
+  /* Suaviza animações no mobile para não travar o scroll do celular */
+  @media (hover: hover) {
+    .noticia-galeria .noticia-imagem:hover {
+      transform: scale(1.01);
+    }
+    .video-wrapper:hover {
+      transform: none;
+    }
   }
 }

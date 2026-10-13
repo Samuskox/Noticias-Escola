@@ -6,11 +6,31 @@ import './Noticia.css';
 
 export default function Noticia() {
   const parametros = useParams();
-  console.log("Parâmetros da URL:", parametros);
  const { id } = useParams(); 
 
   const [noticia, setNoticia] = useState(null);
   const [carregando, setCarregando] = useState(true);
+
+  const obterLinkEmbedYoutube = (url) => {
+    if (!url) return null;
+
+    // Expressão regular super segura que captura apenas o ID de 11 caracteres do vídeo
+    const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+    const resultado = url.match(regex);
+
+    // Se encontrou o ID de 11 caracteres, monta o link perfeito
+    if (resultado && resultado[1]) {
+      const idVideo = resultado[1];
+      return "https://youtube.com/embed/" + idVideo;
+    }
+
+    // Se o link colado já for um embed perfeito, retorna ele mesmo
+    if (url.includes('/embed/')) {
+      return url;
+    }
+
+    return null; // Retorna null para não quebrar o iframe se o link for inválido
+  };
 
   useEffect(() => {
     const buscarNoticiaUnica = async () => {
@@ -94,12 +114,12 @@ export default function Noticia() {
       </div>
 
       {/* Se houver vídeo cadastrado do YouTube, renderiza o Player */}
-      {noticia.url_video && (
+      {noticia.videoUrl && (
         <div className="noticia-video-secao">
           <h4>Vídeo Anexo:</h4>
           <div className="video-wrapper">
             <iframe 
-              src={noticia.url_video.replace('watch?v=', 'embed/')} // Converte link normal do youtube em link embed
+              src={obterLinkEmbedYoutube(noticia.videoUrl)} // Converte link normal do youtube em link embed
               title="Player do Vídeo" 
               allowFullScreen
               className="video-iframe"

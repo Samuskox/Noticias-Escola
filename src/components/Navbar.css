@@ -1,12 +1,11 @@
-/* Navbar.css - Versão O Clarim Divertido 🎈 */
+/* Navbar.css - Versão Ultra Animada & Saltitante 🎈✨ */
 
 .navbar-header {
   padding: 16px 20px;
-  border-bottom: 4px dashed #ff9800; /* Borda pontilhada laranja, estilo recorte */
-  background-color: #ffffff !important; 
-  font-family: 'Comic Sans MS', 'Fredoka One', 'Nunito', sans-serif;
+  border-bottom: 5px double #4A3E3D; 
+  background-color: #FFF9EF !important; 
+  font-family: 'Quicksand', 'Nunito', 'Comic Sans MS', sans-serif;
   box-sizing: border-box;
-  box-shadow: 0 4px 0 #ffe082; /* Sombra sólida fofinha */
   position: relative;
   z-index: 999;
 }
@@ -19,42 +18,58 @@
 
 .navbar-logo-link {
   text-decoration: none;
-  color: #ff5722 !important; /* Coral vivo e alegre */
+  color: #65C7F7 !important; 
+  display: inline-block;
 }
 
+/* 🌟 ANIMAÇÃO DA LOGO: Estica e pula elástica no foco */
 .navbar-logo-link h2 {
   margin: 0;
   font-size: 1.6rem;
-  font-weight: 900; /* Letra bem gordinha */
-  letter-spacing: -0.01em;
-  text-shadow: 1px 1px 0px #ffe082;
+  font-weight: 900; 
+  text-shadow: 2px 2px 0px #FFD85E;
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.4);
 }
 
+@media (hover: hover) {
+  .navbar-logo-link:hover h2 {
+    transform: scale(1.12) translateY(-2px) rotate(-1deg);
+    color: #FFABC4 !important; /* Pisca em rosa chiclete */
+    text-shadow: 3px 3px 0px #4A3E3D;
+  }
+}
+
+/* 🌟 ANIMAÇÃO DO BOTÃO HAMBÚRGUER: Dá uma cambalhota elástica */
 .btn-hamburguer {
-  background: #fffde7;
-  border: 2px solid #fff176;
+  background: #ffffff;
+  border: 2px solid #4A3E3D;
   border-radius: 12px;
   cursor: pointer;
   padding: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 3px 0 #fff176;
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  box-shadow: 0 4px 0 #4A3E3D; 
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.3), 
+              box-shadow 0.1s ease;
 }
 
-.btn-hamburguer:hover {
-  background: #fff9c4;
+@media (hover: hover) {
+  .btn-hamburguer:hover {
+    transform: translateY(-3px) rotate(15deg); /* Dá uma leve inclinada para cima */
+    background-color: #FFF9EF;
+  }
 }
 
 .btn-hamburguer:active {
-  transform: translateY(3px); /* Efeito de afundar de verdade */
-  box-shadow: 0 0px 0 #fff176;
+  transform: translateY(4px) rotate(0deg); 
+  box-shadow: 0 0px 0 #4A3E3D;
 }
 
 .btn-hamburguer img {
   display: block;
-  width: 28px;
+  width: 26px;
   height: auto;
 }
 
@@ -62,18 +77,18 @@
 .navbar-menu-container {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
   margin-top: 16px;
-  padding: 12px 8px;
-  border-top: 3px dashed #ffe082;
+  padding: 16px 8px 8px 8px;
+  border-top: 3px dashed #4A3E3D;
   
   max-height: 0;
   opacity: 0;
   overflow: hidden;
-  transform: translateY(-15px);
-  transition: max-height 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), /* Efeito mola/bouncing */
+  transform: translateY(-20px);
+  transition: max-height 0.45s cubic-bezier(0.175, 0.885, 0.42, 1.35), /* Efeito chiclete reforçado */
               opacity 0.2s ease,
-              transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+              transform 0.45s cubic-bezier(0.175, 0.885, 0.42, 1.35);
 }
 
 .navbar-menu-container.aberto {
@@ -82,65 +97,92 @@
   transform: translateY(0);
 }
 
-/* Links de Navegação - Estilo Adesivo Clicável */
+/* Links de Navegação - Estilo Botões de Mola */
 .navbar-link-item {
   text-decoration: none;
-  color: #2e7d32 !important; /* Letras em tom verde amigável */
+  color: #4A3E3D !important;
   font-size: 1.1rem;
   font-weight: bold;
   padding: 12px 16px;
   border-radius: 14px;
-  background-color: #e8f5e9; /* Fundo verde clarinho */
-  border: 2px solid #a5d6a7;
-  box-shadow: 0 3px 0 #a5d6a7;
+  background-color: #8EDDB0; 
+  border: 2px solid #4A3E3D;
+  box-shadow: 0 4px 0 #4A3E3D;
   text-align: center;
-  transition: all 0.1s ease;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.4), 
+              box-shadow 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.4),
+              background-color 0.2s ease;
 }
 
-.navbar-link-item:hover {
-  background-color: #c8e6c9;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 0 #a5d6a7;
+/* 🌟 ANIMAÇÃO DOS LINKS DO MENU: Balançam e alternam inclinação */
+@media (hover: hover) {
+  .navbar-link-item:hover {
+    background-color: #FFF9EF;
+    box-shadow: 0 7px 0 #4A3E3D;
+  }
+  
+  /* Links ímpares inclinam para a esquerda */
+  .navbar-link-item:nth-child(odd):hover {
+    transform: translateY(-4px) rotate(-1.5deg);
+  }
+  
+  /* Links pares inclinam para a direita */
+  .navbar-link-item:nth-child(even):hover {
+    transform: translateY(-4px) rotate(1.5deg);
+  }
 }
 
 .navbar-link-item:active {
-  transform: translateY(3px);
-  box-shadow: 0 0px 0 #a5d6a7;
+  transform: translateY(4px) rotate(0deg) !important;
+  box-shadow: 0 0px 0 #4A3E3D;
 }
 
 .navbar-divisor {
   border: 0;
   height: 3px;
-  background-image: linear-gradient(to right, #ff9800 50%, rgba(255,255,255,0) 0%); /* Divisória pontilhada colorida */
+  background-image: linear-gradient(to right, #4A3E3D 50%, rgba(255,255,255,0) 0%); 
   background-position: bottom;
   background-size: 10px 3px;
   background-repeat: repeat-x;
-  margin: 16px 0;
+  margin: 12px 0;
 }
 
-/* Botão de Acesso Restrito (Área do Admin) - Estilo Crachá */
+/* Botão de Área do Admin - Estilo Crachá Rosa Interativo */
 .navbar-link-admin {
   text-decoration: none;
-  color: #c62828 !important; /* Vermelho escuro/coral */
+  color: #4A3E3D !important;
   font-size: 1rem;
   font-weight: 800;
   padding: 12px 16px;
   border-radius: 14px;
-  background-color: #ffebee;
-  border: 2px solid #ffcdd2;
-  box-shadow: 0 3px 0 #ffcdd2;
+  background-color: #FFABC4; 
+  border: 2px solid #4A3E3D;
+  box-shadow: 0 4px 0 #4A3E3D;
   text-align: center;
-  transition: all 0.1s ease;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.4), 
+              box-shadow 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.4),
+              background-color 0.2s ease;
+  
+  /* 🌟 ANIMAÇÃO DE PULSO DISCRETA: O crachá respira de leve */
+  animation: pulsoSuave 2.5s infinite ease-in-out;
 }
 
-.navbar-link-admin:hover {
-  background-color: #ffb74d; /* Vira laranja sol no hover */
-  border-color: #ffa726;
-  box-shadow: 0 5px 0 #ffa726;
-  color: #ffffff !important;
+@media (hover: hover) {
+  .navbar-link-admin:hover {
+    animation: none; /* Pausa o pulso automático quando o mouse está em cima */
+    background-color: #FFD85E; 
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 8px 0 #4A3E3D;
+  }
 }
 
 .navbar-link-admin:active {
-  transform: translateY(3px);
-  box-shadow: 0 0px 0 #ffa726;
+  transform: translateY(4px);
+  box-shadow: 0 0px 0 #4A3E3D;
+}
+
+/* Regra da animação de pulso */
+@keyframes pulsoSuave {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(0.98); box-shadow: 0 3px 0 #4A3E3D; }
 }
