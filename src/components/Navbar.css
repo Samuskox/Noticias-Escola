@@ -1,11 +1,14 @@
-/* Navbar.css */
+/* Navbar.css - Versão O Clarim Divertido 🎈 */
 
 .navbar-header {
-  padding: 14px 20px;
-  border-bottom: 1px solid #e2e8f0;
-  background-color: #ffffff !important; /* Força fundo branco */
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding: 16px 20px;
+  border-bottom: 4px dashed #ff9800; /* Borda pontilhada laranja, estilo recorte */
+  background-color: #ffffff !important; 
+  font-family: 'Comic Sans MS', 'Fredoka One', 'Nunito', sans-serif;
   box-sizing: border-box;
+  box-shadow: 0 4px 0 #ffe082; /* Sombra sólida fofinha */
+  position: relative;
+  z-index: 999;
 }
 
 .navbar-topo {
@@ -16,100 +19,128 @@
 
 .navbar-logo-link {
   text-decoration: none;
-  color: #0f172a !important;
+  color: #ff5722 !important; /* Coral vivo e alegre */
 }
 
 .navbar-logo-link h2 {
   margin: 0;
-  font-size: 1.4rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-size: 1.6rem;
+  font-weight: 900; /* Letra bem gordinha */
+  letter-spacing: -0.01em;
+  text-shadow: 1px 1px 0px #ffe082;
 }
 
 .btn-hamburguer {
-  background: none;
-  border: none;
+  background: #fffde7;
+  border: 2px solid #fff176;
+  border-radius: 12px;
   cursor: pointer;
-  padding: 4px;
+  padding: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s ease;
+  box-shadow: 0 3px 0 #fff176;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.btn-hamburguer:hover {
+  background: #fff9c4;
 }
 
 .btn-hamburguer:active {
-  transform: scale(0.92);
+  transform: translateY(3px); /* Efeito de afundar de verdade */
+  box-shadow: 0 0px 0 #fff176;
 }
 
 .btn-hamburguer img {
   display: block;
-  width: 32px;
+  width: 28px;
   height: auto;
 }
 
-/* CONTAINER DO MENU COM ANIMAÇÃO */
+/* CONTAINER DO MENU COM ANIMAÇÃO SALTITANTE */
 .navbar-menu-container {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  margin-top: 14px;
-  padding: 8px 0;
-  border-top: 1px solid #f1f5f9;
+  gap: 6px;
+  margin-top: 16px;
+  padding: 12px 8px;
+  border-top: 3px dashed #ffe082;
   
-  /* Esconde o menu por padrão para a animação começar do zero */
   max-height: 0;
   opacity: 0;
   overflow: hidden;
-  transform: translateY(-10px);
-  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.3s ease,
-              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(-15px);
+  transition: max-height 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), /* Efeito mola/bouncing */
+              opacity 0.2s ease,
+              transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* CLASSE QUE ATIVA A ANIMAÇÃO DE ABRIR SUAVE */
 .navbar-menu-container.aberto {
-  max-height: 500px; /* Um valor alto o suficiente para caber todos os links */
+  max-height: 500px; 
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Links de Navegação */
+/* Links de Navegação - Estilo Adesivo Clicável */
 .navbar-link-item {
   text-decoration: none;
-  color: #334155 !important;
-  font-size: 1.05rem;
-  font-weight: 500;
-  padding: 12px 14px;
-  border-radius: 8px;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  color: #2e7d32 !important; /* Letras em tom verde amigável */
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background-color: #e8f5e9; /* Fundo verde clarinho */
+  border: 2px solid #a5d6a7;
+  box-shadow: 0 3px 0 #a5d6a7;
+  text-align: center;
+  transition: all 0.1s ease;
 }
 
-.navbar-link-item:hover,
+.navbar-link-item:hover {
+  background-color: #c8e6c9;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 0 #a5d6a7;
+}
+
 .navbar-link-item:active {
-  background-color: #f1f5f9;
-  color: #007bff !important;
+  transform: translateY(3px);
+  box-shadow: 0 0px 0 #a5d6a7;
 }
 
 .navbar-divisor {
   border: 0;
-  height: 1px;
-  background-color: #e2e8f0;
-  margin: 12px 0;
+  height: 3px;
+  background-image: linear-gradient(to right, #ff9800 50%, rgba(255,255,255,0) 0%); /* Divisória pontilhada colorida */
+  background-position: bottom;
+  background-size: 10px 3px;
+  background-repeat: repeat-x;
+  margin: 16px 0;
 }
 
+/* Botão de Acesso Restrito (Área do Admin) - Estilo Crachá */
 .navbar-link-admin {
   text-decoration: none;
-  color: #64748b !important;
-  font-size: 0.95rem;
-  font-weight: 600;
-  padding: 10px 14px;
-  border-radius: 8px;
-  background-color: #f8fafc;
+  color: #c62828 !important; /* Vermelho escuro/coral */
+  font-size: 1rem;
+  font-weight: 800;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background-color: #ffebee;
+  border: 2px solid #ffcdd2;
+  box-shadow: 0 3px 0 #ffcdd2;
   text-align: center;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: all 0.1s ease;
 }
 
 .navbar-link-admin:hover {
-  background-color: #007bff;
+  background-color: #ffb74d; /* Vira laranja sol no hover */
+  border-color: #ffa726;
+  box-shadow: 0 5px 0 #ffa726;
   color: #ffffff !important;
+}
+
+.navbar-link-admin:active {
+  transform: translateY(3px);
+  box-shadow: 0 0px 0 #ffa726;
 }

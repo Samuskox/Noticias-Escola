@@ -40,7 +40,6 @@ function App() {
       <Route path="/autores" element={<Autores/>}/>
       <Route path="/jogos" element={<Jogos/>}/>
      </Routes>
-    
     </BrowserRouter>
 
   )

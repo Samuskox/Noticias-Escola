@@ -1,84 +1,124 @@
-/* NoticiaCard.css */
+/* NoticiaPagina.css - Versão O Clarim Divertido 📝🎨 */
 
 .noticia-artigo {
   max-width: 700px;
-  margin: 20px auto;
-  padding: 0 16px;
-  font-family: sans-serif;
+  margin: 32px auto;
+  padding: 24px;
+  font-family: 'Comic Sans MS', 'Fredoka One', 'Nunito', sans-serif; /* Tipografia arredondada infantil */
   box-sizing: border-box;
-  background-color: #ffffff !important; /* Força o fundo branco */
-  color: #222222 !important; /* Força o texto escuro */
+  background-color: #ffffff !important; 
+  color: #3e2723 !important; /* Marrom suave, muito melhor para crianças que o preto rígido */
+  border: 4px solid #ff9800; /* Moldura laranja super alegre */
+  border-radius: 24px; /* Cantos super redondinhos */
+  box-shadow: 0 8px 0 #ffe082; /* Sombra sólida estilo desenho animado */
 }
 
 .noticia-header {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  text-align: center; /* Centralizado deixa o visual mais equilibrado e amigável */
 }
 
 .noticia-titulo {
-  font-size: 2.2rem;
+  font-size: 2.5rem;
   margin-top: 0;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   line-height: 1.2;
+  color: #e65100; /* Laranja chamativo */
+  font-weight: 900; /* Letras bem gordinhas */
+  text-shadow: 2px 2px 0px #ffcc80; /* Efeito 3D lúdico */
 }
 
 .noticia-metadados {
-  color: #666;
-  font-size: 0.9rem;
+  color: #1b5e20; /* Verde escuro legível */
+  font-size: 0.95rem;
+  font-weight: bold;
   margin: 0;
+  background-color: #e8f5e9; /* Badge em formato de crachá infantil */
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 50px;
+  border: 2px solid #a5d6a7;
+  box-shadow: 0 3px 0 #a5d6a7;
 }
 
 .noticia-resumo {
-  font-size: 1.1rem;
-  color: #444;
-  font-style: italic;
-  margin-top: 12px;
-  line-height: 1.4;
+  font-size: 1.2rem;
+  color: #4e342e;
+  font-style: normal; /* Remove o itálico para deixar a leitura mais fácil para crianças */
+  font-weight: bold;
+  margin-top: 20px;
+  line-height: 1.5;
+  background: #fffde7; /* Caixinha amarela estilo post-it */
+  padding: 16px;
+  border-radius: 16px;
+  border: 2px dashed #fff176;
 }
 
-/* Container de imagens da notícia */
+/* Container de imagens - Estilo Álbum de Fotos */
 .noticia-galeria {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  margin: 24px 0;
+  gap: 28px;
+  margin: 32px 0;
 }
 
 .noticia-imagem {
   width: 100%;
-  border-radius: 8px;
+  border-radius: 20px;
   object-fit: cover;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 6px solid #ffffff; /* Borda branca grossa simulando foto Polaroid revelada */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Efeito divertido: as fotos dão uma leve giradinha quando passa o mouse */
+.noticia-imagem:nth-child(odd):hover {
+  transform: scale(1.02) rotate(1.5deg);
+}
+
+.noticia-imagem:nth-child(even):hover {
+  transform: scale(1.02) rotate(-1.5deg);
 }
 
 /* Corpo de texto da matéria */
 .noticia-conteudo {
-  line-height: 1.6;
-  font-size: 1.1rem;
-  color: #222;
+  line-height: 1.8;
+  font-size: 1.15rem;
+  color: #3e2723;
   white-space: pre-line;
   margin-bottom: 40px;
   text-align: left;
+  padding: 0 10px;
+  background-image: radial-gradient(#e0e0e0 1px, transparent 1px); /* Fundo sutil de pontinhos, estilo caderno de desenho */
+  background-size: 20px 20px;
+  border-radius: 12px;
 }
 
-/* Seção de vídeo */
+/* Seção de vídeo - Estilo Cineminha */
 .noticia-video-secao {
-  margin-top: 30px;
-  border-top: 1px solid #eee;
-  padding-top: 20px;
+  margin-top: 40px;
+  border-top: 4px dashed #ffe082; /* Linha de recorte pontilhada */
+  padding-top: 24px;
 }
 
 .noticia-video-secao h4 {
   margin-top: 0;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  font-size: 1.4rem;
+  color: #0288d1; /* Azul chamativo */
+  font-weight: 800;
+  text-align: center;
 }
 
-/* Container mágico para manter o vídeo na proporção 16:9 no celular */
+/* Moldura divertida para o vídeo */
 .video-wrapper {
   position: relative;
-  padding-bottom: 56.25%; /* Proporção 16:9 */
+  padding-bottom: 56.25%; 
   height: 0;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 20px;
+  border: 4px solid #0288d1; /* Moldura de televisão azul */
+  box-shadow: 0 6px 0 #b3e5fc;
 }
 
 .video-iframe {
@@ -92,16 +132,23 @@
 
 /* Otimizações para telas pequenas (Celulares) */
 @media (max-width: 480px) {
+  .noticia-artigo {
+    margin: 16px auto;
+    padding: 16px;
+    border-radius: 16px;
+  }
+
   .noticia-titulo {
-    font-size: 1.75rem; /* Diminui o título para não quebrar muitas linhas */
+    font-size: 1.9rem; 
   }
 
   .noticia-resumo {
-    font-size: 1rem;
+    font-size: 1.05rem;
+    padding: 12px;
   }
 
   .noticia-conteudo {
-    font-size: 1rem; /* Tamanho de letra mais confortável em telas menores */
-    line-height: 1.5;
+    font-size: 1.05rem; 
+    line-height: 1.6;
   }
 }
