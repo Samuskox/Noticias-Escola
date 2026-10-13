@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 
@@ -7,6 +7,7 @@ import './Noticia.css';
 export default function Noticia() {
   const parametros = useParams();
  const { id } = useParams(); 
+ const navigate = useNavigate(); 
 
   const [noticia, setNoticia] = useState(null);
   const [carregando, setCarregando] = useState(true);
@@ -88,6 +89,9 @@ export default function Noticia() {
   return (
     <article className="noticia-artigo">
       <header className="noticia-header">
+        <button onClick={() => navigate(-1)} className="btn-voltar-noticia">
+        ↩ Voltar para a página anterior
+      </button>
         <h1 className="noticia-titulo">{noticia.titulo}</h1>
         <p className="noticia-metadados">
           Por <strong>{noticia.autor}</strong> em {new Date(noticia.data).toLocaleDateString('pt-BR')}

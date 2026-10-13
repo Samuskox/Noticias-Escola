@@ -1,161 +1,221 @@
-/* Estilos para a seção Sobre Nós e Desenvolvedor */
+/* Sobre.css - Versão O Clarim Divertido 🎓✨ */
+
+/* 1. FUNDO GERAL DO SITE */
+body {
+  background-color: #e5f1f7;
+  margin: 0;
+  padding: 0;
+}
+
+/* 2. CONTAINER PRINCIPAL (Mural de Papel Reciclado) */
 .sobre-container {
   max-width: 750px;
   margin: 40px auto;
   padding: 32px 24px;
-  background-color: #ffffff !important; /* Força fundo branco contra Dark Mode */
-  color: #1e293b !important; /* Texto principal em grafite escuro */
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  background-color: #FFF9EF !important; /* Tom creme fofinho */
+  color: #4A3E3D !important; /* Marrom escuro contra o cansaço visual */
+  font-family: 'Quicksand', 'Nunito', 'Comic Sans MS', sans-serif;
+  border: 3px solid #4A3E3D;
+  border-radius: 20px;
+  box-shadow: 6px 6px 0px rgba(74, 62, 61, 0.15);
   box-sizing: border-box;
 }
 
+/* 3. TÍTULO PRINCIPAL (Estilo Recorte) */
 .sobre-container h1 {
-  font-size: 2.2rem;
-  color: #0f172a;
+  font-size: 2.4rem;
+  color: #65C7F7; /* Azul da Paleta */
   margin-top: 0;
   margin-bottom: 20px;
-  border-bottom: 2px solid #f1f5f9;
+  border-bottom: 3px dashed #FFD85E; /* Linha serrilhada amarela */
   padding-bottom: 12px;
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-weight: 900;
+  text-shadow: 1.5px 1px 0px #4A3E3D;
+  display: inline-block;
+  width: 100%;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@media (hover: hover) {
+  .sobre-container h1:hover {
+    transform: scale(1.03) rotate(-0.5deg);
+  }
 }
 
 .sobre-texto {
   font-size: 1.1rem;
-  line-height: 1.6;
-  color: #334155;
+  line-height: 1.7;
+  color: #4A3E3D;
   margin-bottom: 24px;
 }
 
-/* Bloco de destaque para os desenvolvedores e escola */
+/* 4. BLOCO DE DESTAQUE (Estilo Caixa de Giz Amarela) */
 .sobre-destaque-box {
-  background-color: #f8fafc;
-  border-left: 4px solid #007bff;
+  background-color: #FFD85E; /* Amarelo da Paleta */
+  border: 2px solid #4A3E3D;
   padding: 20px;
-  border-radius: 0 8px 8px 0;
+  border-radius: 16px;
   margin-bottom: 24px;
+  box-shadow: 4px 4px 0px #4A3E3D;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.3);
+}
+
+@media (hover: hover) {
+  .sobre-destaque-box:hover {
+    transform: translateY(-3px) rotate(0.5deg);
+  }
 }
 
 .sobre-destaque-box p {
   margin: 8px 0;
   font-size: 1.05rem;
   line-height: 1.5;
-  color: #1e293b;
+  color: #4A3E3D;
 }
 
 .sobre-destaque-box strong {
-  color: #0f172a;
+  color: #4A3E3D;
+  font-weight: 900;
 }
 
-/* Lista de tópicos das notícias */
+/* 5. SEÇÃO DE TAGS (Adesivos Coloridos) */
 .sobre-lista-titulo {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: #0f172a;
-  margin-top: 24px;
-  margin-bottom: 12px;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #4A3E3D;
+  margin-top: 28px;
+  margin-bottom: 14px;
 }
 
 .sobre-grid-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   margin-bottom: 28px;
 }
 
+/* Tags dinâmicas em formato de adesivos pastéis */
 .sobre-tag {
-  background-color: #e0f2fe;
-  color: #0369a1 !important;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: 600;
+  background-color: #FFABC4; /* Rosa da Paleta */
+  color: #4A3E3D !important;
+  padding: 8px 16px;
+  border: 2px solid #4A3E3D;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  box-shadow: 2px 2px 0px #4A3E3D;
+  transition: transform 0.15s ease;
 }
 
-/* --- NOVA SEÇÃO: SOBRE O DESENVOLVEDOR --- */
+@media (hover: hover) {
+  .sobre-tag:hover {
+    transform: scale(1.08) rotate(2deg);
+    background-color: #65C7F7; /* Troca para azul no foco */
+  }
+}
+
+/* --- SEÇÃO DO DESENVOLVEDOR (Crachá de Inventor) --- */
 .dev-section {
-  margin-top: 32px;
+  margin-top: 40px;
   padding-top: 24px;
-  border-top: 2px dashed #e2e8f0;
+  border-top: 4px dashed #4A3E3D; /* Linha de recorte */
 }
 
 .dev-section h2 {
-  font-size: 1.4rem;
-  color: #0f172a;
+  font-size: 1.5rem;
+  color: #4A3E3D;
   margin-top: 0;
-  margin-bottom: 16px;
-  font-weight: 700;
+  margin-bottom: 20px;
+  font-weight: 900;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
 .dev-card {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 20px;
+  background: #ffffff;
+  border: 3px solid #4A3E3D;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 4px 4px 0px rgba(74, 62, 61, 0.1);
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@media (hover: hover) {
+  .dev-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 6px 6px 0px #8EDDB0; /* Sombra sólida verde no foco */
+  }
 }
 
 .dev-nome {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #1e293b;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #4A3E3D;
   margin: 0 0 6px 0;
 }
 
 .dev-cargo {
-  font-size: 0.95rem;
-  color: #007bff;
-  font-weight: 600;
-  margin: 0 0 4px 0;
+  font-size: 1rem;
+  color: #65C7F7; /* Azul da Paleta */
+  font-weight: 800;
+  margin: 0 0 6px 0;
 }
 
 .dev-formacao {
   font-size: 0.95rem;
-  color: #64748b;
-  margin: 0 0 16px 0;
+  color: #757575;
+  margin: 0 0 20px 0;
 }
 
+/* Botão do WhatsApp Estilo Videogame Verde */
 .dev-contato-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background-color: #25d366; /* Cor do WhatsApp para o botão */
-  color: #ffffff !important;
+  background-color: #8EDDB0; /* Verde da Paleta */
+  color: #4A3E3D !important;
   text-decoration: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  transition: background-color 0.2s;
+  padding: 12px 20px;
+  border: 2px solid #4A3E3D;
+  border-radius: 50px;
+  font-weight: 900;
+  font-size: 1rem;
+  box-shadow: 0 4px 0 #4A3E3D;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
-.dev-contato-btn:hover {
-  background-color: #128c7e;
+@media (hover: hover) {
+  .dev-contato-btn:hover {
+    background-color: #a3ebd2;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 #4A3E3D;
+  }
+}
+
+.dev-contato-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 0px 0 #4A3E3D;
 }
 
 .sobre-rodape {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #007bff;
-  margin: 32px 0 0 0;
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #65C7F7;
+  margin: 40px 0 0 0;
   text-align: center;
+  text-shadow: 1px 1px 0px #FFD85E;
 }
 
-/* Responsividade para Celulares */
-@media (max-width: 480px) {
+/* 📱 RESPONSIVIDADE MOBILE */
+@media (max-width: 600px) {
   .sobre-container {
-    margin: 20px 12px;
+    margin: 16px 12px;
     padding: 24px 16px;
+    border-radius: 12px;
   }
 
   .sobre-container h1 { font-size: 1.8rem; }
   .sobre-texto { font-size: 1rem; }
-  .sobre-destaque-box p { font-size: 0.95rem; }
   .dev-contato-btn { width: 100%; justify-content: center; box-sizing: border-box; }
 }
