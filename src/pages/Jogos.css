@@ -1,45 +1,43 @@
-/* EspaçoJogos.css - Versão Fliperama d'O Clarim 🕹️🎈 */
+/* EspaçoJogos.css - Versão Portal de Jogos em Categorias N:N 🕹️🎈 */
 
-/* 1. FUNDO GERAL DO SITE */
 body {
   background-color: #e5f1f7; 
   margin: 0;
   padding: 0;
 }
 
-/* 2. CONTAINER DOS JOGOS (Folha de Jornal Divertida) */
 .jogos-container {
-  max-width: 900px; /* Alinhado com a Home */
+  max-width: 900px;
   margin: 40px auto;
   padding: 40px 32px;
   font-family: 'Quicksand', 'Nunito', 'Comic Sans MS', sans-serif;
   box-sizing: border-box;
   background-color: #FFF9EF !important; /* Tom creme fofinho */
-  color: #4A3E3D !important; /* Marrom escuro contra o cansaço visual */
+  color: #4A3E3D !important;
   border: 4px solid #4A3E3D;
   border-radius: 16px;
   box-shadow: 8px 8px 0px rgba(74, 62, 61, 0.15);
 }
 
-/* 3. BOTÃO VOLTAR (Estilo Adesivo Saltitante Rosa) */
+/* Botão Voltar Estilo Adesivo Rosa */
 .btn-voltar-home {
-  text-decoration: none;
+  background-color: #FFABC4; /* Rosa da Paleta */
   color: #4A3E3D;
   font-weight: 900;
   font-size: 0.95rem;
   display: inline-block;
-  padding: 10px 18px;
-  background-color: #FFABC4; /* Rosa da Paleta */
+  padding: 10px 20px;
   border: 2px solid #4A3E3D;
   border-radius: 50px;
   box-shadow: 0 4px 0 #4A3E3D;
-  transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.4), 
-              box-shadow 0.15s ease;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.4), box-shadow 0.15s ease;
 }
 
 @media (hover: hover) {
   .btn-voltar-home:hover {
-    background-color: #ffc2d4; /* Clareia no foco */
+    background-color: #ffc2d4;
     transform: translateY(-3px) scale(1.02);
     box-shadow: 0 7px 0 #4A3E3D;
   }
@@ -50,29 +48,21 @@ body {
   box-shadow: 0 0px 0 #4A3E3D;
 }
 
-/* 4. CABEÇALHO DO FLIPERAMA */
+/* Cabeçalho do Fliperama */
 .jogos-header {
   margin-top: 24px;
   margin-bottom: 35px;
-  border-bottom: 5px double #4A3E3D; /* Linhas duplas de jornal */
+  border-bottom: 5px double #4A3E3D; 
   padding-bottom: 24px;
   text-align: center;
 }
 
 .jogos-header h1 {
-  font-size: 2.5rem;
+  font-size: 2.6rem;
   color: #65C7F7; /* Azul da Paleta */
   font-weight: 900;
   margin: 0 0 10px 0;
-  text-shadow: 2px 2px 0px #FFD85E; /* Sombra amarela divertida */
-  display: inline-block;
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.3);
-}
-
-@media (hover: hover) {
-  .jogos-header h1:hover {
-    transform: scale(1.06) rotate(-1deg);
-  }
+  text-shadow: 2px 2px 0px #FFD85E;
 }
 
 .jogos-header p {
@@ -82,91 +72,83 @@ body {
   font-weight: bold;
 }
 
-/* 5. GRID DOS JOGOS */
+/* Grid das Caixas de Categorias */
 .jogos-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
 }
 
-/* 6. CARD INDIVIDUAL (Estilo Controle de Game 3D) */
-.jogo-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+/* 🎰 CARDS DAS CATEGORIAS (Estilo Cartazes de Parede do Fliperama) */
+.categoria-card {
   padding: 24px;
-  background: #ffffff;
   border: 3px solid #4A3E3D;
   border-radius: 20px;
-  text-decoration: none;
-  color: inherit;
-  box-shadow: 4px 4px 0px #4A3E3D; /* Sombra sólida flat */
+  box-shadow: 5px 5px 0px #4A3E3D;
   box-sizing: border-box;
-  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.3), 
-              box-shadow 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.3), 
-              border-color 0.2s ease;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.3);
 }
 
-/* Efeito de super flutuação elástica alternada para os cards */
+/* Animação elástica ao passar o mouse na categoria */
 @media (hover: hover) {
-  .jogo-card:hover {
-    box-shadow: 8px 8px 0px #4A3E3D;
-    border-color: #65C7F7;
-  }
-  .jogos-grid .jogo-card:nth-child(odd):hover {
-    transform: translateY(-6px) rotate(-1deg);
-  }
-  .jogos-grid .jogo-card:nth-child(even):hover {
-    transform: translateY(-6px) rotate(1deg);
+  .categoria-card:hover {
+    transform: translateY(-5px);
   }
 }
 
-.jogo-card h3 {
-  margin: 0 0 10px 0;
-  font-size: 1.4rem;
+/* Classes de Cores baseadas estritamente na Paleta do Cliente */
+.cat-azul { background-color: #65C7F7; }
+.cat-amarelo { background-color: #FFD85E; }
+.cat-verde { background-color: #8EDDB0; }
+.cat-rosa { background-color: #FFABC4; }
+
+.categoria-card h3 {
+  margin: 0 0 16px 0;
+  font-size: 1.35rem;
   color: #4A3E3D;
   font-weight: 900;
-  transition: color 0.2s ease;
-}
-
-@media (hover: hover) {
-  .jogo-card:hover h3 {
-    color: #65C7F7; /* Título brilha no azul da paleta */
-  }
-}
-
-.jogo-card p {
-  margin: 0 0 20px 0;
-  font-size: 1.05rem;
-  color: #5d4037;
-  line-height: 1.5;
-}
-
-/* 7. BOTÃO INTERNO JOGAR (Estilo Botão de Arcade Verde) */
-.btn-jogar {
-  display: inline-block;
   text-align: center;
-  padding: 12px; 
-  background: #8EDDB0; /* Verde da paleta */
-  color: #4A3E3D;
+  background-color: #ffffff; /* Título ganha uma lousinha branca interna */
+  padding: 8px;
+  border-radius: 12px;
   border: 2px solid #4A3E3D;
-  border-radius: 50px; /* Formato chiclete macio */
-  font-weight: 900;
-  font-size: 1rem;
-  box-shadow: 0 4px 0 #4A3E3D;
-  transition: transform 0.1s ease, background-color 0.2s ease, box-shadow 0.1s ease;
 }
 
+/* Container interno dos 5 links */
+.links-jogos-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 🕹️ OS BOTÕES DE LINKS INTERNOS (Estilo Fita Adesiva / Chiclete) */
+.link-jogo-botao {
+  display: block;
+  text-decoration: none;
+  color: #4A3E3D !important;
+  background-color: #ffffff;
+  padding: 10px 14px;
+  border: 2px solid #4A3E3D;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  box-shadow: 0 3px 0 #4A3E3D;
+  transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.4), 
+              background-color 0.2s ease, 
+              box-shadow 0.15s ease;
+}
+
+/* Animação individual dos botões de jogos */
 @media (hover: hover) {
-  .jogo-card:hover .btn-jogar {
-    background: #FFF9EF; /* Inverte a cor com o fundo */
-    transform: scale(1.03);
+  .link-jogo-botao:hover {
+    background-color: #FFF9EF; /* Muda para a cor de fundo do jornal */
+    transform: scale(1.03) translateX(2px);
     box-shadow: 0 5px 0 #4A3E3D;
   }
 }
 
-.jogo-card:active .btn-jogar {
-  transform: translateY(4px);
+.link-jogo-botao:active {
+  transform: translateY(3px);
   box-shadow: 0 0px 0 #4A3E3D;
 }
 
@@ -183,12 +165,12 @@ body {
     font-size: 1.9rem;
   }
 
-  .jogo-card {
-    padding: 18px;
+  .categoria-card {
+    padding: 16px;
     border-radius: 16px;
-    transform: none !important; /* Desativa giros para melhor scroll no celular */
+    transform: none !important;
   }
-  
+
   .btn-voltar-home {
     display: block;
     text-align: center;

@@ -1,68 +1,125 @@
 import { Link } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 import './Jogos.css';
 
 export default function Jogos() {
-  // Lista de jogos simulados (Você pode trocar o 'url' pelos links reais depois)
-  const listaJogos = [
+
+  const navigate = useNavigate();
+  const categoriasDeJogos = [
     {
-      id: 1,
-      titulo: "Quebra-Cabeça Escolar",
-      descricao: "Monte os blocos e descubra a imagem misteriosa da fachada da nossa escola.",
-      url: "https://exemplo-jogo1.com" 
+      titulo: "📐 Jogos de Matemática",
+      corClasse: "cat-azul",
+      links: [
+        { nome: "Matemagica", url: "https://hvirtua.com/jogoseducativos/matemagica/" },
+        { nome: "Pac-Mática Subtração", url: "https://hvirtua.com/jogoseducativos/pac-matica-subtracao/" },
+        { nome: "Matemática Divertida", url: "https://hvirtua.com/jogoseducativos/matematica-divertida/" },
+        { nome: "Mais jogos de Matemática...", url: "https://hvirtua.com/jogoseducativos/category/destaque/"}
+      ]
     },
     {
-      id: 2,
-      titulo: "Jogo da Memória",
-      descricao: "Encontre os pares corretos das matérias (Matemática, História, Ciências) antes que o tempo acabe.",
-      url: "https://exemplo-jogo2.com"
+      titulo: "✏️ Jogos de Português",
+      corClasse: "cat-rosa",
+      links: [
+        { nome: "Pula Alfabeto", url: "https://hvirtua.com/jogoseducativos/pula-alfabeto/" },
+        { nome: "Ordene as Letras", url: "https://hvirtua.com/jogoseducativos/ordene-as-letras-palavras-natalinas/" },
+        { nome: "Caça Palavras - Casa", url: "https://hvirtua.com/jogoseducativos/caca-palavras-casa/" },
+        { nome: "Mais jogos de Português...", url: "https://hvirtua.com/jogoseducativos/category/destaque/"},
+      ]
     },
     {
-      id: 3,
-      titulo: "Palavras Cruzadas",
-      descricao: "Desafie seus conhecimentos sobre a história do nosso colégio e dos professores orientadores.",
-      url: "https://exemplo-jogo3.com"
+      titulo: "🧠 Jogos de Raciocínio",
+      corClasse: "cat-verde",
+      links: [
+        { nome: "Quebra Ovos", url: "https://hvirtua.com/jogoseducativos/quebra-ovos/" },
+        { nome: "Ligue as Cores", url: "https://hvirtua.com/jogoseducativos/ligue-as-cores/" },
+        { nome: "Palavra Secreta 2", url: "https://hvirtua.com/jogoseducativos/palavra-secreta-2/" },
+        { nome: "Empurre a Caixa 2", url: "https://hvirtua.com/jogoseducativos/empurre-a-caixa-2/" },
+      ]
     },
     {
-      id: 4,
-      titulo: "Quiz de Conhecimentos Gerais",
-      descricao: "Responda às perguntas rápidas criadas pelo Grêmio Estudantil e teste seu QI.",
-      url: "https://exemplo-jogo4.com"
+      titulo: "🎈 Jogos Divertidos",
+      corClasse: "cat-amarelo",
+      links: [
+        { nome: "Super Missão", url: "https://www.escolagames.com.br/diversao/super-missao" },
+        { nome: "Gire e Escape", url: "https://www.escolagames.com.br/diversao/gire-e-escape" },
+        { nome: "Aventuras do Dino", url: "https://www.escolagames.com.br/diversao/aventuras-do-dino" },
+        { nome: "Super Nerd", url: "https://www.escolagames.com.br/diversao/super-nerd" },
+      ]
+    },
+    {
+      titulo: "🎨 Jogos de Colorir",
+      corClasse: "cat-rosa",
+      links: [
+        { nome: "Hora de pintar Números", url: "https://www.escolagames.com.br/jogos/hora-de-pintar-numeros" },
+        { nome: "Hora de pintar Frutas", url: "https://www.escolagames.com.br/jogos/hora-de-pintar-frutas" },
+        { nome: "Livro de colorir animais", url: "https://www.escolagames.com.br/diversao/livro-de-colorir-animais" },
+        { nome: "Hora de pintar alfabeto", url: "https://www.escolagames.com.br/jogos/hora-de-pintar-alfabeto" },
+      ]
+    },
+    {
+      titulo: "🎲 Jogos de Tabuleiro",
+      corClasse: "cat-azul",
+      links: [
+        { nome: "Xadrez", url: "https://www.escolagames.com.br/diversao/xadrez" },
+        { nome: "4 Cores", url: "https://www.escolagames.com.br/diversao/4-cores" },
+        { nome: "Jogo de Damas", url: "https://www.escolagames.com.br/diversao/jogo-de-damas" },
+        { nome: "Resta um", url: "https://www.escolagames.com.br/diversao/resta-um" },
+      ]
+    },
+    {
+      titulo: "🏎️ Jogos de Corrida",
+      corClasse: "cat-verde",
+      links: [
+        { nome: "Hora do rush", url: "https://www.escolagames.com.br/diversao/hora-do-rush" },
+        { nome: "Sistema Solar", url: "https://www.escolagames.com.br/jogos/sistema-solar" },
+        { nome: "Heróis dos mares", url: "https://www.escolagames.com.br/jogos/herois-dos-mares" },
+        { nome: "Mapa-Múndi", url: "https://www.escolagames.com.br/jogos/mapa-mundi" },
+      ]
+    },
+    {
+      titulo: "👗 Jogos de Moda",
+      corClasse: "cat-amarelo",
+      links: [
+        { nome: "Garota Fashion", url: "https://www.escolagames.com.br/diversao/garota-fashion" },
+        { nome: "Casal Fashion", url: "https://www.escolagames.com.br/diversao/casal-fashion" },
+        { nome: "Cores da moda em inglês", url: "https://www.escolagames.com.br/jogos/cores-da-moda-em-ingles" },
+      ]
     }
   ];
 
+
   return (
     <div className="jogos-container">
-      
-      {/* Botão de navegação para voltar */}
-      <Link to="/" className="btn-voltar-home">
-        ← Voltar para a Página Inicial
-      </Link>
+      <button onClick={() => navigate(-1)} className="btn-voltar-home">
+        ↩ Voltar para a página anterior
+      </button>
 
-      {/* Cabeçalho da Página */}
       <header className="jogos-header">
-        <h1>🎮 Espaço de Jogos</h1>
-        <p>Divirta-se e teste suas habilidades nos minijogos educativos.</p>
+        <h1>🎮 Fliperama do Sarah</h1>
+        <p>Escolha uma categoria e divirta-se com os melhores jogos escolares!</p>
       </header>
 
-      {/* Grid de Cards de Jogos */}
+      {/* Grid das Categorias de Jogos */}
       <div className="jogos-grid">
-        {listaJogos.map((jogo) => (
-          <a 
-            key={jogo.id}
-            href={jogo.url}
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="jogo-card"
-          >
-            <div>
-              <h3>{jogo.titulo}</h3>
-              <p>{jogo.descricao}</p>
+        {categoriasDeJogos.map((cat, index) => (
+          <div key={index} className={`categoria-card ${cat.corClasse}`}>
+            <h3>{cat.titulo}</h3>
+            
+            {/* Lista dos 5 links de jogos */}
+            <div className="links-jogos-lista">
+              {cat.links.map((link, lIndex) => (
+                <a 
+                  key={lIndex} 
+                  href={link.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="link-jogo-botao"
+                >
+                  {link.nome}
+                </a>
+              ))}
             </div>
-
-            <span className="btn-jogar">
-              🕹️ Jogar Agora
-            </span>
-          </a>
+          </div>
         ))}
       </div>
     </div>
