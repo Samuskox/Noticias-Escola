@@ -17,6 +17,7 @@ import Jogos from './pages/Jogos';
 import Sobre from './pages/Sobre';
 import Escola from './pages/NossaEscola';
 import GerenciarNoticias from './pages/GerenciarNoticias';
+import EditarNoticia from './pages/EditarNoticias';
 
 import './App.css'
 
@@ -41,6 +42,7 @@ function App() {
       <Route path="/autores" element={<Autores/>}/>
       <Route path="/jogos" element={<Jogos/>}/>
       <Route path="/gerenciarNoticias" element={<GerenciarNoticias/>}/>
+      <Route path="/editarNoticia/:id" element={<EditarNoticia/>}/>
      </Routes>
     </BrowserRouter>
 

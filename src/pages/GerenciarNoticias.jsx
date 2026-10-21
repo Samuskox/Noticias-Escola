@@ -75,12 +75,12 @@ export default function GerenciarNoticias() {
       </button>
 
       <header className="gerenciar-noticias-header">
-        <h2>📰 Gerenciar Notícias</h2>
+        <h2>Gerenciar Notícias</h2>
         <p>Aqui você pode ver, alterar ou excluir as matérias do jornal.</p>
         
         {/* Botão de Adicionar que redireciona para a tela que você já possui */}
         <Link to="/admin" className="btn-adicionar-noticia-atalho">
-          ➕ Escrever Nova Notícia
+          Escrever Nova Notícia
         </Link>
       </header>
 
@@ -100,7 +100,7 @@ export default function GerenciarNoticias() {
               <div className="botoes-acoes-admin">
                 {/* Redireciona para uma rota de edição que podemos estruturar se necessário */}
                 <button 
-                  onClick={() => navigate(`/editar-noticia/${item.ID_NOTICIAS}`)} 
+                  onClick={() => navigate(`/editarNoticia/${item.ID_NOTICIAS}`)} 
                   className="btn-acao-editar"
                 >
                   ✏️ Alterar

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseclient';
+import { Link } from 'react-router-dom';
 
 import './Admin.css';
 
@@ -25,22 +26,22 @@ export default function Admin() {
   useEffect(() => {
     const adminLogado = localStorage.getItem('adminLogado');
 
-    if(!adminLogado){
+    if (!adminLogado) {
       navigate('/login');
     } else {
       buscarAutores();
     }
   }, [navigate]);
 
-    const buscarAutores = async () => {
+  const buscarAutores = async () => {
     const { data } = await supabase.from('AUTORES').select('*').order('NOME', { ascending: true });
     if (data) setListaAutores(data);
-    };
+  };
 
-    const handleSubmeter = async (e) => {
+  const handleSubmeter = async (e) => {
     e.preventDefault();
     setCarregando(true);
-    
+
     try {
       const admin = JSON.parse(localStorage.getItem('adminLogado'));
       const idAdmin = admin?.ID_ADMIN || 1;
@@ -48,7 +49,7 @@ export default function Admin() {
       // 1. SE DIGITOU NOVOS AUTORES (SEPARADOS POR VÍRGULA), CADASTRA ELES PRIMEIRO
       if (novosAutoresTexto.trim() !== '') {
         const nomesNovos = novosAutoresTexto.split(',').map(n => n.trim()).filter(Boolean);
-        
+
         for (const nome of nomesNovos) {
           // Insere ou ignora se já existir (devido ao UNIQUE no banco)
           const { data: criado } = await supabase
@@ -119,24 +120,28 @@ export default function Admin() {
       setVideoUrl('');
       setImagens([]);
       e.target.reset();
-      
+
     } catch (error) {
       console.error("Erro ao publicar a notícia: ", error);
       alert('Erro ao salvar no banco de dados');
-      
-    } finally{
+
+    } finally {
       setCarregando(false);
     }
   };
 
-    const handleSelectChange = (e) => {
+  const handleSelectChange = (e) => {
     const valores = Array.from(e.target.selectedOptions, option => option.value);
     setAutoresSelecionados(valores);
   };
 
 
   return (
-<div className="escrever-container">
+    <div className="escrever-container">
+
+      <Link to="/gerenciarNoticias" className="btn-voltar-gerenciar">
+        ← Cancelar e Voltar
+      </Link>
       <h1>Escrever Notícia</h1>
       <p className="escrever-subtitulo">Preencha os campos abaixo para publicar uma nova notícia.</p>
 
@@ -191,11 +196,11 @@ export default function Admin() {
         {/* Campo: Cadastro de novos Autores na hora */}
         <div className="form-campo autores-novos">
           <label>Ou cadastrar novos autores na hora (separe por vírgula):</label>
-          <input 
-            type="text" 
-            placeholder="Ex: Aluno Lucas, Aluna Mariana, Aluno Pedro" 
-            value={novosAutoresTexto} 
-            onChange={(e) => setNovosAutoresTexto(e.target.value)} 
+          <input
+            type="text"
+            placeholder="Ex: Aluno Lucas, Aluna Mariana, Aluno Pedro"
+            value={novosAutoresTexto}
+            onChange={(e) => setNovosAutoresTexto(e.target.value)}
           />
         </div>
 

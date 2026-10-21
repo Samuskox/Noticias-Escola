@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
-import './EditarNoticia.css';
+//import './EditarNoticia.css';
 
 export default function EditarNoticia() {
   const { id } = useParams();
@@ -133,7 +133,7 @@ export default function EditarNoticia() {
 
   return (
     <div className="editar-noticia-container">
-      <Link to="/gerenciar-noticias" className="btn-voltar-gerenciar">
+      <Link to="/gerenciarNoticias" className="btn-voltar-gerenciar">
         ← Cancelar e Voltar
       </Link>
 
