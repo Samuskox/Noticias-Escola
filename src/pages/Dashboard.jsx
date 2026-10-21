@@ -94,8 +94,8 @@ export default function Dashboard() {
 
       {/* Grid de botões principais */}
       <div className="dashboard-menu-grid">
-        <Link to="/admin" className="menu-card escrever">
-          Escrever
+        <Link to="/gerenciarNoticias" className="menu-card escrever">
+          Gerenciar Notícias
         </Link>
         <Link to="/" className="menu-card ver-site">
           Ver o Site (Home)
