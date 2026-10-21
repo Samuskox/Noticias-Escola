@@ -17,9 +17,19 @@ export default function Home() {
   const [muralBlocos, setMuralBlocos] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [autoresMural, setAutoresMural] = useState('Carregando autores...');
+  const [isAdminLogado, setIsAdminLogado] = useState(false);
+
 
   // Busca os dados da API ao carregar o componente
   useEffect(() => {
+
+
+    const admin = localStorage.getItem('adminLogado');
+    if (admin) {
+      setIsAdminLogado(true);
+    }
+
+
     const buscarNoticiasDoBanco = async () => {
       try {
         const { data, error } = await supabase.from('NOTICIAS').select(
@@ -111,6 +121,20 @@ export default function Home() {
           pointerEvents: 'none' /* Garante que o usuário consiga clicar nos cards sem a imagem travar o mouse */
         }} 
       />
+
+      
+        {
+          isAdminLogado && (
+            <div className="home-container" style={{ position: 'relative', zIndex: 1 }}>
+            <div className="atalho-painel-admin-container">
+            <Link to="/Dashboard" className="btn-atalho-painel-admin">
+              ⚙️ Voltar ao Painel do Administrador
+            </Link>
+            </div>
+            </div>
+          )
+        }
+      
 
   <header className="home-header">
     <h1>Jornal do Sarah</h1>
