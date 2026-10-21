@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
-//import './EditarNoticia.css';
+import './EditarNoticia.css';
 
 export default function EditarNoticia() {
   const { id } = useParams();

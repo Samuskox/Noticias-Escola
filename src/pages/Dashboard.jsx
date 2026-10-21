@@ -125,8 +125,7 @@ export default function Dashboard() {
               </div>
               <button 
                 onClick={() => handleExcluirNoticia(item.ID_NOTICIAS, item.IMAGENS)}
-                className="btn-excluir-noticia"
-              >
+                className="btn-excluir-noticia">
                 🗑️ Excluir
               </button>
             </div>

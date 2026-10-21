@@ -1,118 +1,232 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
-
-import './GerenciarMural.css';
+import './GerenciarMural.css'; // Vamos criar esse arquivo com estilo limpo
 
 export default function GerenciarMural() {
   const [listaBlocos, setListaBlocos] = useState([]);
-  const [novoTitulo, setNovoTitulo] = useState('');
-  const [novoConteudo, setNovoConteudo] = useState('');
-  const [carregando, setCarregando] = useState(false);
+  const [carregando, setCarregando] = useState(true);
+
+  // Estados do formulário (serve para criar E para editar)
+  const [idEditando, setIdEditando] = useState(null);
+  const [titulo, setTitulo] = useState('');
+  const [conteudo, setConteudo] = useState('');
+  const [statusAtivo, setStatusAtivo] = useState(true);
+  const [salvando, setSalvando] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const adminLogado = localStorage.getItem('adminLogado');
     if (!adminLogado) navigate('/login');
-    buscarBlocos();
+    else buscarBlocos();
   }, [navigate]);
 
-  // Busca todos os blocos cadastrados atualmente no banco
+  // Carrega todos os blocos do banco de dados (ativos e inativos)
   const buscarBlocos = async () => {
-    const { data, error } = await supabase
-      .from('MURAL_HOME')
-      .select('*')
-      .order('ORDEM', { ascending: true })
-      .order('DATA_CRIACAO', { ascending: true });
-    
-    if (data) setListaBlocos(data);
-  };
-
-  // Cadastra um novo bloco livre no mural
-  const handleAdicionarBloco = async (e) => {
-    e.preventDefault();
-    setCarregando(true);
-
     try {
-      // Define a ordem baseado no tamanho atual da lista
-      const proximaOrdem = listaBlocos.length + 1;
-
-      const { error } = await supabase
+      setCarregando(true);
+      const { data, error } = await supabase
         .from('MURAL_HOME')
-        .insert([{ TITULO: novoTitulo, CONTEUDO: novoConteudo, ORDEM: proximaOrdem }]);
+        .select('*')
+        .order('ORDEM', { ascending: true })
+        .order('DATA_CRIACAO', { ascending: false });
 
       if (error) throw error;
-
-      alert('Novo bloco adicionado ao mural!');
-      setNovoTitulo('');
-      setNovoConteudo('');
-      buscarBlocos(); // Atualiza a lista na tela
+      setListaBlocos(data || []);
     } catch (error) {
-      alert('Erro ao adicionar bloco: ' + error.message);
+      alert('Erro ao buscar blocos do mural: ' + error.message);
     } finally {
       setCarregando(false);
     }
   };
 
-  // Deleta um bloco específico do mural
-  const handleExcluirBloco = async (id) => {
-    if (!window.confirm('Tem certeza que deseja apagar este bloco do mural?')) return;
+  // Salva um bloco novo ou atualiza um existente (Graças ao upsert)
+  const handleSalvarBloco = async (e) => {
+    e.preventDefault();
+    if (titulo.trim() === '' || conteudo.trim() === '') return;
+    setSalvando(true);
 
     try {
-      const { error } = await supabase.from('MURAL_HOME').delete().eq('ID', id);
+      const dadosBloco = {
+        TITULO: titulo.trim(),
+        CONTEUDO: conteudo.trim(),
+        STATUS: statusAtivo
+      };
+
+      // Se estiver editando, injeta o ID na linha para o Postgres substituir
+      if (idEditando) {
+        dadosBloco.ID = idEditando;
+      } else {
+        // Se for novo, define a ordem com base no tamanho da lista
+        dadosBloco.ORDEM = listaBlocos.length + 1;
+      }
+
+      const { error } = await supabase
+        .from('MURAL_HOME')
+        .upsert([dadosBloco]);
+
       if (error) throw error;
-      buscarBlocos(); // Atualiza a lista na tela
+
+      alert(idEditando ? '📝 Bloco alterado com sucesso!' : '✅ Novo bloco criado no mural!');
+      handleLimparFormulario();
+      buscarBlocos();
     } catch (error) {
-      alert('Erro ao excluir: ' + error.message);
+      alert('Erro ao salvar bloco: ' + error.message);
+    } finally {
+      setSalvando(false);
     }
   };
 
+  // Ativa o modo de edição, jogando as informações para os inputs superiores
+  const iniciarEdicao = (bloco) => {
+    setIdEditando(bloco.ID);
+    setTitulo(bloco.TITULO);
+    setConteudo(bloco.CONTEUDO);
+    setStatusAtivo(bloco.STATUS);
+  };
+
+  // Alterna rapidamente o STATUS de ativo/inativo direto no clique do botão da linha
+  const handleAlternarStatus = async (id, statusAtual) => {
+    try {
+      const { error } = await supabase
+        .from('MURAL_HOME')
+        .update({ STATUS: !statusAtual })
+        .eq('ID', id);
+
+      if (error) throw error;
+      buscarBlocos(); // Recarrega a tabela imediatamente
+    } catch (error) {
+      alert('Erro ao alterar status: ' + error.message);
+    }
+  };
+
+  // Remove permanentemente o bloco do banco
+  const handleExcluirBloco = async (id) => {
+    if (!window.confirm('🗑️ Tem certeza de que deseja excluir permanentemente este aviso do mural?')) return;
+
+    try {
+      const { error } = await supabase
+        .from('MURAL_HOME')
+        .delete()
+        .eq('ID', id);
+
+      if (error) throw error;
+      buscarBlocos();
+    } catch (error) {
+      alert('Erro ao excluir bloco: ' + error.message);
+    }
+  };
+
+  const handleLimparFormulario = () => {
+    setIdEditando(null);
+    setTitulo('');
+    setConteudo('');
+    setStatusAtivo(true);
+  };
+
   return (
-    <div className="mural-manager-container">
-      <Link to="/Dashboard" className="btn-voltar-painel">← Voltar ao Painel</Link>
-      
-      <h2>⚙️ Gerenciar Blocos do Mural</h2>
-      
-      {/* FORMULÁRIO PARA ADICIONAR NOVO BLOCO */}
-      <form onSubmit={handleAdicionarBloco} className="form-cadastro-bloco">
-        <h4>➕ Adicionar Novo Bloco Informativo</h4>
-        <input 
-          type="text" 
-          placeholder="Título do Bloco (Ex: ⚽ Grêmio Estudantil)" 
-          required 
-          value={novoTitulo} 
-          onChange={(e) => setNovoTitulo(e.target.value)} 
-        />
-        <textarea 
-          placeholder="Conteúdo informativo..." 
-          required 
-          rows="3" 
-          value={novoConteudo} 
-          onChange={(e) => setNovoConteudo(e.target.value)} 
-        />
-        <button type="submit" className="btn-inserir" disabled={carregando}>
-          {carregando ? 'Adicionando...' : 'Inserir no Mural'}
-        </button>
+    <div className="gerenciar-mural-container">
+      <Link to="/dashboard" className="btn-voltar-painel">
+        ← Voltar ao Painel
+      </Link>
+
+      <h1 className="gerenciar-mural-titulo-tela">
+        {idEditando ? '✏️ Editar Bloco do Mural' : '⚙️ Gerenciar Mural da Home'}
+      </h1>
+
+      {/* FORMULÁRIO DE CADASTRO / EDIÇÃO */}
+      <form onSubmit={handleSalvarBloco} className="form-mural-admin">
+        <div className="form-group-mural">
+          <label>Título do Bloco Informativo:</label>
+          <input 
+            type="text" 
+            required 
+            placeholder="Ex: 🍱 Almoço do Dia ou 📅 Evento" 
+            value={titulo} 
+            onChange={(e) => setTitulo(e.target.value)} 
+          />
+        </div>
+
+        <div className="form-group-mural">
+          <label>Conteúdo do Recado:</label>
+          <textarea 
+            required 
+            rows="3" 
+            placeholder="Digite as informações do bloco..." 
+            value={conteudo} 
+            onChange={(e) => setConteudo(e.target.value)} 
+          />
+        </div>
+
+        <div className="form-group-mural checkbox-inline">
+          <input 
+            type="checkbox" 
+            id="status-checkbox"
+            checked={statusAtivo} 
+            onChange={(e) => setStatusAtivo(e.target.checked)} 
+          />
+          <label htmlFor="status-checkbox">Exibir este bloco ativo na página inicial (Home)</label>
+        </div>
+
+        <div className="botoes-form-mural">
+          <button type="submit" disabled={salvando} className="btn-salvar-mural">
+            {salvando ? '⏳ Gravando...' : idEditando ? '💾 Atualizar Recado' : '➕ Inserir no Mural'}
+          </button>
+          
+          {idEditando && (
+            <button type="button" onClick={handleLimparFormulario} className="btn-cancelar-mural">
+              Cancelar Edição
+            </button>
+          )}
+        </div>
       </form>
 
-      {/* LISTAGEM DOS BLOCOS EXISTENTES PARA GERENCIAMENTO */}
-      <h3>Blocos Ativos no Site ({listaBlocos.length})</h3>
-      <div className="lista-blocos-ativos">
-        {listaBlocos.map((bloco) => (
-          <div key={bloco.ID} className="bloco-item-gerenciável">
-            <div className="bloco-item-info">
-              <strong>{bloco.TITULO}</strong>
-              <span>{bloco.CONTEUDO}</span>
+      {/* TABELA / LISTAGEM DE GERENCIAMENTO */}
+      <section className="secao-tabela-mural">
+        <h3>Lista de Blocos Cadastrados ({listaBlocos.length})</h3>
+        
+        {carregando && <p className="status-mural-msg">Buscando recados na nuvem...</p>}
+        
+        <div className="lista-blocos-mural-admin">
+          {listaBlocos.map((bloco) => (
+            <div key={bloco.ID} className={`card-bloco-admin ${!bloco.STATUS ? 'bloco-desativado' : ''}`}>
+              <div className="info-bloco-admin">
+                <strong>{bloco.TITULO} {!bloco.STATUS && <span className="tag-inativo">🚫 Inativo</span>}</strong>
+                <p>{bloco.CONTEUDO}</p>
+              </div>
+
+              <div className="botoes-acoes-mural">
+                <button 
+                  type="button"
+                  onClick={() => handleAlternarStatus(bloco.ID, bloco.STATUS)}
+                  className={`btn-mural-toggle ${bloco.STATUS ? 'btn-status-ativo' : 'btn-status-inativo'}`}
+                >
+                  {bloco.STATUS ? '🟢 Ativo' : '🔴 Inativo'}
+                </button>
+                <button 
+                  type="button"
+                  onClick={() => iniciarEdicao(bloco)} 
+                  className="btn-mural-editar"
+                >
+                  ✏️ Editar
+                </button>
+                <button 
+                  type="button"
+                  onClick={() => handleExcluirBloco(bloco.ID)} 
+                  className="btn-mural-excluir"
+                >
+                  🗑️ Excluir
+                </button>
+              </div>
             </div>
-            <button onClick={() => handleExcluirBloco(bloco.ID)} className="btn-excluir">
-              Excluir
-            </button>
-          </div>
-        ))}
-        {listaBlocos.length === 0 && (
-          <p className="mural-vazio-notificacao">Nenhum bloco ativo no momento.</p>
-        )}
-      </div>
+          ))}
+
+          {!carregando && listaBlocos.length === 0 && (
+            <p className="status-mural-msg">Nenhum recado cadastrado no banco de dados.</p>
+          )}
+        </div>
+      </section>
     </div>
   );
 }

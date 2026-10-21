@@ -55,6 +55,7 @@ export default function Home() {
         const { data: muralData } = await supabase
           .from('MURAL_HOME')
           .select('*')
+          .eq('STATUS', true)
           .order('ORDEM', { ascending: true })
           .order('DATA_CRIACAO', { ascending: true });
 

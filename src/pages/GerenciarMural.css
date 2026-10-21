@@ -1,172 +1,241 @@
-/* GerenciarBlocos.css */
+/* GerenciarMural.css - Visual Administrativo Padrão */
 
-.mural-manager-container {
-  max-width: 650px;
+.gerenciar-mural-container {
+  max-width: 750px;
   margin: 40px auto;
-  padding: 20px;
-  font-family: sans-serif;
+  padding: 24px;
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
   box-sizing: border-box;
-  background-color: #ffffff !important; /* Mantém fundo branco contra Dark Mode */
-  color: #222222 !important; /* Mantém texto escuro */
 }
 
 .btn-voltar-painel {
-  text-decoration: none;
-  color: #007bff;
-  font-weight: bold;
   display: inline-block;
-  padding: 6px 0;
+  text-decoration: none;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 6px 12px;
+  background-color: #f1f5f9;
+  border-radius: 6px;
+  transition: background-color 0.2s;
 }
 
 .btn-voltar-painel:hover {
-  color: #0056b3;
+  background-color: #e2e8f0;
+  color: #1e293b;
 }
 
-.mural-manager-container h2 {
-  border-bottom: 2px solid #333;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-  margin-top: 20px;
+.gerenciar-mural-titulo-tela {
+  font-size: 1.8rem;
+  color: #0f172a;
+  font-weight: 800;
+  margin: 20px 0;
+  letter-spacing: -0.02em;
 }
 
-/* Formulário de cadastro */
-.form-cadastro-bloco {
-  background: #f9f9f9;
-  padding: 20px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
+.form-mural-admin {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  margin-bottom: 30px;
-  box-sizing: border-box;
+  gap: 16px;
+  background-color: #f8fafc;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
 }
 
-.form-cadastro-bloco h4 {
-  margin: 0;
-  color: #333;
-  font-size: 1.1rem;
+.form-group-mural {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.form-cadastro-bloco input[type="text"],
-.form-cadastro-bloco textarea {
+.form-group-mural label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.form-group-mural input[type="text"], 
+.form-group-mural textarea {
   width: 100%;
-  padding: 12px;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  color: #1e293b;
+  border: 1px solid #cccccc;
   border-radius: 6px;
-  border: 1px solid #ccc;
   box-sizing: border-box;
-  font-size: 16px; /* Evita zoom automático no iOS */
+  font-family: inherit;
 }
 
-.form-cadastro-bloco textarea {
-  resize: vertical;
-}
-
-.form-cadastro-bloco input:focus,
-.form-cadastro-bloco textarea:focus {
+.form-group-mural input:focus, 
+.form-group-mural textarea:focus {
   border-color: #007bff;
   outline: none;
 }
 
-.btn-inserir {
+.checkbox-inline {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0;
+  cursor: pointer;
+}
+
+.checkbox-inline input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.checkbox-inline label {
+  cursor: pointer;
+  user-select: none;
+}
+
+.botoes-form-mural {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-salvar-mural {
+  flex-grow: 1;
+  padding: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
   background: #007bff;
-  color: white;
-  padding: 14px;
+  color: #ffffff;
   border: none;
   border-radius: 6px;
-  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.btn-salvar-mural:hover { background-color: #0056b3; }
+.btn-salvar-mural:disabled { background: #cccccc; cursor: not-allowed; }
+
+.btn-cancelar-mural {
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 1rem;
-  transition: background 0.2s;
+  background: #64748b;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.2s;
 }
 
-@media (hover: hover) {
-  .btn-inserir:hover {
-    background: #0056b3;
-  }
+.btn-cancelar-mural:hover { background-color: #475569; }
+
+/* Tabela de blocos ativos */
+.secao-tabela-mural {
+  margin-top: 32px;
 }
 
-.btn-inserir:disabled {
-  background: #cccccc;
-  cursor: not-allowed;
+.secao-tabela-mural h3 {
+  font-size: 1.15rem;
+  color: #0f172a;
+  margin-bottom: 16px;
 }
 
-/* Listagem de Blocos Ativos */
-.lista-blocos-ativos {
+.lista-blocos-mural-admin {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.bloco-item-gerenciável {
+.card-bloco-admin {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px;
-  border: 1px solid #eee;
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
-  background: #fff;
-  gap: 16px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  background: #ffffff;
 }
 
-.bloco-item-info {
-  flex: 1;
+.bloco-desativado {
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
 }
 
-.bloco-item-info strong {
-  display: block;
+.info-bloco-admin {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-right: 16px;
+}
+
+.info-bloco-admin strong {
   font-size: 1.05rem;
-  margin-bottom: 4px;
-  color: #111;
+  color: #1e293b;
 }
 
-.bloco-item-info span {
-  font-size: 0.95rem;
-  color: #555;
-  line-height: 1.4;
+.info-bloco-admin p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: #475569;
 }
 
-.btn-excluir {
-  background: #dc3545;
-  color: white;
-  border: none;
-  padding: 10px 16px;
+.tag-inativo {
+  font-size: 0.75rem;
+  background-color: #e2e8f0;
+  color: #475569;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 6px;
+}
+
+.botoes-acoes-mural {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.btn-mural-toggle, .btn-mural-editar, .btn-mural-excluir {
+  padding: 6px 12px;
+  border: 1px solid #e2e8f0;
   border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
   cursor: pointer;
-  font-weight: bold;
-  font-size: 0.9rem;
-  transition: background 0.2s;
-  white-space: nowrap;
+  transition: background-color 0.15s;
 }
 
-@media (hover: hover) {
-  .btn-excluir:hover {
-    background: #bd2130;
-  }
-}
+.btn-status-ativo { background-color: #e8f5e9; color: #2e7d32; border-color: #c8e6c9; }
+.btn-status-ativo:hover { background-color: #c8e6c9; }
 
-.mural-vazio-notificacao {
-  color: #777;
+.btn-status-inativo { background-color: #f1f5f9; color: #475569; border-color: #cbd5e1; }
+.btn-status-inativo:hover { background-color: #cbd5e1; }
+
+.btn-mural-editar { background-color: #ffffff; color: #1e293b; }
+.btn-mural-editar:hover { background-color: #f1f5f9; }
+
+.btn-mural-excluir { background-color: #ffe4e6; color: #b91c1c; border-color: #fecdd3; }
+.btn-mural-excluir:hover { background-color: #fecdd3; }
+
+.status-mural-msg {
+  text-align: center;
   font-style: italic;
+  color: #64748b;
 }
 
-/* Customização Responsiva para Celular */
-@media (max-width: 580px) {
-  .mural-manager-container {
-    margin: 10px auto;
-    padding: 16px;
-  }
-
-  .bloco-item-gerenciável {
-    flex-direction: column; /* Empilha o texto e o botão de apagar */
-    align-items: flex-start;
+@media (max-width: 650px) {
+  .card-bloco-admin {
+    flex-direction: column;
     gap: 12px;
+    align-items: flex-start;
   }
-
-  .btn-excluir {
-    width: 100%; /* Botão ocupa a largura toda no mobile, facilitando o clique */
+  .botoes-acoes-mural, .botoes-form-mural {
+    width: 100%;
+  }
+  .btn-mural-toggle, .btn-mural-editar, .btn-mural-excluir {
+    flex-grow: 1;
     text-align: center;
-    padding: 12px;
   }
 }

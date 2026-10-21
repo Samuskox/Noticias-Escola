@@ -11,7 +11,7 @@ export default function Admin() {
   const [titulo, setTitulo] = useState('');
   const [resumo, setResumo] = useState('');
   const [conteudo, setConteudo] = useState('');
-  const [autores, setAutores] = useState('');
+
   const [videoUrl, setVideoUrl] = useState('');
   const [imagens, setImagens] = useState([]);
   const [carregando, setCarregando] = useState(false);
