@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseclient';
+import bcrypt from 'bcryptjs';
 import './Login.css';
 
 export default function Login() {
@@ -16,27 +17,40 @@ export default function Login() {
     setCarregando(true);
 
     try {
-      const { data, error } = await supabase
-        .from('ADMINISTRADOR')
-        .select('ID_ADMIN, NOME_ADMINISTRADOR')
-        .eq('NOME_ADMINISTRADOR', usuario.trim())
-        .eq('SENHA_ADMINISTRADOR', senha.trim());
+    // 1. Busca no Supabase apenas pelo Nome do Usuário
+    const { data, error } = await supabase
+      .from('ADMINISTRADOR')
+      .select('ID_ADMIN, NOME_ADMINISTRADOR, SENHA_ADMINISTRADOR')
+      .eq('NOME_ADMINISTRADOR', usuario.trim());
 
-      if (error) throw error;
+    if (error) throw error;
 
-      if (data && data.length > 0) {
-        const adminLogado = data[0];
-        localStorage.setItem('adminLogado', JSON.stringify(adminLogado));
+    if (data && data.length > 0) {
+      const adminLogado = data[0];
+
+      const senhaEstaCorreta = bcrypt.compareSync(senha.trim(), adminLogado.SENHA_ADMINISTRADOR);
+      console.log(senha.trim())
+
+      if (senhaEstaCorreta) {
+        const dadosSessao = {
+          ID_ADMIN: adminLogado.ID_ADMIN,
+          NOME_ADMINISTRADOR: adminLogado.NOME_ADMINISTRADOR
+        };
+
+        localStorage.setItem('adminLogado', JSON.stringify(dadosSessao));
         navigate('/Dashboard');
       } else {
-        setErro('Usuário ou senha inválidos');
+        setErro('Usuário ou senha inválidos!');
       }
-    } catch (err) {
-      console.error("Erro ao autenticar com Supabase: ", err); // Corrigido de Firebase para Supabase no log
-      setErro('Não foi possível conectar ao servidor.');
-    } finally {
-      setCarregando(false);
+    } else {
+      setErro('Usuário ou senha inválidos!');
     }
+  } catch (err) {
+    console.error("Erro na autenticação:", err);
+    setErro('Não foi possível conectar ao banco de dados.');
+  } finally {
+    setCarregando(false);
+  }
   };
 
   return (

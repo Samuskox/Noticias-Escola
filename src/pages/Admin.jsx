@@ -46,7 +46,7 @@ export default function Admin() {
       const admin = JSON.parse(localStorage.getItem('adminLogado'));
       const idAdmin = admin?.ID_ADMIN || 1;
       let idsAutoresFinais = [...autoresSelecionados].map(Number);
-      // 1. SE DIGITOU NOVOS AUTORES (SEPARADOS POR VÍRGULA), CADASTRA ELES PRIMEIRO
+      
       if (novosAutoresTexto.trim() !== '') {
         const nomesNovos = novosAutoresTexto.split(',').map(n => n.trim()).filter(Boolean);
 
