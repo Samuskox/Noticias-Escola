@@ -43,6 +43,7 @@ function App() {
       <Route path="/jogos" element={<Jogos/>}/>
       <Route path="/gerenciarNoticias" element={<GerenciarNoticias/>}/>
       <Route path="/editarNoticia/:id" element={<EditarNoticia/>}/>
+      
      </Routes>
     </BrowserRouter>
 

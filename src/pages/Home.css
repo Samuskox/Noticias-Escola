@@ -289,3 +289,85 @@ body {
     box-sizing: border-box;
   }
 }
+
+/* Home.css - Caixa de Eventos do Mês com Scroll 📜 */
+
+.home-eventos-box {
+  background-color: #65C7F7; /* Azul da Paleta do Cliente */
+  border: 3px solid #4A3E3D;
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 40px;
+  box-shadow: 5px 5px 0px #4A3E3D;
+}
+
+.home-eventos-box h3 {
+  margin: 0 0 14px 0;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 1.5px 1.5px 0px #4A3E3D;
+}
+
+/* 🌟 ÁREA DE SCROLL INTERNO */
+.home-eventos-scroll {
+  max-height: 220px; /* Limita a altura e ativa o scroll se passar disso */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 8px; /* Espaço para não colar na barra de rolagem */
+}
+
+/* Estilização da barra de rolagem */
+.home-eventos-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.home-eventos-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 10px;
+}
+
+.home-eventos-scroll::-webkit-scrollbar-thumb {
+  background: #4A3E3D;
+  border-radius: 10px;
+}
+
+/* Linha de cada evento dentro do scroll */
+.home-evento-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #FFF9EF;
+  border: 2px solid #4A3E3D;
+  border-radius: 12px;
+  padding: 10px 14px;
+  color: #4A3E3D;
+}
+
+.home-evento-data {
+  background-color: #FFD85E; /* Etiqueta Amarela */
+  font-weight: 900;
+  font-size: 0.95rem;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 2px solid #4A3E3D;
+  flex-shrink: 0;
+}
+
+.home-evento-texto {
+  font-size: 0.98rem;
+  line-height: 1.4;
+}
+
+.sem-eventos-msg {
+  background-color: #FFF9EF;
+  padding: 14px;
+  border-radius: 12px;
+  border: 2px dashed #4A3E3D;
+  text-align: center;
+  font-weight: bold;
+  margin: 0;
+}
+

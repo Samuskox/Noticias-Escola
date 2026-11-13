@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NoticiaCard from '../components/NoticiaCard';
 import { supabase } from '../supabaseClient';
-import logoEscola from '../assets/LogoSarah.jpg'; 
+import logoEscola from '../assets/LogoSarah.jpg';
 import './Home.css';
 
 // Exemplo de lista de notícias (depois pode vir de uma API ou LocalStorage)
@@ -18,6 +18,7 @@ export default function Home() {
   const [carregando, setCarregando] = useState(true);
   const [autoresMural, setAutoresMural] = useState('Carregando autores...');
   const [isAdminLogado, setIsAdminLogado] = useState(false);
+  const [eventosDoMes, setEventosDoMes] = useState([]);
 
 
   // Busca os dados da API ao carregar o componente
@@ -27,6 +28,37 @@ export default function Home() {
     const admin = localStorage.getItem('adminLogado');
     if (admin) {
       setIsAdminLogado(true);
+    }
+
+    const buscarEventos = async () => {
+      try {
+        const hoje = new Date();
+
+        const ano = hoje.getFullYear();
+        const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+        const dia = String(hoje.getDate()).padStart(2, '0');
+        const dataHojeStr = `${ano}-${mes}-${dia}`;
+
+        const ultimoDiaObj = new Date(ano, hoje.getMonth() + 1, 0);
+        const ultimoDiaStr = `${ano}-${mes}-${String(ultimoDiaObj.getDate()).padStart(2, '0')}`;
+
+        const { data: eventosData, error: eventosError } = await supabase
+          .from('EVENTOS')
+          .select('*')
+          .gte('DATA_EVENTO', dataHojeStr)     // Apenas eventos de HOJE em diante (>=)
+          .lte('DATA_EVENTO', ultimoDiaStr)    // Apenas eventos até o ÚLTIMO DIA deste mês (<=)
+          .order('DATA_EVENTO', { ascending: true }); // Ordena do mais próximo para o mais distante
+
+        if (eventosError) throw eventosError;
+        if (eventosData) setEventosDoMes(eventosData);
+
+      } catch (erro) {
+        console.error('Erro ao buscar dados:', erro);
+
+      } finally {
+        setCarregando(false);
+      }
+
     }
 
 
@@ -78,7 +110,7 @@ export default function Home() {
           .select('NOME')
           .order('NOME', { ascending: true });
 
-        if(autoresData && autoresData.length > 0){
+        if (autoresData && autoresData.length > 0) {
           const nomesFormatados = autoresData.map(auth => auth.NOME).join(', ');
           setAutoresMural(nomesFormatados);
         } else {
@@ -94,16 +126,17 @@ export default function Home() {
       }
     };
 
+    buscarEventos();
     buscarNoticiasDoBanco();
   }, []);
 
 
   return (
-<div className="home-container">
+    <div className="home-container">
 
-  <img 
-        src={logoEscola} 
-        alt="Logo de fundo da escola" 
+      <img
+        src={logoEscola}
+        alt="Logo de fundo da escola"
         style={{
           position: 'fixed',
           top: '50%',
@@ -113,69 +146,96 @@ export default function Home() {
           width: 'auto',
           objectFit: 'contain',
           zIndex: 0, /* Fica atrás de todos os textos do jornal */
-          
+
           /* 🌟 OPACIDADE MÍNIMA PEDIDA: 0.04 significa apenas 4% de visibilidade.
              Fica super sutil, parecendo papel timbrado de verdade e não atrapalha a leitura! */
-          opacity: 0.05, 
-          
+          opacity: 0.05,
+
           pointerEvents: 'none' /* Garante que o usuário consiga clicar nos cards sem a imagem travar o mouse */
-        }} 
+        }}
       />
 
-      
-        {
-          isAdminLogado && (
-            <div className="home-container" style={{ position: 'relative', zIndex: 1 }}>
+
+      {
+        isAdminLogado && (
+          <div className="home-container" style={{ position: 'relative', zIndex: 1 }}>
             <div className="atalho-painel-admin-container">
-            <Link to="/Dashboard" className="btn-atalho-painel-admin">
-              ⚙️ Voltar ao Painel do Administrador
-            </Link>
+              <Link to="/Dashboard" className="btn-atalho-painel-admin">
+                ⚙️ Voltar ao Painel do Administrador
+              </Link>
             </div>
-            </div>
-          )
-        }
-      
+          </div>
+        )
+      }
 
-  <header className="home-header">
-    <h1>Jornal do Sarah</h1>
-    <p><strong>Professor Orientador:</strong> Lucas Alaric Angelo</p>
-    <p><strong>Redação: </strong>{autoresMural}</p>
-  </header>
 
-  {/* Seção dos blocos do mural */}
-  <section className="mural-grid">
-    {muralBlocos.map((bloco) => (
-      <div key={bloco.ID} className="mural-bloco">
-        <h3>{bloco.TITULO}</h3>
-        <p>{bloco.CONTEUDO}</p>
-      </div>
-    ))}
-  </section>
+      <header className="home-header">
+        <h1>Jornal do Sarah</h1>
+        <p><strong>Professor Orientador:</strong> Lucas Alaric Angelo</p>
+        <p><strong>Redação: </strong>{autoresMural}</p>
+      </header>
 
-  {/* Seção das notícias */}
-  <section className="noticias-secao">
-    <h2>Últimas Notícias</h2>
+      {/* Seção dos blocos do mural */}
+      <section className="mural-grid">
+        {muralBlocos.map((bloco) => (
+          <div key={bloco.ID} className="mural-bloco">
+            <h3>{bloco.TITULO}</h3>
+            <p>{bloco.CONTEUDO}</p>
+          </div>
+        ))}
+      </section>
 
-    {carregando && <p className="mensagem-status">Carregando matérias recentes...</p>}
+      {/* 🌟 SEÇÃO DE EVENTOS DO MÊS COM SCROLL INTERNO */}
+      <section className="home-eventos-box">
+        <h3>📅 Próximos Eventos do Mês</h3>
 
-    {!carregando && listaNoticias.length === 0 && (
-      <p className="mensagem-status">Nenhuma notícia publicada ainda no mural.</p>
-    )}
+        <div className="home-eventos-scroll">
+          {eventosDoMes.length === 0 ? (
+            <p className="sem-eventos-msg">Nenhum evento restante programado para este mês! 🎉</p>
+          ) : (
+            eventosDoMes.map((ev) => {
+              // Formata "2026-11-23" para "23/11" sem erro de fuso horário
+              const [, mesEv, diaEv] = ev.DATA_EVENTO.split('-');
 
-    {!carregando && listaNoticias.slice(0, 2).map((item) => (
-      <NoticiaCard key={item.id} noticia={item} />
-    ))}
-  </section>
+              return (
+                <div key={ev.ID_EVENTO} className="home-evento-item">
+                  <span className="home-evento-data">{diaEv}/{mesEv}</span>
+                  <div className="home-evento-texto">
+                    <strong>{ev.TITULO}</strong>
+                    {ev.DESCRICAO && <span> — {ev.DESCRICAO}</span>}
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </div>
+      </section>
 
-  {/* Botão dinâmico para ver o acervo de todas as notícias */}
-  {!carregando && listaNoticias.length > 2 && (
-    <div className="botao-acervo-container">
-      <Link to="/todasNoticias" className="botao-acervo">
-        📚 Ver Todas as Notícias Antigas ({listaNoticias.length})
-      </Link>
+
+      {/* Seção das notícias */}
+      <section className="noticias-secao">
+        <h2>Últimas Notícias</h2>
+
+        {carregando && <p className="mensagem-status">Carregando matérias recentes...</p>}
+
+        {!carregando && listaNoticias.length === 0 && (
+          <p className="mensagem-status">Nenhuma notícia publicada ainda no mural.</p>
+        )}
+
+        {!carregando && listaNoticias.slice(0, 2).map((item) => (
+          <NoticiaCard key={item.id} noticia={item} />
+        ))}
+      </section>
+
+      {/* Botão dinâmico para ver o acervo de todas as notícias */}
+      {!carregando && listaNoticias.length > 2 && (
+        <div className="botao-acervo-container">
+          <Link to="/todasNoticias" className="botao-acervo">
+            📚 Ver Todas as Notícias Antigas ({listaNoticias.length})
+          </Link>
+        </div>
+      )}
     </div>
-  )}
-</div>
 
   );
 }
