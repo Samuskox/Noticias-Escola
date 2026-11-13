@@ -18,6 +18,7 @@ import Sobre from './pages/Sobre';
 import Escola from './pages/NossaEscola';
 import GerenciarNoticias from './pages/GerenciarNoticias';
 import EditarNoticia from './pages/EditarNoticias';
+import GerenciarEventos from './pages/GerenciarEventos';
 
 import './App.css'
 
@@ -43,6 +44,7 @@ function App() {
       <Route path="/jogos" element={<Jogos/>}/>
       <Route path="/gerenciarNoticias" element={<GerenciarNoticias/>}/>
       <Route path="/editarNoticia/:id" element={<EditarNoticia/>}/>
+      <Route path="/eventos-admin" element={<GerenciarEventos />} />
       
      </Routes>
     </BrowserRouter>

@@ -81,6 +81,7 @@
 .menu-card.ver-site { background: #6c7d76; }
 .menu-card.mural { background: #ceab61; }
 .menu-card.autores { background: #17a2b8; }
+.menu-card.eventos {background: #f59e0b;}
 
 @media (hover: hover) {
   .menu-card:hover {

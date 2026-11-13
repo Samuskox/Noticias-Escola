@@ -106,6 +106,9 @@ export default function Dashboard() {
         <Link to="/autores" className="menu-card autores">
           Gerenciar Autores
         </Link>
+        <Link to="/eventos-admin" className='menu-card eventos'>
+          Gerenciar Eventos
+        </Link>
       </div>
 
       {/* Seção das postagens abaixo */}
@@ -126,7 +129,7 @@ export default function Dashboard() {
               <button 
                 onClick={() => handleExcluirNoticia(item.ID_NOTICIAS, item.IMAGENS)}
                 className="btn-excluir-noticia">
-                🗑️ Excluir
+                Excluir
               </button>
             </div>
           ))}

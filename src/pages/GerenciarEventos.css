@@ -1,0 +1,224 @@
+/* GerenciarEventos.css - Visual Administrativo Padrão */
+
+.gerenciar-eventos-container {
+  max-width: 750px;
+  margin: 40px auto;
+  padding: 24px;
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  box-sizing: border-box;
+}
+
+.btn-voltar-painel {
+  display: inline-block;
+  text-decoration: none;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 6px 12px;
+  background-color: #f1f5f9;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.btn-voltar-painel:hover {
+  background-color: #e2e8f0;
+  color: #1e293b;
+}
+
+.gerenciar-eventos-titulo {
+  font-size: 1.8rem;
+  color: #0f172a;
+  font-weight: 800;
+  margin: 20px 0;
+  letter-spacing: -0.02em;
+}
+
+.form-eventos-admin {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background-color: #f8fafc;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.form-row-eventos {
+  display: flex;
+  gap: 16px;
+}
+
+.data-field {
+  flex: 1;
+}
+
+.titulo-field {
+  flex: 2;
+}
+
+.form-group-evento {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group-evento label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.form-group-evento input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  color: #1e293b;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.form-group-evento input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.botoes-form-eventos {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-salvar-evento {
+  flex-grow: 1;
+  padding: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.btn-salvar-evento:hover { background-color: #0056b3; }
+.btn-salvar-evento:disabled { background: #cccccc; cursor: not-allowed; }
+
+.btn-cancelar-evento {
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: #64748b;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+}
+
+.btn-cancelar-evento:hover { background-color: #475569; }
+
+/* Lista de eventos */
+.secao-lista-eventos {
+  margin-top: 32px;
+}
+
+.secao-lista-eventos h3 {
+  font-size: 1.15rem;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+
+.lista-eventos-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-evento-admin {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.info-evento-admin {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-right: 12px;
+}
+
+.badge-data-admin {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.info-evento-admin strong {
+  display: block;
+  font-size: 1rem;
+  color: #1e293b;
+}
+
+.info-evento-admin p {
+  margin: 2px 0 0 0;
+  font-size: 0.88rem;
+  color: #64748b;
+}
+
+.acoes-evento-admin {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.btn-ev-editar, .btn-ev-excluir {
+  padding: 6px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.btn-ev-editar { background-color: #ffffff; color: #1e293b; }
+.btn-ev-editar:hover { background-color: #f1f5f9; }
+
+.btn-ev-excluir { background-color: #ffe4e6; color: #b91c1c; border-color: #fecdd3; }
+.btn-ev-excluir:hover { background-color: #fecdd3; }
+
+.msg-status-eventos {
+  text-align: center;
+  font-style: italic;
+  color: #64748b;
+}
+
+@media (max-width: 600px) {
+  .form-row-eventos {
+    flex-direction: column;
+  }
+  .card-evento-admin {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .acoes-evento-admin {
+    width: 100%;
+  }
+  .btn-ev-editar, .btn-ev-excluir {
+    flex-grow: 1;
+  }
+}
