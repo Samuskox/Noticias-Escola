@@ -3,6 +3,7 @@ import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
@@ -45,8 +46,8 @@ function App() {
       <Route path="/gerenciarNoticias" element={<GerenciarNoticias/>}/>
       <Route path="/editarNoticia/:id" element={<EditarNoticia/>}/>
       <Route path="/eventos-admin" element={<GerenciarEventos />} />
-      
      </Routes>
+     <Analytics/>
     </BrowserRouter>
 
   )

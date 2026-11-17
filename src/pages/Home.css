@@ -309,17 +309,54 @@ body {
   text-shadow: 1.5px 1.5px 0px #4A3E3D;
 }
 
-/* 🌟 ÁREA DE SCROLL INTERNO */
-.home-eventos-scroll {
-  max-height: 220px; /* Limita a altura e ativa o scroll se passar disso */
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding-right: 8px; /* Espaço para não colar na barra de rolagem */
+/* Home.css - Caixa de Eventos do Mês Ultra Animada 📅🎈 */
+
+.home-eventos-box {
+  background-color: #65C7F7; /* Azul da Paleta do Cliente */
+  border: 3px solid #4A3E3D;
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 40px;
+  box-shadow: 5px 5px 0px #4A3E3D;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.3), 
+              box-shadow 0.25s ease;
 }
 
-/* Estilização da barra de rolagem */
+/* 🌟 ANIMAÇÃO DA CAIXA PRINCIPAL: Flutua levemente ao passar o mouse */
+@media (hover: hover) {
+  .home-eventos-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 8px 8px 0px #4A3E3D;
+  }
+}
+
+.home-eventos-box h3 {
+  margin: 0 0 14px 0;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 1.5px 1.5px 0px #4A3E3D;
+  display: inline-block;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.4);
+}
+
+@media (hover: hover) {
+  .home-eventos-box h3:hover {
+    transform: scale(1.05) rotate(-1deg);
+  }
+}
+
+/* ÁREA DE SCROLL INTERNO */
+.home-eventos-scroll {
+  max-height: 220px;
+  overflow-y: auto;
+  overflow-x: hidden; /* Evita barra horizontal quando os itens aumentarem na animação */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 4px 8px 4px 2px; /* Respiro extra para a sombra animada não cortar */
+}
+
 .home-eventos-scroll::-webkit-scrollbar {
   width: 8px;
 }
@@ -334,7 +371,7 @@ body {
   border-radius: 10px;
 }
 
-/* Linha de cada evento dentro do scroll */
+/* 🌟 LINHA DE CADA EVENTO: Salta para a direita e ganha sombra no foco */
 .home-evento-item {
   display: flex;
   align-items: center;
@@ -344,16 +381,39 @@ body {
   border-radius: 12px;
   padding: 10px 14px;
   color: #4A3E3D;
+  box-shadow: 2px 2px 0px #4A3E3D;
+  cursor: default;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.4), 
+              box-shadow 0.2s ease, 
+              background-color 0.2s ease;
 }
 
+@media (hover: hover) {
+  .home-evento-item:hover {
+    transform: translateX(6px) scale(1.01);
+    background-color: #ffffff;
+    box-shadow: 4px 4px 0px #4A3E3D;
+  }
+}
+
+/* 🌟 ETIQUETA DE DATA: Dá uma cambalhota de leve e muda de cor quando o item recebe foco */
 .home-evento-data {
-  background-color: #FFD85E; /* Etiqueta Amarela */
+  background-color: #FFD85E; /* Amarelo */
   font-weight: 900;
   font-size: 0.95rem;
   padding: 4px 10px;
   border-radius: 8px;
   border: 2px solid #4A3E3D;
   flex-shrink: 0;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.5), 
+              background-color 0.2s ease;
+}
+
+@media (hover: hover) {
+  .home-evento-item:hover .home-evento-data {
+    transform: rotate(-4deg) scale(1.1);
+    background-color: #8EDDB0; /* Transforma em Verde da Paleta */
+  }
 }
 
 .home-evento-texto {
@@ -370,4 +430,5 @@ body {
   font-weight: bold;
   margin: 0;
 }
+
 

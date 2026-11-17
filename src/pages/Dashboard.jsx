@@ -6,28 +6,42 @@ import './Dashboard.css';
 export default function Dashboard() {
   const [noticias, setNoticias] = useState([]);
   const [carregando, setCarregando] = useState(true);
+  const [totalVisitas, setTotalVisitas] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
     const adminLogado = localStorage.getItem('adminLogado');
-    if(!adminLogado){
+    if (!adminLogado) {
       navigate('/login')
-    }else{
-      buscarNoticias(); 
-    } 
+    } else {
+      buscarNoticias();
+      buscarEstatisticas();
+    }
   }, [navigate]);
+
+  const buscarEstatisticas = async () => {
+    const { data } = await supabase
+      .from('ESTATISTICAS')
+      .select('TOTAL_VISITAS')
+      .eq('ID', 1)
+      .single();
+
+    if (data) {
+      setTotalVisitas(data.TOTAL_VISITAS);
+    }
+  };
 
   const handleSair = () => {
     localStorage.removeItem('adminLogado');
     navigate('/login');
   };
 
-   const buscarNoticias = async () => {
+  const buscarNoticias = async () => {
 
     try {
       setCarregando(true);
 
-      
+
       const { data, error } = await supabase
         .from('NOTICIAS')
         .select('ID_NOTICIAS, TITULO, DATA, IMAGENS')
@@ -63,7 +77,7 @@ export default function Dashboard() {
           if (storageError) console.warn('Aviso ao limpar mídias do Storage:', storageError.message);
         }
       }
-       const { error: dbError } = await supabase
+      const { error: dbError } = await supabase
         .from('NOTICIAS')
         .delete()
         .eq('ID_NOTICIAS', id);
@@ -81,7 +95,7 @@ export default function Dashboard() {
   const nomeAdmin = admin.NOME_ADMINISTRADOR || 'Administrador';
 
   return (
-<div className="dashboard-container">
+    <div className="dashboard-container">
       <header className="dashboard-header">
         <div>
           <h1>Painel do Administrador</h1>
@@ -91,6 +105,29 @@ export default function Dashboard() {
           Sair
         </button>
       </header>
+
+      <div style={{
+        background: '#f8fafc',
+        border: '1px solid #e2e8f0',
+        borderRadius: '10px',
+        padding: '16px 20px',
+        marginBottom: '24px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }}>
+        <div>
+          <span style={{ display: 'block', fontSize: '0.95rem', color: '#0f172a', fontWeight: '700' }}>
+            📈 Total de Visitas do Jornal
+          </span>
+          <span style={{ fontSize: '0.82rem', color: '#64748b' }}>
+            Contagem histórica acumulada desde o dia 17/11/2026
+          </span>
+        </div>
+        <strong style={{ fontSize: '2rem', color: '#007bff' }}>
+          {totalVisitas.toLocaleString('pt-BR')}
+        </strong>
+      </div>
 
       {/* Grid de botões principais */}
       <div className="dashboard-menu-grid">
@@ -114,9 +151,9 @@ export default function Dashboard() {
       {/* Seção das postagens abaixo */}
       <section className="publicacoes-section">
         <h3>Publicações Ativas ({noticias.length})</h3>
-        
+
         {carregando && <p className="publicacoes-status-msg">Carregando acervo de controle...</p>}
-        
+
         <div className="publicacoes-lista">
           {noticias.map((item) => (
             <div key={item.ID_NOTICIAS} className="publicacao-item">
@@ -126,7 +163,7 @@ export default function Dashboard() {
                   {new Date(item.DATA).toLocaleDateString('pt-BR')}
                 </span>
               </div>
-              <button 
+              <button
                 onClick={() => handleExcluirNoticia(item.ID_NOTICIAS, item.IMAGENS)}
                 className="btn-excluir-noticia">
                 Excluir

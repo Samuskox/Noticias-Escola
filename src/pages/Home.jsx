@@ -24,6 +24,16 @@ export default function Home() {
   // Busca os dados da API ao carregar o componente
   useEffect(() => {
 
+    const jaContouNestaSessao = sessionStorage.getItem('visitaContada');
+  
+  if (!jaContouNestaSessao) {
+    supabase.rpc('registrar_visita').then(({ error }) => {
+      if (!error) {
+        sessionStorage.setItem('visitaContada', 'true');
+      }
+    });
+  }
+
 
     const admin = localStorage.getItem('adminLogado');
     if (admin) {
